@@ -1,0 +1,34 @@
+
+# Build working directories
+Sample-App/bin
+Sample-App/bld
+
+# Generated TypeScript artifacts
+Sample-App/app/*.js
+Sample-App/app/*.js.map
+Sample-App/app/*/*.js
+Sample-App/app/*/*.js.map
+
+# Local nu-get packages
+packages/*/
+
+# Build-time variables
+Sample-App/scripts/BuildVars.js
+
+# Visual Studio user preferences etc
+*.docstates
+*.suo
+*.jsproj.user
+
+# Windows thumbnail cache
+Thumbs.db
+
+# Windows folder config
+Desktop.ini
+
+# Mac OS Stuff
+.DS_Store
+
+# Misc temp files
+*.tmp
+*.bak

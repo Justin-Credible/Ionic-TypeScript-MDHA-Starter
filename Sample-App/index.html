@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+        <title></title>
+
+        <!-- Exposes certain build flags (version, build time, debug, etc). -->
+        <!-- This is created by the build scripts and will be a 404 during development. -->
+        <script src="scripts/BuildVars.js"></script>
+
+        <!-- Allows us to perform custom mocking, etc for the Apache Ripple Emulator. -->
+        <script src="scripts/RippleMockApi.js"></script>
+
+        <!-- *** Ionic Framework (includes AngularJs) **************************************** -->
+
+        <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+        <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+        <!-- Allows us to perform mocking in Angular (eg fake HTTP calls etc). -->
+        <script src="lib/angular-mocks.js"></script>
+
+        <!-- *** Cordova Library ************************************************************* -->
+
+        <!-- The ngCordova library exposes the Cordova API as Angular services. -->
+        <script src="lib/ng-cordova.js"></script>
+
+        <!-- This will be a 404 during development; it is copied into package at build time. -->
+        <script src="cordova.js"></script>
+
+        <!-- *** Third Party Libraries ******************************************************* -->
+
+        <script src="lib/lodash.min.js"></script>
+        <script src="lib/moment.min.js"></script>
+        <script src="lib/URI.min.js"></script>
+        <link href="lib/nprogress/nprogress.css" rel="stylesheet" />
+        <script src="lib/nprogress/nprogress.js"></script>
+
+        <!-- *** Application Specific Dependencies ******************************************* -->
+
+        <!-- Styles -->
+        <link href="css/ionic-overrides.css" rel="stylesheet">
+        <link href="css/nprogress-overrides.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/devices.css" rel="stylesheet">
+
+        <!-- Models -->
+        <script src="app/Models/Misc.js"></script>
+        <script src="app/Models/LogEntry.js"></script>
+
+        <!-- View Models -->
+        <script src="app/ViewModels/EmptyViewModel.js"></script>
+        <script src="app/ViewModels/MenuViewModel.js"></script>
+        <script src="app/ViewModels/CategoryItemViewModel.js"></script>
+        <script src="app/ViewModels/ReorderCategoriesViewModel.js"></script>
+        <script src="app/ViewModels/LogsViewModel.js"></script>
+        <script src="app/ViewModels/AboutViewModel.js"></script>
+        <script src="app/ViewModels/ConfigurePinViewModel.js"></script>
+        <script src="app/ViewModels/PinEntryViewModel.js"></script>
+        <script src="app/ViewModels/DeveloperViewModel.js"></script>
+        <script src="app/ViewModels/SettingsViewModel.js"></script>
+
+        <!-- Services -->
+        <script src="app/Services/Utilities.js"></script>
+        <script src="app/Services/FileUtilities.js"></script>
+        <script src="app/Services/Logger.js"></script>
+        <script src="app/Services/Preferences.js"></script>
+        <script src="app/Services/MockApis.js"></script>
+        <script src="app/Services/HttpInterceptor.js"></script>
+        <script src="app/Services/UiHelper.js"></script>
+
+        <!-- Directives -->
+        <script src="app/Directives/BaseDirective.js"></script>
+
+        <!-- Controllers -->
+        <script src="app/Controllers/BaseController.js"></script>
+        <script src="app/Controllers/MenuController.js"></script>
+        <script src="app/Controllers/ReorderCategoriesController.js"></script>
+        <script src="app/Controllers/SettingsController.js"></script>
+        <script src="app/Controllers/LogsController.js"></script>
+        <script src="app/Controllers/LogEntryController.js"></script>
+        <script src="app/Controllers/DeveloperController.js"></script>
+        <script src="app/Controllers/AboutController.js"></script>
+        <script src="app/Controllers/PinEntryController.js"></script>
+        <script src="app/Controllers/ConfigurePinController.js"></script>
+
+        <!-- Application Bootstrap -->
+        <script src="app/Application.js"></script>
+
+    </head>
+
+    <body ng-app="JustinCredible.SampleApp.Application">
+        <ion-nav-view></ion-nav-view>
+    </body>
+
+</html>

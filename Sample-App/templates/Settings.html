@@ -1,0 +1,43 @@
+<ion-view title="Settings">
+
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button icon ion-navicon"></button>
+    </ion-nav-buttons>
+
+    <ion-content class="has-header">
+        <ion-list>
+
+            <ion-item href="#/app/cloud-sync" class="item-icon-left item-icon-right" ng-show="viewModel.isDebugMode || viewModel.isDeveloperMode">
+                <i class="icon ion-ios7-cloud-upload-outline"></i>
+                <i class="icon ion-ios7-arrow-forward"></i>
+                Cloud Sync
+            </ion-item>
+
+            <ion-item href="#/app/configure-pin" class="item-icon-left item-icon-right">
+                <i class="icon ion-ios7-locked-outline"></i>
+                <i class="icon ion-ios7-arrow-forward"></i>
+                Configure PIN
+            </ion-item>
+
+            <ion-item href="#/app/logs" class="item-icon-left item-icon-right">
+                <i class="icon ion-ios7-copy-outline"></i>
+                <i class="icon ion-ios7-arrow-forward"></i>
+                Logs
+            </ion-item>
+
+            <ion-item href="#/app/developer" class="item-icon-left item-icon-right" ng-show="viewModel.isDebugMode || viewModel.isDeveloperMode">
+                <i class="icon ion-android-developer"></i>
+                <i class="icon ion-ios7-arrow-forward"></i>
+                Development Tools
+            </ion-item>
+
+            <ion-item href="#/app/about" class="item-icon-left item-icon-right">
+                <i class="icon ion-ios7-information-outline"></i>
+                <i class="icon ion-ios7-arrow-forward"></i>
+                About
+            </ion-item>
+
+        </ion-list>
+    </ion-content>
+
+</ion-view>

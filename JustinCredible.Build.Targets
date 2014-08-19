@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- Used to get the version number string from a Cordova configuration XML file. -->
+  <UsingTask
+    TaskName="GetVersionNumbers"
+    TaskFactory="CodeTaskFactory"
+    AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v12.0.dll" >
+    <ParameterGroup>
+      <ConfigFile ParameterType="System.String" Required="true" />
+      <MajorVersion ParameterType="System.String" Required="false" Output="true" />
+      <MinorVersion ParameterType="System.String" Required="false" Output="true" />
+      <ReleaseVersion ParameterType="System.String" Required="false" Output="true" />
+      <RevisionVersion ParameterType="System.String" Required="false" Output="true" />
+    </ParameterGroup>
+    <Task>
+      <Reference Include="System.Xml" />
+      <Reference Include="System.Xml.Linq"/>
+      <Using Namespace="System"/>
+      <Using Namespace="System.Linq"/>
+      <Using Namespace="System.Xml.Linq"/>
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+var configXml = XDocument.Load(this.ConfigFile);
+
+var versionString = configXml.Root.Attribute("version").Value.ToString();
+
+var versionParts = versionString.Split('.');
+
+this.MajorVersion = versionParts[0];
+this.MinorVersion = versionParts[1];
+this.ReleaseVersion = versionParts[2];
+this.RevisionVersion = versionParts[3];
+
+return true;
+]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
+  <!--
+    Used to inject the revision (4th place) into the version string, preserving the first 3 places,
+    into a Cordova configuration XML file.
+  -->
+  <UsingTask
+    TaskName="InjectRevisionVersion"
+    TaskFactory="CodeTaskFactory"
+    AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v12.0.dll" >
+    <ParameterGroup>
+      <ConfigFile ParameterType="System.String" Required="true" />
+      <RevisionVersion ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Reference Include="System.Xml" />
+      <Reference Include="System.Xml.Linq"/>
+      <Using Namespace="System"/>
+      <Using Namespace="System.Linq"/>
+      <Using Namespace="System.Xml.Linq"/>
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+var configXml = XDocument.Load(this.ConfigFile);
+
+var versionString = configXml.Root.Attribute("version").Value.ToString();
+
+var versionParts = versionString.Split('.');
+
+configXml.Root.Attribute("version").Value = String.Join(".", versionParts[0], versionParts[1], versionParts[2], this.RevisionVersion);
+configXml.Save(this.ConfigFile);
+
+return true;
+]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
+  <!--
+    Used to create a JavaScript file which declares global variables for
+    use in the application during runtime.
+  -->
+  <UsingTask
+    TaskName="CreateBuildVarsJs"
+    TaskFactory="CodeTaskFactory"
+    AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v12.0.dll" >
+    <ParameterGroup>
+      <FilePath ParameterType="System.String" Required="true" />
+      <IsDebug ParameterType="System.String" Required="true" />
+      <MajorVersion ParameterType="System.String" Required="true" />
+      <MinorVersion ParameterType="System.String" Required="true" />
+      <ReleaseVersion ParameterType="System.String" Required="true" />
+      <RevisionVersion ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System"/>
+      <Using Namespace="System.Text"/>
+      <Using Namespace="System.IO"/>
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+
+StringBuilder jsSource = new StringBuilder();
+
+jsSource.Append("window.buildVars = {");
+jsSource.AppendFormat("debug: {0}", IsDebug.ToString().ToLower());
+jsSource.AppendFormat(",");
+jsSource.AppendFormat("buildTimestamp: '{0}'", DateTime.Now.ToString());
+jsSource.AppendFormat(",");
+jsSource.AppendFormat("majorVersion: {0}", MajorVersion);
+jsSource.AppendFormat(",");
+jsSource.AppendFormat("minorVersion: {0}", MinorVersion);
+jsSource.AppendFormat(",");
+jsSource.AppendFormat("releaseVersion: {0}", ReleaseVersion);
+jsSource.AppendFormat(",");
+jsSource.AppendFormat("revisionVersion: {0}", RevisionVersion);
+jsSource.Append("};");
+
+File.WriteAllText(FilePath, jsSource.ToString());
+
+return true;
+]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
+</Project>
