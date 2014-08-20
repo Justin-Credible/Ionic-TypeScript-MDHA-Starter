@@ -6,21 +6,19 @@
 
     export class MenuController extends BaseController<ViewModels.MenuViewModel> implements IMenuController {
 
-        public static $inject = ["$scope", "$location", "$http", "$ionicViewService", "Utilities", "UiHelper", "Preferences"];
+        public static $inject = ["$scope", "$location", "$http", "Utilities", "UiHelper", "Preferences"];
 
         private $location: ng.ILocationService;
         private $http: ng.IHttpService;
-        private $ionicViewService: any;
         private Utilities: Services.Utilities;
         private UiHelper: Services.UiHelper;
         private Preferences: Services.Preferences;
 
-        constructor($scope: ng.IScope, $location: ng.ILocationService, $http: ng.IHttpService, $ionicViewService: any, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences) {
+        constructor($scope: ng.IScope, $location: ng.ILocationService, $http: ng.IHttpService, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences) {
             super($scope, ViewModels.MenuViewModel);
 
             this.$location = $location;
             this.$http = $http;
-            this.$ionicViewService = $ionicViewService;
             this.Utilities = Utilities;
             this.UiHelper = UiHelper;
             this.Preferences = Preferences;

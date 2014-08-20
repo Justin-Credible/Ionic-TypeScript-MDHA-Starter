@@ -6,18 +6,16 @@
 
     export class PinEntryController extends BaseController<ViewModels.PinEntryViewModel> implements IPinEntryController {
 
-        public static $inject = ["$scope", "$ionicModal", "Utilities", "Preferences"];
+        public static $inject = ["$scope", "Utilities", "Preferences"];
 
-        private $ionicModal: any;
         private Utilities: Services.Utilities;
         private Preferences: Services.Preferences;
 
         private modalInstance: any;
 
-        constructor($scope: ng.IScope, $ionicModal: any, Utilities: Services.Utilities, Preferences: Services.Preferences) {
+        constructor($scope: ng.IScope, Utilities: Services.Utilities, Preferences: Services.Preferences) {
             super($scope, ViewModels.PinEntryViewModel);
 
-            this.$ionicModal = $ionicModal;
             this.Utilities = Utilities;
             this.Preferences = Preferences;
 

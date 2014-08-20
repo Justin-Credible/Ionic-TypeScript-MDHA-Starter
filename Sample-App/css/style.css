@@ -1,11 +1,4 @@
 ﻿
-/** Global Body Styles ***************************************************************************/
-
-body {
-	/* This changes the default cursor to feel more like a touch when using the Ripple emulator. */
-	cursor: url('../images/touch-cursor.png'), auto;
-}
-
 /** Global Shared Styles *************************************************************************/
 
 /* Custom styling for the back navigation button to make it look like other buttons. */

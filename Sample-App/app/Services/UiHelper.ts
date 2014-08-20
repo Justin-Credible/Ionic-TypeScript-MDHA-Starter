@@ -32,6 +32,36 @@
         //#region Native Dialogs
 
         /**
+         * Shows a native alert dialog with an OK button and "Alert" as the title.
+         * 
+         * @param message The message text to display.
+         * 
+         * @returns A promise of void which will be resolved when the alert is closed.
+         */
+        public alert(message: string): ng.IPromise<void>;
+
+        /**
+         * Shows a native alert dialog with an OK button.
+         * 
+         * @param message The message text to display.
+         * @param title The title of the dialog, defaults to "Alert".
+         * 
+         * @returns A promise of void which will be resolved when the alert is closed.
+         */
+        public alert(message: string, title: string): ng.IPromise<void>;
+
+        /**
+         * Shows a native alert dialog.
+         * 
+         * @param message The message text to display.
+         * @param title The title of the dialog, defaults to "Alert".
+         * @param buttonName The label for the button, defaults to "OK".
+         * 
+         * @returns A promise of void which will be resolved when the alert is closed.
+         */
+        public alert(message: string, title: string, buttonName: string): ng.IPromise<void>;
+
+        /**
          * Shows a native alert dialog.
          * 
          * @param message The message text to display.
@@ -44,17 +74,53 @@
             var q = this.$q.defer<void>(),
                 alertCallback: () => void;
 
+            // Default the title.
+            title = title || "Alert";
+
+            // Default the button name.
+            buttonName = buttonName || "OK";
+
             navigator.notification.alert(message, alertCallback, title, buttonName);
 
             return q.promise;
         }
 
         /**
+         * Displays a native confirm dialog with "Yes" and "No" buttons and "Confirm" as the title.
+         * 
+         * @param message The message text to display.
+         * 
+         * @returns A promise of type string which will be resolved when the confirm is closed with the button that was clicked.
+         */
+        public confirm(message: string): ng.IPromise<string>;
+
+        /**
+         * Displays a native confirm dialog with "Yes" and "No" buttons.
+         * 
+         * @param message The message text to display.
+         * @param title The title of the dialog, defaults to "Confirm".
+         * 
+         * @returns A promise of type string which will be resolved when the confirm is closed with the button that was clicked.
+         */
+        public confirm(message: string, title: string): ng.IPromise<string>;
+
+        /**
          * Displays a native confirm dialog.
          * 
          * @param message The message text to display.
          * @param title The title of the dialog, defaults to "Confirm".
-         * @param buttonLabels An array of strings for specifying button labels, defaults to "OK" and "Cancel".
+         * @param buttonLabels An array of strings for specifying button labels, defaults to "Yes" and "No".
+         * 
+         * @returns A promise of type string which will be resolved when the confirm is closed with the button that was clicked.
+         */
+        public confirm(message: string, title: string, buttonLabels: string[]): ng.IPromise<string>;
+
+        /**
+         * Displays a native confirm dialog.
+         * 
+         * @param message The message text to display.
+         * @param title The title of the dialog, defaults to "Confirm".
+         * @param buttonLabels An array of strings for specifying button labels, defaults to "Yes" and "No".
          * 
          * @returns A promise of type string which will be resolved when the confirm is closed with the button that was clicked.
          */
@@ -62,8 +128,11 @@
             var q = this.$q.defer<string>(),
                 callback: (choice: number) => void;
 
+            // Default the title.
+            title = title || "Confirm";
+
             // Default the buttons array.
-            buttonLabels = buttonLabels || ["OK", "Cancel"];
+            buttonLabels = buttonLabels || ["Yes", "No"];
 
             // Define the callback that is executed when the dialog is closed.
             callback = (choice: number): void => {
@@ -84,6 +153,48 @@
         }
 
         /**
+         * Shows a native prompt dialog with "OK" and "Cancel" buttons with "Prompt" as the title.
+         * 
+         * @param message The message text to display.
+         * 
+         * @returns A promise of key/value pair of strings; the key is the button that was clicked and the value is the value of the text box.
+         */
+        public prompt(message: string): ng.IPromise<Models.KeyValuePair<string, string>>;
+
+        /**
+         * Shows a native prompt dialog with "OK" and "Cancel" buttons.
+         * 
+         * @param message The message text to display.
+         * @param title The title of the dialog, defaults to "Prompt".
+         * 
+         * @returns A promise of key/value pair of strings; the key is the button that was clicked and the value is the value of the text box.
+         */
+        public prompt(message: string, title: string): ng.IPromise<Models.KeyValuePair<string, string>>;
+
+        /**
+         * Shows a native prompt dialog.
+         * 
+         * @param message The message text to display.
+         * @param title The title of the dialog, defaults to "Prompt".
+         * @param buttonLabels An array of strings for specifying button labels, defaults to "OK" and "Cancel".
+         * 
+         * @returns A promise of key/value pair of strings; the key is the button that was clicked and the value is the value of the text box.
+         */
+        public prompt(message: string, title: string, buttonLabels: string[]): ng.IPromise<Models.KeyValuePair<string, string>>;
+
+        /**
+         * Shows a native prompt dialog.
+         * 
+         * @param message The message text to display.
+         * @param title The title of the dialog, defaults to "Prompt".
+         * @param buttonLabels An array of strings for specifying button labels, defaults to "OK" and "Cancel".
+         * @param defaultText Default text box input value, default is an empty string.
+         * 
+         * @returns A promise of key/value pair of strings; the key is the button that was clicked and the value is the value of the text box.
+         */
+        public prompt(message: string, title: string, buttonLabels: string[], defaultText: string): ng.IPromise<Models.KeyValuePair<string, string>>;
+
+        /**
          * Shows a native prompt dialog.
          * 
          * @param message The message text to display.
@@ -96,6 +207,9 @@
         public prompt(message: string, title?: string, buttonLabels?: string[], defaultText?: string): ng.IPromise<Models.KeyValuePair<string, string>> {
             var q = this.$q.defer<Models.KeyValuePair<string, string>>(),
                 callback: (result: NotificationPromptResult) => void;
+
+            // Default the title
+            title = title || "Prompt";
 
             // Default the buttons array.
             buttonLabels = buttonLabels || ["OK", "Cancel"];

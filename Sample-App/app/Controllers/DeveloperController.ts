@@ -40,13 +40,13 @@
         private alertFileIoError(error: any) {
             if (error) {
                 if (error.code) {
-                    alert(error.code);
+                    this.UiHelper.alert(error.code);
                 }
                 else if (error.message) {
-                    alert(error.message);
+                    this.UiHelper.alert(error.message);
                 }
                 else {
-                    alert(error);
+                    this.UiHelper.alert(error);
                 }
             }
         }
@@ -62,7 +62,7 @@
 
             message = "The application needs to be reloaded for changes to take effect. Reload now?";
 
-            this.UiHelper.confirm(message, "Confirm Reload", ["Yes", "No"]).then((result: string) => {
+            this.UiHelper.confirm(message, "Confirm Reload").then((result: string) => {
                 if (result === "Yes") {
                     document.location.href = "index.html";
                 }
@@ -75,7 +75,7 @@
             message = "Enable exception logging to local storage? Current setting is " + this.Logger.getLogToLocalStorage();
 
             this.UiHelper.confirm(message).then((result: string) => {
-                var enable = result === "OK";
+                var enable = result === "Yes";
 
                 this.viewModel.loggingToLocalStorage = enable + "";
                 this.Logger.setLogToLocalStorage(enable);
@@ -95,7 +95,7 @@
             message = "Enable logging of all HTTP requests (even non-errors)? Current setting is " + this.Preferences.enableFullHttpLogging;
 
             this.UiHelper.confirm(message).then((result: string) => {
-                var enable = result === "OK";
+                var enable = result === "Yes";
 
                 this.Preferences.enableFullHttpLogging = enable;
 

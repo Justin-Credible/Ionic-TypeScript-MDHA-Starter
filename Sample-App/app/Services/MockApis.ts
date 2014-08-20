@@ -223,7 +223,7 @@
         }
 
         private clipboard_paste() {
-            return prompt("A paste from clipboard was requested; enter test for the paste operation:");
+            return prompt("A paste from clipboard was requested; enter text for the paste operation:");
         }
 
         //#endregion
@@ -232,6 +232,9 @@
 
         private notification_alert(message: string, alertCallback: () => void, title?: string, buttonName?: string): void {
             var buttons = [];
+
+            // Default the title.
+            title = title || "Alert";
 
             // Default the button label text.
             buttonName = buttonName || "OK";
@@ -250,8 +253,11 @@
         private notification_confirm(message: string, confirmCallback: (choice: number) => void, title?: string, buttonLabels?: string[]): void {
             var buttons = [];
 
+            // Default the title.
+            title = title || "Confirm";
+
             // Default the buttons array.
-            buttonLabels = buttonLabels || ["OK", "Cancel"];
+            buttonLabels = buttonLabels || ["Yes", "No"];
 
             // Build each of the buttons.
             buttonLabels.forEach((value: string, index: number) => {
@@ -275,6 +281,9 @@
         private notification_prompt(message: string, promptCallback: (result: NotificationPromptResult) => void, title?: string, buttonLabels?: string[], defaultText?: string): void {
             var buttons = [],
                 template = this.Utilities.format("<p>{0}</p><input type='text' id='notification_prompt_input'/>", message);
+
+            // Default the title.
+            title = title || "Prompt";
 
             // Default the buttons array.
             buttonLabels = buttonLabels || ["OK", "Cancel"];

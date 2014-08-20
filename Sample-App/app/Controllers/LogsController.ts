@@ -6,20 +6,18 @@
 
     export class LogsController extends BaseController<ViewModels.LogsViewModel> implements ILogsController {
 
-        public static $inject = ["$scope", "Logger", "Utilities", "$ionicActionSheet"];
+        public static $inject = ["$scope", "Logger", "Utilities", "UiHelper"];
 
         private Logger: Services.Logger;
         private Utilities: Services.Utilities;
-        private $ionicActionSheet: any;
-        private $ionicPopup: any;
+        private UiHelper: Services.UiHelper;
 
-        constructor($scope: ng.IScope, Logger: Services.Logger, Utilities: Services.Utilities, $ionicActionSheet: any, $ionicPopup: any) {
+        constructor($scope: ng.IScope, Logger: Services.Logger, Utilities: Services.Utilities, UiHelper: Services.UiHelper) {
             super($scope, ViewModels.LogsViewModel);
 
             this.Logger = Logger;
             this.Utilities = Utilities;
-            this.$ionicActionSheet = $ionicActionSheet;
-            this.$ionicPopup = $ionicPopup;
+            this.UiHelper = UiHelper;
 
             this.setupViewModel();
         }
@@ -89,10 +87,7 @@
         }
 
         private getLogs_failure(error: Error): void {
-            this.$ionicPopup.alert({
-                title: "Error",
-                template: "An error occurred while retrieving log files: " + error.message
-            });
+            window.plugins.toast.showShortBottom("An error occurred while retrieving the logs.");
         }
 
         private deleteActionSheet_destructiveButtonClicked(buttonIndex: number) {
@@ -106,11 +101,11 @@
         //#region Controller Methods
 
         public clearLogs() {
-            this.$ionicActionSheet.show({
-                titleText: "Are you sure you want to delete the logs?",
-                cancelText: "Cancel",
-                destructiveText: "Delete",
-                destructiveButtonClicked: _.bind(this.deleteActionSheet_destructiveButtonClicked, this)
+            this.UiHelper.confirm("Are you sure you want to delete the logs?", "Delete Logs").then((result: string) => {
+                if (result === "Yes") {
+                    this.Logger.clearLogs();
+                    this.viewModel.logs = {};
+                }
             });
         }
 

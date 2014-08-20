@@ -116,6 +116,7 @@
     <Content Include="css\nprogress-overrides.css" />
     <Content Include="images\about-icon.png" />
     <Content Include="images\placeholder.png" />
+    <Content Include="images\touch-cursor-hover.png" />
     <Content Include="lib\angular-mocks.js" />
     <Content Include="lib\lodash.js" />
     <Content Include="lib\lodash.min.js" />

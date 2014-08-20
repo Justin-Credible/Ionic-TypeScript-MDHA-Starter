@@ -120,12 +120,12 @@ module JustinCredible.SampleApp.Application {
     /**
      * The main initialize/run function for Angular; fired once the AngularJs framework is done loading.
      */
-    function angular_initialize($rootScope: ng.IScope, $ionicPlatform: Ionic.IPlatform, $ionicPopup: any, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences, MockApis: Services.MockApis): void {
+    function angular_initialize($rootScope: ng.IScope, $ionicPlatform: Ionic.IPlatform, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences, MockApis: Services.MockApis): void {
 
         // Once AngularJs has loaded we'll wait for the Ionic platform's ready event.
         // This event will be fired once the device ready event fires via Cordova.
         $ionicPlatform.ready(function () {
-            ionicPlatform_ready($rootScope, $ionicPlatform, $ionicPopup, UiHelper, Preferences);
+            ionicPlatform_ready($rootScope, $ionicPlatform, UiHelper, Preferences);
         });
 
         // Mock up APIs for the various platforms. This allows us to "polyfill" functionality
@@ -136,7 +136,7 @@ module JustinCredible.SampleApp.Application {
 
             // If we are in the Ripple emulator, Cordova will never fire it's ready event which
             // means Ionic will never fire it's platform ready. We'll do it here manually.
-            ionicPlatform_ready($rootScope, $ionicPlatform, $ionicPopup, UiHelper, Preferences);
+            ionicPlatform_ready($rootScope, $ionicPlatform, UiHelper, Preferences);
         }
 
         if (Utilities.isAndroid) {
@@ -153,7 +153,7 @@ module JustinCredible.SampleApp.Application {
      * Note that this will not fire in the Ripple emulator because it relies
      * on the Codrova device ready event.
      */
-    function ionicPlatform_ready($rootScope: ng.IScope, $ionicPlatform: Ionic.IPlatform, $ionicPopup: any, UiHelper: Services.UiHelper, Preferences: Services.Preferences): void {
+    function ionicPlatform_ready($rootScope: ng.IScope, $ionicPlatform: Ionic.IPlatform, UiHelper: Services.UiHelper, Preferences: Services.Preferences): void {
 
         // This makes the status bar not overlay the webview, but unfortunately
         // doesn't free up the tall space on top of the ionic header element.
