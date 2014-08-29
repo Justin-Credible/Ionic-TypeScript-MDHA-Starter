@@ -9,9 +9,9 @@
 
     var apisToIgnore,
         originalBridgeExecFn,
-        isDebuggingInRipple;
+        isRunningInRipple;
 
-    isDebuggingInRipple = buildVars.debug && window.top && window.top.ripple;
+    isRunningInRipple = window.top && window.top.ripple;
 
     /**
      * These are the APIs for the services that we want to ignore (eg suppress the "cheeseburger"
@@ -23,7 +23,7 @@
     };
 
 
-    if (isDebuggingInRipple) {
+    if (isRunningInRipple) {
 
         // Save off a reference to the Ripple's original bridge function.
         originalBridgeExecFn = window.top.ripple("platform/cordova/2.0.0/bridge").exec;

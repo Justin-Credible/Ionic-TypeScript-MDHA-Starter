@@ -9,7 +9,7 @@
         <ion-list class="card">
 
             <ion-item class="item-avatar">
-                <img src="images/about-icon.png">
+                <img src="images/about-icon.png" ng-click="controller.logo_click()">
                 <h2>{{viewModel.applicationName}}</h2>
                 <p>Version: {{viewModel.versionString}}</p>
                 <p>Built: {{viewModel.timestamp}}</p>

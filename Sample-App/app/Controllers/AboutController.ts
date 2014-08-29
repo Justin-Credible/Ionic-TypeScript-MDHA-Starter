@@ -30,7 +30,7 @@
 
         //#region Controller Methods
 
-        public titleBar_click() {
+        public logo_click() {
 
             if (this.Preferences.enableDeveloperTools) {
                 return;

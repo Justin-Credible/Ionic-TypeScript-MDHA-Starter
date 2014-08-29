@@ -5,6 +5,15 @@
     */
     export class UiHelper {
 
+        public static PIN_ENTRY_DIALOG_ID = "PIN_ENTRY_DIALOG";
+        public static REORDER_DIALOG_ID = "REORDER_DIALOG";
+
+        /**
+         * Value for rejection of a promise for singleton dialogs when the
+         * dialog that was requested to open is already open.
+         */
+        public static DIALOG_ALREADY_OPEN = "DIALOG_ALREADY_OPEN";
+
         public static $inject = ["$rootScope", "$q", "$http", "$ionicModal", "Utilities", "Preferences"];
 
         private $rootScope: ng.IRootScopeService;
@@ -15,7 +24,7 @@
         private Preferences: Services.Preferences;
 
         private isPinEntryOpen = false;
-        private isLoginOpen = false;
+        private isReorderOpen = false;
 
         constructor($rootScope: ng.IRootScopeService, $q: ng.IQService, $http: ng.IHttpService, $ionicModal: any, Utilities: Services.Utilities, Preferences: Services.Preferences) {
             this.$rootScope = $rootScope;
@@ -24,9 +33,6 @@
             this.$ionicModal = $ionicModal;
             this.Utilities = Utilities;
             this.Preferences = Preferences;
-
-            this.isPinEntryOpen = false;
-            this.isLoginOpen = false;
         }
 
         //#region Native Dialogs
@@ -262,9 +268,12 @@
             // If the dialog is already open, then we don't want to open another.
             // In this case, we explicitly reject the promise.
             if (this.isPinEntryOpen) {
-                q.reject("ALREADY_OPEN");
+                q.reject(UiHelper.DIALOG_ALREADY_OPEN);
                 return q.promise;
             }
+
+            // Set the flag so we know not to try to open multiple instances of this dialog.
+            this.isPinEntryOpen = true;
 
             // Create the modal dialog.
             creationPromise = this.$ionicModal.fromTemplateUrl("templates/PinEntry.html", {
@@ -278,9 +287,11 @@
             // Once it has been created then...
             creationPromise.then((modal: any) => {
 
-                // ... show the dialog.
+                // Tag this dialog so we can identify it.
+                modal.scope.dialogId = UiHelper.PIN_ENTRY_DIALOG_ID;
+
+                // Show the dialog.
                 modal.show();
-                this.isPinEntryOpen = true;
 
                 if (hideBackground) {
                     // HACK: Here we adjust the background color's alpha value so the user can't
@@ -291,7 +302,12 @@
                 }
 
                 // Subscribe to the close event.
-                modal.scope.$on("modal.hidden", () => {
+                modal.scope.$on("modal.hidden", (eventArgs: ng.IAngularEvent, instance: any) => {
+
+                    // Only handle events for the PIN entry dialog.
+                    if (instance.scope.dialogId !== UiHelper.PIN_ENTRY_DIALOG_ID) {
+                        return;
+                    }
 
                     if (hideBackground) {
                         // HACK: Restore the backdrop's background color value.
@@ -319,6 +335,16 @@
             var q = this.$q.defer<void>(),
                 creationPromise: ng.IPromise<void>;
 
+            // If the dialog is already open, then we don't want to open another.
+            // In this case, we explicitly reject the promise.
+            if (this.isReorderOpen) {
+                q.reject(UiHelper.DIALOG_ALREADY_OPEN);
+                return q.promise;
+            }
+
+            // Set the flag so we know not to try to open multiple instances of this dialog.
+            this.isReorderOpen = true;
+
             // Create the modal dialog.
             creationPromise = this.$ionicModal.fromTemplateUrl("templates/ReorderCategories.html", {
                 backdropClickToClose: true,
@@ -328,11 +354,21 @@
             // Once it has been created then...
             creationPromise.then((modal: any) => {
 
-                // ... show the dialog.
+                // Tag this dialog so we can identify it.
+                modal.scope.dialogId = UiHelper.REORDER_DIALOG_ID;
+
+                // Show the dialog.
                 modal.show();
 
                 // Subscribe to the close event.
-                modal.scope.$on("modal.hidden", () => {
+                modal.scope.$on("modal.hidden", (eventArgs: ng.IAngularEvent, instance: any) => {
+
+                    // Only handle events for the re-order dialog.
+                    if (instance.scope.dialogId !== UiHelper.REORDER_DIALOG_ID) {
+                        return;
+                    }
+
+                    this.isReorderOpen = false;
 
                     // Once the dialog is closed, resolve the original promise.
                     q.resolve();

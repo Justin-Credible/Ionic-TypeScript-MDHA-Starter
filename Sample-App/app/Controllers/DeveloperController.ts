@@ -112,9 +112,12 @@
             /*tslint:disable no-string-literals*/
             window["__FileUtilities"] = this.FileUtilities;
             window["__Logger"] = this.Logger;
+            window["__Utilities"] = this.Utilities;
+            window["__UiHelper"] = this.UiHelper;
+            window["__Preferences"] = this.Preferences;
             /*tslint:enable no-string-literals*/
 
-            this.UiHelper.alert("Added __FileUtilities and __Logger to window.");
+            this.UiHelper.alert("Added the following services to the global window scope: __FileUtilities, __Logger, __Utilities, __UiHelper, __Preferences");
         }
 
         public setRequirePinThreshold_click() {
@@ -137,6 +140,16 @@
 
                 this.UiHelper.alert(this.Utilities.format("PIN prompt threshold is now set to {0} minutes.", result.value));
             });
+        }
+
+        public resetPinTimeout_click() {
+            var message: string;
+
+            this.Preferences.lastPausedAt = moment("01-01-2000", "MM-DD-yyyy");
+
+            message = "The PIN timeout has been set to more than 10 minutes ago. To see the PIN screen, terminate the application via the OS task manager (don't just background it), and then re-launch.";
+
+            this.UiHelper.alert(message, "Reset PIN Timeout");
         }
 
         public testJsException_click() {

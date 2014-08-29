@@ -51,11 +51,23 @@
 
             // First, we need to ensure the log directory is available.
             this.FileUtilities.createDirectory("/logs").then(() => {
-                var logFileName: string;
+                var logFileName: string,
+                    json: string;
 
                 logFileName = this.Utilities.format("/logs/{0}.log", moment(logEntry.timestamp).format("YYYY-MM-DD_hh-mm-ss-SSS-a"));
 
-                this.FileUtilities.writeTextFile(logFileName, JSON.stringify(logEntry)).then(() => {
+                try {
+                    json = JSON.stringify(logEntry);
+                }
+                catch (exception) {
+                    // If for some reason we couldn't stringify the log entry (circular reference perhaps?)
+                    // then we'll just emit the log entry and error to the console.
+                    console.error("Unable to stringify the log entry.", logEntry, exception);
+                    q.resolve();
+                    return;
+                }
+
+                this.FileUtilities.writeTextFile(logFileName, json).then(() => {
 
                     q.resolve();
 
