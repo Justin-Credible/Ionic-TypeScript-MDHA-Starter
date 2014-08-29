@@ -29,6 +29,12 @@
         //#region Event Handlers
 
         private modal_shown(ngEvent: ng.IAngularEvent, instance: any) {
+
+            // Only respond to modal.shown events for the re-order dashboards dialog.
+            if (instance.dialogId !== Services.UiHelper.REORDER_DIALOG_ID) {
+                return;
+            }
+
             this.modalInstance = instance;
         }
 

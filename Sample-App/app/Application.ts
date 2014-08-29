@@ -61,7 +61,7 @@ module JustinCredible.SampleApp.Application {
 
         // Define each of the controllers.
         ngModule.controller("MenuController", Controllers.MenuController);
-        ngModule.controller("SettingsController", Controllers.SettingsController);
+        ngModule.controller("SettingsListController", Controllers.SettingsListController);
         ngModule.controller("ReorderCategoriesController", Controllers.ReorderCategoriesController);
         ngModule.controller("LogsController", Controllers.LogsController);
         ngModule.controller("LogEntryController", Controllers.LogEntryController);
@@ -205,6 +205,7 @@ module JustinCredible.SampleApp.Application {
      * This maps routes to the controller/view that should be used.
      */
     function setupAngularRoutes($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider) {
+
         // Setup an abstract state for the tabs directive.
         $stateProvider.state("app", {
             url: "/app",
@@ -213,8 +214,7 @@ module JustinCredible.SampleApp.Application {
             controller: "MenuController"
         });
 
-        // Define each of the states for each of the tabs; each tab has its own navigation history stack.
-
+        // An empty/blank view useful as a place holder etc.
         $stateProvider.state("app.empty", {
             url: "/empty",
             views: {
@@ -224,65 +224,70 @@ module JustinCredible.SampleApp.Application {
             }
         });
 
-        $stateProvider.state("app.settings", {
-            url: "/settings",
+        //#region Settings
+
+        $stateProvider.state("app.settings-list", {
+            url: "/settings/list",
             views: {
                 "menuContent": {
-                    templateUrl: "templates/Settings.html",
-                    controller: "SettingsController"
+                    templateUrl: "templates/Settings/Settings-List.html",
+                    controller: "SettingsListController"
                 }
             }
         });
 
         $stateProvider.state("app.configure-pin", {
-            url: "/configure-pin",
+            url: "/settings/configure-pin",
             views: {
                 "menuContent": {
-                    templateUrl: "templates/ConfigurePin.html",
+                    templateUrl: "templates/Settings/Configure-Pin.html",
                     controller: "ConfigurePinController"
                 }
             }
         });
 
         $stateProvider.state("app.developer", {
-            url: "/developer",
+            url: "/settings/developer",
             views: {
                 "menuContent": {
-                    templateUrl: "templates/Developer.html",
+                    templateUrl: "templates/Settings/Developer.html",
                     controller: "DeveloperController"
                 }
             }
         });
 
         $stateProvider.state("app.logs", {
-            url: "/logs",
+            url: "/settings/logs",
             views: {
                 "menuContent": {
-                    templateUrl: "templates/Logs.html",
+                    templateUrl: "templates/Settings/Logs.html",
                     controller: "LogsController"
                 }
             }
         });
 
-        $stateProvider.state("app.logEntry", {
-            url: "/logEntry/:id",
+        $stateProvider.state("app.log-entry", {
+            url: "/settings/logEntry/:id",
             views: {
                 "menuContent": {
-                    templateUrl: "templates/LogEntry.html",
+                    templateUrl: "templates/Settings/Log-Entry.html",
                     controller: "LogEntryController"
                 }
             }
         });
 
         $stateProvider.state("app.about", {
-            url: "/about",
+            url: "/settings/about",
             views: {
                 "menuContent": {
-                    templateUrl: "templates/About.html",
+                    templateUrl: "templates/Settings/About.html",
                     controller: "AboutController"
                 }
             }
         });
+
+        //#endregion
+
 
         // If none of the above states are matched, use the empty route.
         $urlRouterProvider.otherwise("/app/empty");

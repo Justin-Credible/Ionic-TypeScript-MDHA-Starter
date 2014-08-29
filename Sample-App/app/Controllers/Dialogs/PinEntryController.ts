@@ -27,6 +27,12 @@
         //#region Event Handlers
 
         private modal_shown(ngEvent: ng.IAngularEvent, instance: any) {
+
+            // Only respond to modal.shown events for the PIN Entry dialog.
+            if (instance.dialogId !== Services.UiHelper.PIN_ENTRY_DIALOG_ID) {
+                return;
+            }
+
             this.modalInstance = instance;
 
             this.viewModel.pin = instance.pin == null ? "" : instance.pin;

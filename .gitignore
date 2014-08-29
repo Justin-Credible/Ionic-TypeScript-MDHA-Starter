@@ -4,10 +4,8 @@ Sample-App/bin
 Sample-App/bld
 
 # Generated TypeScript artifacts
-Sample-App/app/*.js
-Sample-App/app/*.js.map
-Sample-App/app/*/*.js
-Sample-App/app/*/*.js.map
+Sample-App/app/**/*.js
+Sample-App/app/**/*.js.map
 
 # Local nu-get packages
 packages/*/

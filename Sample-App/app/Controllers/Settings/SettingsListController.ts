@@ -1,10 +1,10 @@
 ﻿module JustinCredible.SampleApp.Controllers {
 
     export interface ISettingsController {
-        viewModel: ViewModels.SettingsViewModel;
+        viewModel: ViewModels.SettingsListViewModel;
     }
 
-    export class SettingsController extends BaseController<ViewModels.SettingsViewModel> implements ISettingsController {
+    export class SettingsListController extends BaseController<ViewModels.SettingsListViewModel> implements ISettingsController {
 
         public static $inject = ["$scope", "Utilities", "Preferences"];
 
@@ -12,7 +12,7 @@
         private Preferences: Services.Preferences;
 
         constructor($scope: ng.IScope, Utilities: Services.Utilities, Preferences: Services.Preferences) {
-            super($scope, ViewModels.SettingsViewModel);
+            super($scope, ViewModels.SettingsListViewModel);
 
             this.Utilities = Utilities;
             this.Preferences = Preferences;

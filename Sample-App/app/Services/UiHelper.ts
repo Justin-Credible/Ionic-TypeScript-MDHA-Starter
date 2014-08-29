@@ -276,12 +276,13 @@
             this.isPinEntryOpen = true;
 
             // Create the modal dialog.
-            creationPromise = this.$ionicModal.fromTemplateUrl("templates/PinEntry.html", {
+            creationPromise = this.$ionicModal.fromTemplateUrl("templates/Dialogs/Pin-Entry.html", {
                 backdropClickToClose: false,
                 hardwareBackButtonClose: false,
                 showBackButton: showBackButton,
                 pinToMatch: pinToMatch,
-                promptText: promptText
+                promptText: promptText,
+                dialogId: UiHelper.PIN_ENTRY_DIALOG_ID
             });
 
             // Once it has been created then...
@@ -305,7 +306,7 @@
                 modal.scope.$on("modal.hidden", (eventArgs: ng.IAngularEvent, instance: any) => {
 
                     // Only handle events for the PIN entry dialog.
-                    if (instance.scope.dialogId !== UiHelper.PIN_ENTRY_DIALOG_ID) {
+                    if (instance.dialogId !== UiHelper.PIN_ENTRY_DIALOG_ID) {
                         return;
                     }
 
@@ -346,16 +347,14 @@
             this.isReorderOpen = true;
 
             // Create the modal dialog.
-            creationPromise = this.$ionicModal.fromTemplateUrl("templates/ReorderCategories.html", {
+            creationPromise = this.$ionicModal.fromTemplateUrl("templates/Dialogs/Reorder-Categories.html", {
                 backdropClickToClose: true,
-                hardwareBackButtonClose: true
+                hardwareBackButtonClose: true,
+                dialogId: UiHelper.REORDER_DIALOG_ID
             });
 
             // Once it has been created then...
             creationPromise.then((modal: any) => {
-
-                // Tag this dialog so we can identify it.
-                modal.scope.dialogId = UiHelper.REORDER_DIALOG_ID;
 
                 // Show the dialog.
                 modal.show();
@@ -364,7 +363,7 @@
                 modal.scope.$on("modal.hidden", (eventArgs: ng.IAngularEvent, instance: any) => {
 
                     // Only handle events for the re-order dialog.
-                    if (instance.scope.dialogId !== UiHelper.REORDER_DIALOG_ID) {
+                    if (instance.dialogId !== UiHelper.REORDER_DIALOG_ID) {
                         return;
                     }
 
