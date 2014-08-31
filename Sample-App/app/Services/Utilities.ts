@@ -25,10 +25,10 @@
 
             // Define the default set of categories.
             var categories = [
-                new ViewModels.CategoryItemViewModel("Category 1", "#/app/category-1", "ios7-pricetags-outline", 0),
-                new ViewModels.CategoryItemViewModel("Category 2", "#/app/category-2", "ios7-pricetags-outline", 1),
-                new ViewModels.CategoryItemViewModel("Category 3", "#/app/category-3", "ios7-pricetags-outline", 2),
-                new ViewModels.CategoryItemViewModel("Category 4", "#/app/category-4", "ios7-pricetags-outline", 3)
+                new ViewModels.CategoryItemViewModel("Category 1", "#/app/category/1", "ios7-pricetags-outline", 0),
+                new ViewModels.CategoryItemViewModel("Category 2", "#/app/category/2", "ios7-pricetags-outline", 1),
+                new ViewModels.CategoryItemViewModel("Category 3", "#/app/category/3", "ios7-pricetags-outline", 2),
+                new ViewModels.CategoryItemViewModel("Category 4", "#/app/category/4", "ios7-pricetags-outline", 3)
             ];
 
             // If the user has ordering preferences, then apply their custom ordering.

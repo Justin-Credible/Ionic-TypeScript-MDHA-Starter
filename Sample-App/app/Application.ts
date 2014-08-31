@@ -57,18 +57,23 @@ module JustinCredible.SampleApp.Application {
         ngModule.service("UiHelper", Services.UiHelper);
 
         // Define each of the directives.
-        //ngModule.directive("chart", getDirectiveFactoryFunction(Directives.ChartDirective));
+        ngModule.directive("iconPanel", getDirectiveFactoryFunction(Directives.IconPanelDirective));
+
+        // Define each of the filters.
+        ngModule.filter("Thousands", getFilterFactoryFunction(Filters.ThousandsFilter.filter));
 
         // Define each of the controllers.
         ngModule.controller("MenuController", Controllers.MenuController);
-        ngModule.controller("SettingsListController", Controllers.SettingsListController);
+        ngModule.controller("CategoryController", Controllers.CategoryController);
         ngModule.controller("ReorderCategoriesController", Controllers.ReorderCategoriesController);
+        ngModule.controller("PinEntryController", Controllers.PinEntryController);
+        ngModule.controller("SettingsListController", Controllers.SettingsListController);
         ngModule.controller("LogsController", Controllers.LogsController);
         ngModule.controller("LogEntryController", Controllers.LogEntryController);
         ngModule.controller("DeveloperController", Controllers.DeveloperController);
         ngModule.controller("AboutController", Controllers.AboutController);
-        ngModule.controller("PinEntryController", Controllers.PinEntryController);
         ngModule.controller("ConfigurePinController", Controllers.ConfigurePinController);
+        ngModule.controller("CloudSyncController", Controllers.CloudSyncController);
 
         // Specify the initialize/run and configuration functions.
         ngModule.run(angular_initialize);
@@ -111,6 +116,15 @@ module JustinCredible.SampleApp.Application {
 
         // Finally, return a function that returns this Angular directive descriptor object.
         return function () { return descriptor; };
+    }
+
+    /**
+     * Used to create a function that returns a function for use by a filter.
+     * 
+     * @param fn The function that will provide the filter's logic.
+     */
+    function getFilterFactoryFunction(fn: Function): () => Function {
+        return function () { return fn; };
     }
 
     //#endregion
@@ -224,6 +238,17 @@ module JustinCredible.SampleApp.Application {
             }
         });
 
+        // A shared view used between categories, assigned a number via the route URL (categoryNumber).
+        $stateProvider.state("app.category", {
+            url: "/category/:categoryNumber",
+            views: {
+                "menuContent": {
+                    templateUrl: "templates/Category.html",
+                    controller: "CategoryController"
+                }
+            }
+        });
+
         //#region Settings
 
         $stateProvider.state("app.settings-list", {
@@ -232,6 +257,16 @@ module JustinCredible.SampleApp.Application {
                 "menuContent": {
                     templateUrl: "templates/Settings/Settings-List.html",
                     controller: "SettingsListController"
+                }
+            }
+        });
+
+        $stateProvider.state("app.cloud-sync", {
+            url: "/settings/cloud-sync",
+            views: {
+                "menuContent": {
+                    templateUrl: "templates/Settings/Cloud-Sync.html",
+                    controller: "CloudSyncController"
                 }
             }
         });

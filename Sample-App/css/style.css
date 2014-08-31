@@ -112,3 +112,15 @@
 .pin-entry-numpad button {
 	font-size: 28pt;
 }
+
+/** Icon Panel Directive *************************************************************************/
+
+.icon-panel {
+	padding-top: 75px;
+	text-align: center;
+}
+
+.icon-panel .icon-container {
+	text-align: center;
+	font-size: 120pt;
+}

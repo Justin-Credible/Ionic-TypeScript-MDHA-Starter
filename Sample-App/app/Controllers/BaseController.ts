@@ -31,6 +31,30 @@
             this.scope["controller"] = this;
 
             /*tslint:enable no-string-literals*/
+
+            // Subscribe to the destroy event so we can perform clean-up etc.
+            this.scope.$on("$destroy", _.bind(this.destroy, this));
+
+            // Now that everything else is done, we can initialize.
+            // We defer here so that the initialize event occurs after the constructor
+            // of the child class has had a chance to execute.
+            _.defer(() => { this.initialize(); });
+        }
+
+        /**
+         * Fired after the constructor has completed. Used to setup the controller.
+         * 
+         * Can be overridden by implementing controllers.
+         */
+        public initialize() {
+        }
+
+        /**
+         * Fired when this controller is destroyed. Can be used for clean-up etc.
+         * 
+         * Can be overridden by implementing controllers.
+         */
+        public destroy() {
         }
     }
 }
