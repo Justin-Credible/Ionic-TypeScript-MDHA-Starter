@@ -180,13 +180,13 @@ Injection for controllers is done by setting a public static variable named `$in
 	}
 
 
-### Utilities Service ###
+### Utilities ###
 
 The `Utilities.ts` file defines a `Utilities` service which provides several convenience methods for checking the device version, build mode (debug vs release), application version numbers.
 
 It also includes helpers for manipulating strings (startsWith, endsWith, format), creating GUIDs, and working with the clipboard.
 
-### UiHelper ###
+### UI Helper ###
 
 The `UiHelper.ts` file defines a `UiHelper` service which provides several methods for working with the UI.
 
@@ -195,6 +195,14 @@ Any accessors for native plug-ins will be exposed here (eg toast and progress in
 It also provides helpers to show native dialogs via alert/prompt/confirm when running on a device, or via `$ionicPopup` when running in Ripple.
 
 Finally, it provides a `showDialog` helper for working with dialogs.
+
+### File Utilities ###
+
+Cordova's file system API required a few too many callbacks to do simple file I/O, so I created a bunch of helper methods in `FileUtilities.ts`. There are helps to list files and directories, as well as create, delete, and append to files, among others.
+
+### Responsive Design ###
+
+The `devices.css` stylesheet includes several classes that make it easy to hide or show elements based on the device orientation or screen size. For example, `landscape` and `portrait` as well as more specific classes such as `phone-landscape` or `tablet-portrait`.
 
 ### Dialogs ###
 
