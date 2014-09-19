@@ -275,60 +275,60 @@
         }
 
         /**
-         * Used to obtain a function from the window scope using the dotted notation property string.
+         * Used to obtain a function from the window object using the dotted notation property string.
          * 
-         * @param propertyString The dotted notation property string used to obtain the function reference from the scope.
+         * @param propertyString The dotted notation property string used to obtain the function reference from the window object.
          */
         public getFunction(propertyString: string): () => any;
 
         /**
-         * Used to obtain a function from the given scope using the dotted notation property string.
+         * Used to obtain a function from the given object using the dotted notation property string.
          * 
-         * @param scope The scope to being the search at.
-         * @param propertyString The dotted notation property string used to obtain the function reference from the scope.
+         * @param obj The object to being the search at.
+         * @param propertyString The dotted notation property string used to obtain the function reference from the object.
          */
-        public getFunction(scope: any, propertyString: string): () => any;
+        public getFunction(obj: any, propertyString: string): () => any;
 
         /**
-         * Used to obtain a function from the given scope using the dotted notation property string.
+         * Used to obtain a function from the given object using the dotted notation property string.
          * 
          * If inferContext is true, then the method will attempt to determine which context the function should be executed in.
          * For example, given the string "something.else.theFunction" where "theFunction" is a function reference, the context
-         * would be "somethin.else". In this case the function returned will be wrapped in a function that will invoke the original
+         * would be "something.else". In this case the function returned will be wrapped in a function that will invoke the original
          * function in the correct context. This is most useful for client event strings as passed from the server.
          * 
-         * @param scopeOrPropertyString The scope to being the search at OR a property string (which assumes the scope is window).
-         * @param propertyString The dotted notation property string used to obtain the function reference from the scope.
+         * @param objectOrPropertyString The object to being the search at OR a property string (which assumes the object to use is the window object).
+         * @param propertyString The dotted notation property string used to obtain the function reference from the object.
          */
-        public getFunction(scopeOrPropertyString?: any, propertyString?: string): () => any;
+        public getFunction(objectOrPropertyString?: any, propertyString?: string): () => any;
 
         /**
-         * Used to obtain a function from the given scope using the dotted notation property string.
+         * Used to obtain a function from the given object using the dotted notation property string.
          * 
          * If inferContext is true, then the method will attempt to determine which context the function should be executed in.
          * For example, given the string "something.else.theFunction" where "theFunction" is a function reference, the context
-         * would be "somethin.else". In this case the function returned will be wrapped in a function that will invoke the original
+         * would be "something.else". In this case the function returned will be wrapped in a function that will invoke the original
          * function in the correct context. This is most useful for client event strings as passed from the server.
          * 
-         * @param scopeOrPropertyString The scope to being the search at OR a property string (which assumes the scope is window).
-         * @param propertyString The dotted notation property string used to obtain the function reference from the scope.
+         * @param objectOrPropertyString The object to being the search at OR a property string (which assumes the object to use is the window object).
+         * @param propertyString The dotted notation property string used to obtain the function reference from the object.
          * @param inferContext Indicates that we should attempt determine the context in which the function should be called.
          */
-        public getFunction(scopeOrPropertyString?: any, propertyString?: string, inferContext?: boolean): () => any;
+        public getFunction(objectOrPropertyString?: any, propertyString?: string, inferContext?: boolean): () => any;
 
         /**
-         * Used to obtain a function from the given scope using the dotted notation property string.
+         * Used to obtain a function from the given object using the dotted notation property string.
          * 
          * If inferContext is true, then the method will attempt to determine which context the function should be executed in.
          * For example, given the string "something.else.theFunction" where "theFunction" is a function reference, the context
-         * would be "somethin.else". In this case the function returned will be wrapped in a function that will invoke the original
+         * would be "something.else". In this case the function returned will be wrapped in a function that will invoke the original
          * function in the correct context. This is most useful for client event strings as passed from the server. Defaults to true.
          * 
-         * @param scopeOrPropertyString The scope to being the search at OR a property string (which assumes the scope is window).
-         * @param propertyString The dotted notation property string used to obtain the function reference from the scope.
+         * @param objectOrPropertyString The object to being the search at OR a property string (which assumes the object to use is the window object).
+         * @param propertyString The dotted notation property string used to obtain the function reference from the object.
          * @param inferContext Indicates that we should attempt determine the context in which the function should be called.
          */
-        public getFunction(scopeOrPropertyString?: any, propertyString?: string, inferContext?: boolean): () => any {
+        public getFunction(objectOrPropertyString?: any, propertyString?: string, inferContext?: boolean): () => any {
             var scope: any,
                 fn: () => any,
                 contextPropertyString: string,

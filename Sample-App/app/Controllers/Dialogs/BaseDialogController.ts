@@ -7,7 +7,9 @@
      * model object type, and injecting the view model and controller onto the
      * scope object for use in views.
      * 
-     * T - The parameter type for the model.
+     * V - The type of the view model that this controller will utilize.
+     * D - The type of data object that will be passed in when this dialog is opened.
+     * R - The type of the data object that will be returned when this dialog is closed.
      */
     export class BaseDialogController<V, D, R> extends BaseController<V> {
 

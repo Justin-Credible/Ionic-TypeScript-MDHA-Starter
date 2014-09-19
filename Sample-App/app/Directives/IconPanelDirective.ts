@@ -1,5 +1,4 @@
-﻿
-module JustinCredible.SampleApp.Directives {
+﻿module JustinCredible.SampleApp.Directives {
 
     //#region TypeScript Declarations
 
