@@ -142,7 +142,7 @@
     <Content Include="templates\Category.html" />
     <Content Include="templates\Dialogs\Pin-Entry.html" />
     <Content Include="templates\Dialogs\Reorder-Categories.html" />
-    <Content Include="templates\Empty.html" />
+    <Content Include="templates\Blank.html" />
     <Content Include="templates\Settings\About.html" />
     <Content Include="templates\Settings\Cloud-Sync.html" />
     <Content Include="templates\Settings\Configure-Pin.html" />
@@ -186,6 +186,7 @@
     <TypeScriptCompile Include="app\Application.ts" />
     <TypeScriptCompile Include="app\Controllers\BaseController.ts" />
     <TypeScriptCompile Include="app\Controllers\CategoryController.ts" />
+    <TypeScriptCompile Include="app\Controllers\Dialogs\BaseDialogController.ts" />
     <TypeScriptCompile Include="app\Controllers\Dialogs\PinEntryController.ts" />
     <TypeScriptCompile Include="app\Controllers\Dialogs\ReorderCategoriesController.ts" />
     <TypeScriptCompile Include="app\Controllers\MenuController.ts" />
@@ -199,8 +200,11 @@
     <TypeScriptCompile Include="app\Directives\BaseDirective.ts" />
     <TypeScriptCompile Include="app\Directives\IconPanelDirective.ts" />
     <TypeScriptCompile Include="app\Filters\ThousandsFilter.ts" />
-    <TypeScriptCompile Include="app\Models\LogEntry.ts" />
+    <TypeScriptCompile Include="app\Models\Dialogs\DialogOptions.ts" />
+    <TypeScriptCompile Include="app\Models\Dialogs\PinEntryDialogModel.ts" />
+    <TypeScriptCompile Include="app\Models\Dialogs\PinEntryDialogResultModel.ts" />
     <TypeScriptCompile Include="app\Models\Misc.ts" />
+    <TypeScriptCompile Include="app\Models\Settings\LogEntry.ts" />
     <TypeScriptCompile Include="app\Services\FileUtilities.ts" />
     <TypeScriptCompile Include="app\Services\HttpInterceptor.ts" />
     <TypeScriptCompile Include="app\Services\Logger.ts" />

@@ -17,6 +17,7 @@ declare module JustinCredible.SampleApp.DataTypes {
         applicationName: string;
         websiteUrl: string;
         githubUrl: string;
+        email: string;
     }
 
     //#endregion

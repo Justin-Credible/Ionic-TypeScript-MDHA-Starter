@@ -30,6 +30,7 @@ module JustinCredible.SampleApp.Application {
             applicationName: "Sample App",
             websiteUrl: "http://www.justin-credible.net",
             githubUrl: "https://github.com/Justin-Credible",
+            email: "justin.unterreiner@gmail.com",
             majorVersion: window.buildVars.majorVersion,
             minorVersion: window.buildVars.minorVersion,
             releaseVersion: window.buildVars.releaseVersion,
@@ -179,6 +180,9 @@ module JustinCredible.SampleApp.Application {
         document.addEventListener("resume", _.bind(device_resume, null, UiHelper, Preferences));
         document.addEventListener("menubutton", _.bind(device_menuButton, null, $rootScope));
 
+        // Subscribe to Angular events.
+        $rootScope.$on("$locationChangeStart", angular_locationChangeStart);
+
         // Now that the platform is ready, we'll delegate to the resume event.
         // We do this so the same code that fires on resume also fires when the
         // application is started for the first time.
@@ -228,12 +232,12 @@ module JustinCredible.SampleApp.Application {
             controller: "MenuController"
         });
 
-        // An empty/blank view useful as a place holder etc.
-        $stateProvider.state("app.empty", {
-            url: "/empty",
+        // An blank view useful as a place holder etc.
+        $stateProvider.state("app.blank", {
+            url: "/blank",
             views: {
                 "menuContent": {
-                    templateUrl: "templates/Empty.html"
+                    templateUrl: "templates/Blank.html"
                 }
             }
         });
@@ -302,7 +306,7 @@ module JustinCredible.SampleApp.Application {
         });
 
         $stateProvider.state("app.log-entry", {
-            url: "/settings/logEntry/:id",
+            url: "/settings/log-entry/:id",
             views: {
                 "menuContent": {
                     templateUrl: "templates/Settings/Log-Entry.html",
@@ -325,7 +329,7 @@ module JustinCredible.SampleApp.Application {
 
 
         // If none of the above states are matched, use the empty route.
-        $urlRouterProvider.otherwise("/app/empty");
+        $urlRouterProvider.otherwise("/app/blank");
     }
 
     //#endregion
@@ -361,6 +365,14 @@ module JustinCredible.SampleApp.Application {
         // views to handle this event and show a contextual menu etc.
         $rootScope.$broadcast("menubutton");
     }
+
+    /**
+     * Fired when Angular's route/location (eg URL hash) is changing.
+     */
+    function angular_locationChangeStart(event: ng.IAngularEvent, newRoute: string, oldRoute: string) {
+        console.log("Location change, old Route: " + oldRoute);
+        console.log("Location change, new Route: " + newRoute);
+    };
 
     /**
      * Fired when an unhandled JavaScript exception occurs outside of Angular.

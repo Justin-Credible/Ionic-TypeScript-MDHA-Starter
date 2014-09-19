@@ -26,7 +26,11 @@
             this.Logger = Logger;
             this.Preferences = Preferences;
             this.MockApis = MockApis;
+        }
 
+        //#region BaseController Overrides
+
+        public initialize(): void {
             this.viewModel.mockApiRequests = this.Preferences.enableMockHttpCalls;
 
             this.viewModel.devicePlatform = device.platform;
@@ -34,6 +38,8 @@
             this.viewModel.defaultStoragePathId = this.FileUtilities.getDefaultRootPathId();
             this.viewModel.defaultStoragePath = this.FileUtilities.getDefaultRootPath();
         }
+
+        //#endregion
 
         //#region Private Helper Methods
 
@@ -191,10 +197,10 @@
         }
 
         public showFullScreenBlock_click() {
-            window.ProgressIndicator.showSimpleWithLabel(true, "Authenticating...");
+            this.UiHelper.progressIndicator.showSimpleWithLabel(true, "Authenticating...");
 
-            setTimeout(function () {
-                window.ProgressIndicator.hide();
+            setTimeout(() => {
+                this.UiHelper.progressIndicator.hide();
             }, 4000);
         }
 
@@ -211,14 +217,26 @@
         }
 
         public showPinEntry_click() {
-            this.UiHelper.showPinEntry(null, true, "Testing new PIN entry").then((pin: string) => {
-                this.UiHelper.alert("PIN entered: " + pin);
+            var options: Models.DialogOptions,
+                model: Models.PinEntryDialogModel;
+
+            model = new Models.PinEntryDialogModel("Testing new PIN entry", null, true);
+            options = new Models.DialogOptions(model);
+
+            this.UiHelper.showDialog(this.UiHelper.DialogIds.PinEntry, options).then((result: Models.PinEntryDialogResultModel) => {
+                this.UiHelper.alert("Cancelled: " + result.cancelled + " PIN matches: " + result.matches + " PIN entered: " + result.pin);
             });
         }
 
         public showPinEntry1234_click() {
-            this.UiHelper.showPinEntry("1234", true, "Testing PIN matching (1234)").then((pin: string) => {
-                this.UiHelper.alert("PIN entered: " + pin);
+            var options: Models.DialogOptions,
+                model: Models.PinEntryDialogModel;
+
+            model = new Models.PinEntryDialogModel("Testing PIN matching (1234)", "1234", true);
+            options = new Models.DialogOptions(model);
+
+            this.UiHelper.showDialog(this.UiHelper.DialogIds.PinEntry, options).then((result: Models.PinEntryDialogResultModel) => {
+                this.UiHelper.alert("Cancelled: " + result.cancelled + " PIN matches: " + result.matches + " PIN entered: " + result.pin);
             });
         }
 

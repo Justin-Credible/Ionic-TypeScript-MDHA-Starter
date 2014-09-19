@@ -4,38 +4,25 @@
         viewModel: ViewModels.ReorderCategoriesViewModel;
     }
 
-    export class ReorderCategoriesController extends BaseController<ViewModels.ReorderCategoriesViewModel> implements IReorderCategoriesController {
+    export class ReorderCategoriesController extends BaseDialogController<ViewModels.ReorderCategoriesViewModel, void, void> implements IReorderCategoriesController {
 
-        public static $inject = ["$scope", "Utilities", "Preferences"];
+        public static $inject = ["$scope", "Utilities", "Preferences", "UiHelper"];
 
         private Utilities: Services.Utilities;
         private Preferences: Services.Preferences;
 
-        private modalInstance: any;
-
-        constructor($scope: ng.IScope, Utilities: Services.Utilities, Preferences: Services.Preferences) {
-            super($scope, ViewModels.ReorderCategoriesViewModel);
+        constructor($scope: ng.IScope, Utilities: Services.Utilities, Preferences: Services.Preferences, UiHelper: Services.UiHelper) {
+            super($scope, ViewModels.ReorderCategoriesViewModel, UiHelper.DialogIds.ReorderCategories);
 
             this.Utilities = Utilities;
             this.Preferences = Preferences;
-
-            // Grab the available categories.
-            this.viewModel.categories = this.Utilities.categories;
-
-            // Subscribe to the modal shown event.
-            $scope.$on("modal.shown", _.bind(this.modal_shown, this));
         }
 
-        //#region Event Handlers
+        //#region BaseController Overrides
 
-        private modal_shown(ngEvent: ng.IAngularEvent, instance: any) {
-
-            // Only respond to modal.shown events for the re-order dashboards dialog.
-            if (instance.dialogId !== Services.UiHelper.REORDER_DIALOG_ID) {
-                return;
-            }
-
-            this.modalInstance = instance;
+        public initialize() {
+            // Grab the available categories.
+            this.viewModel.categories = this.Utilities.categories;
         }
 
         //#endregion
@@ -56,8 +43,7 @@
 
             this.Preferences.categoryOrder = categoryOrder;
 
-            this.modalInstance.hide();
-            this.modalInstance.remove();
+            this.close();
         }
 
         //#endregion

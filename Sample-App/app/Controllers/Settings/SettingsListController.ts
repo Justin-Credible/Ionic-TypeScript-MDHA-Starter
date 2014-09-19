@@ -16,9 +16,15 @@
 
             this.Utilities = Utilities;
             this.Preferences = Preferences;
+        }
 
+        //#region BaseController Overrides
+
+        public initialize(): void {
             this.viewModel.isDebugMode = this.Utilities.isDebugMode;
             this.viewModel.isDeveloperMode = this.Preferences.enableDeveloperTools;
         }
+
+        //#endregion
     }
 }

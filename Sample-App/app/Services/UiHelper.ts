@@ -5,14 +5,46 @@
     */
     export class UiHelper {
 
-        public static PIN_ENTRY_DIALOG_ID = "PIN_ENTRY_DIALOG";
-        public static REORDER_DIALOG_ID = "REORDER_DIALOG";
+        //#region Dialog Stuff
 
         /**
-         * Value for rejection of a promise for singleton dialogs when the
-         * dialog that was requested to open is already open.
+         * Value for rejection of a promise when opening a dialog using the showDialog
+         * helper method. This value will be used when showDialog was called with a dialog
+         * ID of a dialog that is already open.
          */
         public static DIALOG_ALREADY_OPEN = "DIALOG_ALREADY_OPEN";
+
+        /**
+         * Value for rejection of a promise when opening a dialog using the showDialog
+         * helper method. This value will be used when showDialog was called with a dialog
+         * ID who is not registered in the dialogTemplateMap map.
+         */
+        public static DIALOG_ID_NOT_REGISTERED = "DIALOG_ID_NOT_REGISTERED";
+
+        /**
+         * Keeps track of the currently open dialogs. Used by the showDialog helper method.
+         */
+        private static openDialogIds: string[];
+
+        /**
+         * Constant IDs for the dialogs. For use with the showDialog helper method.
+         */
+        public DialogIds = {
+            ReorderCategories: "REORDER_CATEGORIES_DIALOG",
+            PinEntry: "PIN_ENTRY_DIALOG"
+        };
+
+        /**
+         * A map of dialog IDs to the templates that they use. Used by the showDialog helper method.
+         * 
+         * The template's root element should have a controller that extends BaseDialogController.
+         */
+        private static dialogTemplateMap = {
+            "REORDER_CATEGORIES_DIALOG": "templates/Dialogs/Reorder-Categories.html",
+            "PIN_ENTRY_DIALOG": "templates/Dialogs/Pin-Entry.html"
+        };
+
+        //#endregion
 
         public static $inject = ["$rootScope", "$q", "$http", "$ionicModal", "Utilities", "Preferences"];
 
@@ -34,6 +66,24 @@
             this.Utilities = Utilities;
             this.Preferences = Preferences;
         }
+
+        //#region Plug-in Accessors
+
+        /**
+         * Exposes an API for showing toast messages.
+         */
+        get toast(): ICordovaToastPlugin {
+            return window.plugins.toast;
+        }
+
+        /**
+         * Exposes an API for working with the operating system's clipboard.
+         */
+        get progressIndicator(): ICordovaProgressIndicator {
+            return window.ProgressIndicator;
+        }
+
+        //#endregion
 
         //#region Native Dialogs
 
@@ -248,53 +298,104 @@
         //#region Modal Dialogs
 
         /**
-         * Used to show the PIN entry prompt dialog.
+         * Used to open the modal dialog with the given dialog ID.
+         * Dialog IDs and templates can be set via UiHelper.DialogIds.
          * 
-         * @param pinToMatch The PIN to validate against; if provided validation will occur and if they don't match
-         *                      the dialog will not close automatically until it is matched. If not provided then
-         *                      the dialog will close once the user enters a PIN.
-         * @param showBackButton Indicates if the back (cancel) button should be click-able by the user.
-         * @param promptText The text to show above the PIN fields.
-         * @param hideBackground Optional parameter used to indicate the content in the background shouldn't be visible (defaults to false).
-         * @returns A promise which will be resolved once the dialog has closed. It will include a single parameter
-         *          of type string. This will be populated with the PIN value that was entered (or null if the user
-         *          clicked the cancel button).
+         * If a dialog with the given ID is already open, another will not be opened
+         * and the promise will be rejected with UiHelper.DIALOG_ALREADY_OPEN.
+         * 
+         * @param dialogId The ID of the dialog to show/open.
+         * @returns A promise that will be resolved when the dialog is closed with the dialog's return type.
          */
-        public showPinEntry(pinToMatch: string, showBackButton: boolean, promptText: string, hideBackground?: boolean): ng.IPromise<string> {
-            var q = this.$q.defer<string>(),
-                backdrop: HTMLDivElement,
-                creationPromise: ng.IPromise<string>;
+        public showDialog(dialogId: string): ng.IPromise<any>;
 
-            // If the dialog is already open, then we don't want to open another.
-            // In this case, we explicitly reject the promise.
-            if (this.isPinEntryOpen) {
-                q.reject(UiHelper.DIALOG_ALREADY_OPEN);
+        /**
+         * Used to open the modal dialog with the given dialog ID.
+         * Dialog IDs and templates can be set via UiHelper.DialogIds.
+         * 
+         * If a dialog with the given ID is already open, another will not be opened
+         * and the promise will be rejected with UiHelper.DIALOG_ALREADY_OPEN.
+         * 
+         * @param dialogId The ID of the dialog to show/open.
+         * @param options The options to use when opening the dialog.
+         * @returns A promise that will be resolved when the dialog is closed with the dialog's return type.
+         */
+        public showDialog(dialogId: string, options: Models.DialogOptions): ng.IPromise<any>;
+
+        /**
+         * Used to open the modal dialog with the given dialog ID.
+         * Dialog IDs and templates can be set via UiHelper.DialogIds.
+         * 
+         * If a dialog with the given ID is already open, another will not be opened
+         * and the promise will be rejected with UiHelper.DIALOG_ALREADY_OPEN.
+         * 
+         * @param dialogId The ID of the dialog to show/open.
+         * @param options The options to use when opening the dialog.
+         * @returns A promise that will be resolved when the dialog is closed with the dialog's return type.
+         */
+        public showDialog(dialogId: string, options?: Models.DialogOptions): ng.IPromise<any> {
+            var q = this.$q.defer<any>(),
+                template: string,
+                creationArgs: any,
+                creationPromise: ng.IPromise<any>;
+
+            // Ensure the options object is present.
+            if (!options) {
+                options = new Models.DialogOptions();
+            }
+
+            // Ensure the array is initialized.
+            if (UiHelper.openDialogIds == null) {
+                UiHelper.openDialogIds = [];
+            }
+
+            // If a dialog with this ID is already open, we can reject immediately.
+            // This ensures that only a single dialog with a given ID can be open
+            // at one time.
+            if (_.contains(UiHelper.openDialogIds, dialogId)) {
+                this.$q.reject(UiHelper.DIALOG_ALREADY_OPEN);
                 return q.promise;
             }
 
-            // Set the flag so we know not to try to open multiple instances of this dialog.
-            this.isPinEntryOpen = true;
+            // Lookup the template to use for this dialog based on the dialog ID.
+            template = UiHelper.dialogTemplateMap[dialogId];
 
-            // Create the modal dialog.
-            creationPromise = this.$ionicModal.fromTemplateUrl("templates/Dialogs/Pin-Entry.html", {
-                backdropClickToClose: false,
-                hardwareBackButtonClose: false,
-                showBackButton: showBackButton,
-                pinToMatch: pinToMatch,
-                promptText: promptText,
-                dialogId: UiHelper.PIN_ENTRY_DIALOG_ID
-            });
+            // If we were unable to find a dialog ID in the template map then we
+            // can bail out here as there is nothing to do.
+            if (!template) {
+                this.$q.reject(UiHelper.DIALOG_ID_NOT_REGISTERED);
+                console.warn(this.Utilities.format("A call was made to openDialog with dialogId '{0}', but a template is not registered with that ID in the dialogTemplateMap.", dialogId));
+                return q.promise;
+            }
 
-            // Once it has been created then...
+            // Add the ID of this dialog to the list of dialogs that are open.
+            UiHelper.openDialogIds.push(dialogId);
+
+            // Define the arguments that will be used to create the modal instance.
+            creationArgs = {
+                // Include the dialog ID so we can identify the dialog later on.
+                dialogId: dialogId,
+
+                // Include the dialog data object so the BaseDialogController can
+                // get the dialog for the dialog.
+                dialogData: options.dialogData,
+
+                // Include Ionic modal options.
+                backdropClickToClose: options.backdropClickToClose,
+                hardwareBackButtonClose: options.hardwareBackButtonClose
+            };
+
+            // Schedule the modal instance to be created.
+            creationPromise = this.$ionicModal.fromTemplateUrl(template, creationArgs);
+
+            // Once the modal instance has been created...
             creationPromise.then((modal: any) => {
+                var backdrop: HTMLDivElement;
 
-                // Tag this dialog so we can identify it.
-                modal.scope.dialogId = UiHelper.PIN_ENTRY_DIALOG_ID;
-
-                // Show the dialog.
+                // Show it.
                 modal.show();
 
-                if (hideBackground) {
+                if (!options.showBackground) {
                     // HACK: Here we adjust the background color's alpha value so the user can't
                     // see through the overlay. At some point we should update this to use a blur
                     // effect similar to this: http://ionicframework.com/demos/frosted-glass/
@@ -305,72 +406,24 @@
                 // Subscribe to the close event.
                 modal.scope.$on("modal.hidden", (eventArgs: ng.IAngularEvent, instance: any) => {
 
-                    // Only handle events for the PIN entry dialog.
-                    if (instance.dialogId !== UiHelper.PIN_ENTRY_DIALOG_ID) {
+                    // Only handle events for the relevant dialog.
+                    if (dialogId !== instance.dialogId) {
                         return;
                     }
 
-                    if (hideBackground) {
+                    // If we were blocking out the background, we need to revert that now that
+                    // we are closing this instance.
+                    if (!options.showBackground) {
                         // HACK: Restore the backdrop's background color value.
                         backdrop.style.backgroundColor = "";
                     }
 
-                    this.isPinEntryOpen = false;
+                    // Remove this dialog's ID from the list of ones that are open.
+                    UiHelper.openDialogIds = _.without(UiHelper.openDialogIds, dialogId);
 
                     // Once the dialog is closed, resolve the original promise
-                    // using the result (the PIN) from the dialog.
-                    q.resolve(<string>modal.result);
-
-                });
-            });
-
-            return q.promise;
-        }
-
-        /**
-         * Used to show the reorder categories dialog.
-         * 
-         * @returns A promise which will be resolved once the dialog has closed.
-         */
-        public showReorder(): ng.IPromise<void> {
-            var q = this.$q.defer<void>(),
-                creationPromise: ng.IPromise<void>;
-
-            // If the dialog is already open, then we don't want to open another.
-            // In this case, we explicitly reject the promise.
-            if (this.isReorderOpen) {
-                q.reject(UiHelper.DIALOG_ALREADY_OPEN);
-                return q.promise;
-            }
-
-            // Set the flag so we know not to try to open multiple instances of this dialog.
-            this.isReorderOpen = true;
-
-            // Create the modal dialog.
-            creationPromise = this.$ionicModal.fromTemplateUrl("templates/Dialogs/Reorder-Categories.html", {
-                backdropClickToClose: true,
-                hardwareBackButtonClose: true,
-                dialogId: UiHelper.REORDER_DIALOG_ID
-            });
-
-            // Once it has been created then...
-            creationPromise.then((modal: any) => {
-
-                // Show the dialog.
-                modal.show();
-
-                // Subscribe to the close event.
-                modal.scope.$on("modal.hidden", (eventArgs: ng.IAngularEvent, instance: any) => {
-
-                    // Only handle events for the re-order dialog.
-                    if (instance.dialogId !== UiHelper.REORDER_DIALOG_ID) {
-                        return;
-                    }
-
-                    this.isReorderOpen = false;
-
-                    // Once the dialog is closed, resolve the original promise.
-                    q.resolve();
+                    // using the result data object from the dialog (if any).
+                    q.resolve(modal.result);
 
                 });
             });
@@ -384,11 +437,13 @@
 
         public showPinEntryAfterResume(): ng.IPromise<void> {
             var q = this.$q.defer<void>(),
-                resumedAt: Moment;
+                resumedAt: Moment,
+                options: Models.DialogOptions,
+                model: Models.PinEntryDialogModel;
 
             // If the PIN entry dialog then there is nothing to do.
             if (this.isPinEntryOpen) {
-                q.reject("ALREADY_OPEN");
+                q.reject(UiHelper.DIALOG_ALREADY_OPEN);
                 return q.promise;
             }
 
@@ -401,7 +456,11 @@
                 // If the time elapsed since the last pause event is greater than the threshold,
                 // then we need to show the lock screen.
                 if (resumedAt.diff(this.Preferences.lastPausedAt, "minutes") > this.Preferences.requirePinThreshold) {
-                    this.showPinEntry(this.Preferences.pin, false, "PIN Required", true).then(() => {
+
+                    model = new Models.PinEntryDialogModel("PIN Required", this.Preferences.pin, false);
+                    options = new Models.DialogOptions(model);
+
+                    this.showDialog(this.DialogIds.PinEntry, options).then((result: Models.PinEntryDialogResultModel) => {
                         // Once a matching PIN is entered, then we can resolve.
                         q.resolve();
                     });

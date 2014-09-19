@@ -18,15 +18,17 @@
             this.Logger = Logger;
             this.Utilities = Utilities;
             this.UiHelper = UiHelper;
-
-            this.setupViewModel();
         }
 
-        //#region Private Helper Methods
+        //#region BaseController Overrides
 
-        private setupViewModel() {
+        public initialize(): void {
             this.Logger.getLogs().then(_.bind(this.getLogs_success, this), _.bind(this.getLogs_failure, this));
         }
+
+        //#endregion
+
+        //#region Private Helper Methods
 
         private getLogs_success(logEntries: Models.LogEntry[]): void {
 
@@ -87,7 +89,7 @@
         }
 
         private getLogs_failure(error: Error): void {
-            window.plugins.toast.showShortBottom("An error occurred while retrieving the logs.");
+            this.UiHelper.toast.showShortBottom("An error occurred while retrieving the logs.");
         }
 
         private deleteActionSheet_destructiveButtonClicked(buttonIndex: number) {

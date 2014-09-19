@@ -10,27 +10,35 @@
 
     export class LogEntryController extends BaseController<ViewModels.LogEntryViewModel> implements ILogEntryController {
 
-        public static $inject = ["$scope", "$stateParams", "Logger"];
+        public static $inject = ["$scope", "$stateParams", "Logger", "UiHelper", "Utilities", "versionInfo"];
 
-        private Logger: Services.Logger;
         private $stateParams: ILogEntryStateParams;
+        private Logger: Services.Logger;
+        private UiHelper: Services.UiHelper;
+        private Utilities: Services.Utilities;
+        private versionInfo: DataTypes.IVersionInfo;
 
         private _fullLogEntry: Models.LogEntry;
 
-        constructor($scope: ng.IScope, $stateParams: ILogEntryStateParams, Logger: Services.Logger) {
+        constructor($scope: ng.IScope, $stateParams: ILogEntryStateParams, Logger: Services.Logger, UiHelper: Services.UiHelper, Utilities: Services.Utilities, versionInfo: DataTypes.IVersionInfo) {
             super($scope, ViewModels.LogEntryViewModel);
 
             this.$stateParams = $stateParams;
             this.Logger = Logger;
-
-            this.setupViewModel();
+            this.UiHelper = UiHelper;
+            this.Utilities = Utilities;
+            this.versionInfo = versionInfo;
         }
 
-        //#region Private Helper Methods
+        //#region BaseController Overrides
 
-        private setupViewModel() {
+        public initialize(): void {
             this.Logger.getLog(this.$stateParams.id).then(_.bind(this.getLogEntry_success, this));
         }
+
+        //#endregion
+
+        //#region Private Helper Methods
 
         private getLogEntry_success(logEntry: Models.LogEntry): void {
             var formattedDate: string;
@@ -78,13 +86,17 @@
         //#region Controller Methods
 
         public copy(): void {
-            cordova.plugins.clipboard.copy(JSON.stringify(this._fullLogEntry), () => {
-                window.plugins.toast.showShortBottom("Log copied to clipboard!");
+            this.Utilities.clipboard.copy(JSON.stringify(this._fullLogEntry), () => {
+                this.UiHelper.toast.showShortBottom("Log copied to clipboard!");
             }, null);
         }
 
         public email(): void {
-            window.plugins.toast.showShortBottom("E-mail not currently implemented.");
+            this.Logger.getLog(this.$stateParams.id).then((logEntry: Models.LogEntry) => {
+                var uri = this.Utilities.format("mailto:{0}?subject={0}&body={1}", this.versionInfo.email, "SampleApp Error Log", JSON.stringify(logEntry));
+                uri = encodeURI(uri);
+                window.location.href = uri;
+            });
         }
 
         //#endregion

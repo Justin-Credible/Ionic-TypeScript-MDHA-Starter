@@ -6,27 +6,37 @@
 
     export class AboutController extends BaseController<ViewModels.AboutViewModel> implements IAboutController {
 
-        public static $inject = ["$scope", "$location", "Utilities", "Preferences", "versionInfo"];
+        public static $inject = ["$scope", "$location", "Utilities", "Preferences", "UiHelper", "versionInfo"];
 
         private $location: ng.ILocationService;
         private Utilities: Services.Utilities;
         private Preferences: Services.Preferences;
+        private UiHelper: Services.UiHelper;
+        private versionInfo: JustinCredible.SampleApp.DataTypes.IVersionInfo;
 
-        constructor($scope: ng.IScope, $location: ng.ILocationService, Utilities: Services.Utilities, Preferences: Services.Preferences, versionInfo: JustinCredible.SampleApp.DataTypes.IVersionInfo) {
+        constructor($scope: ng.IScope, $location: ng.ILocationService, Utilities: Services.Utilities, Preferences: Services.Preferences, UiHelper: Services.UiHelper, versionInfo: JustinCredible.SampleApp.DataTypes.IVersionInfo) {
             super($scope, ViewModels.AboutViewModel);
 
             this.$location = $location;
             this.Utilities = Utilities;
             this.Preferences = Preferences;
+            this.UiHelper = UiHelper;
+            this.versionInfo = versionInfo;
+        }
 
+        //#region BaseController Overrides
+
+        public initialize(): void {
             this.viewModel.logoClickCount = 0;
 
-            this.viewModel.applicationName = versionInfo.applicationName;
-            this.viewModel.websiteUrl = versionInfo.websiteUrl;
-            this.viewModel.githubUrl = versionInfo.githubUrl;
-            this.viewModel.versionString = Utilities.format("{0}.{1}.{2}.{3}", versionInfo.majorVersion, versionInfo.minorVersion, versionInfo.releaseVersion, versionInfo.revisionVersion);
-            this.viewModel.timestamp = versionInfo.buildTimestamp;
+            this.viewModel.applicationName = this.versionInfo.applicationName;
+            this.viewModel.websiteUrl = this.versionInfo.websiteUrl;
+            this.viewModel.githubUrl = this.versionInfo.githubUrl;
+            this.viewModel.versionString = this.Utilities.format("{0}.{1}.{2}.{3}", this.versionInfo.majorVersion, this.versionInfo.minorVersion, this.versionInfo.releaseVersion, this.versionInfo.revisionVersion);
+            this.viewModel.timestamp = this.versionInfo.buildTimestamp;
         }
+
+        //#endregion
 
         //#region Controller Methods
 
@@ -42,7 +52,7 @@
             // and push them back to the settings page.
             if (this.viewModel.logoClickCount > 9) {
                 this.Preferences.enableDeveloperTools = true;
-                window.plugins.toast.showShortBottom("Development Tools Enabled!");
+                this.UiHelper.toast.showShortBottom("Development Tools Enabled!");
                 this.$location.path("/app/settings");
             }
         }

@@ -96,6 +96,13 @@
         }
 
         /**
+         * Exposes an API for working with the operating system's clipboard.
+         */
+        get clipboard(): ICordovaClipboardPlugin {
+            return cordova.plugins.clipboard;
+        }
+
+        /**
          * Used to determine if a string ends with a specified string.
          * 
          * @param str The string to check.

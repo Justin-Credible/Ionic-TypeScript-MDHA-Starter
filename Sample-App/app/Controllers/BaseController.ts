@@ -38,7 +38,10 @@
             // Now that everything else is done, we can initialize.
             // We defer here so that the initialize event occurs after the constructor
             // of the child class has had a chance to execute.
-            _.defer(() => { this.initialize(); });
+            _.defer(() => {
+                this.initialize();
+                this.scope.$apply();
+            });
         }
 
         /**
@@ -47,6 +50,8 @@
          * Can be overridden by implementing controllers.
          */
         public initialize() {
+            // No logic should be placed here, since TypeScript doesn't currently support
+            // protected members, so descendants may not be delegating to super.initialize().
         }
 
         /**
@@ -55,6 +60,8 @@
          * Can be overridden by implementing controllers.
          */
         public destroy() {
+            // No logic should be placed here, since TypeScript doesn't currently support
+            // protected members, so descendants may not be delegating to super.initialize().
         }
     }
 }

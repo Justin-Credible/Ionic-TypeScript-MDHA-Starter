@@ -18,30 +18,47 @@
 
             this.UiHelper = UiHelper;
             this.Preferences = Preferences;
-
-            this.viewModel.isPinSet = Preferences.pin !== null;
         }
+
+
+        //#region BaseController Overrides
+
+        public initialize() {
+            this.viewModel.isPinSet = this.Preferences.pin !== null;
+        }
+
+        //#endregion
 
         //#region Controller Methods
 
         public setPin_click() {
+            var options: Models.DialogOptions,
+                model: Models.PinEntryDialogModel;
+
+            model = new Models.PinEntryDialogModel("Enter a value for your new PIN", null, true);
+            options = new Models.DialogOptions(model);
 
             // Show the PIN entry dialog.
-            this.UiHelper.showPinEntry(null, true, "Enter a value for your new PIN").then((newPin1: string) => {
+            this.UiHelper.showDialog(this.UiHelper.DialogIds.PinEntry, options).then((result1: Models.PinEntryDialogResultModel) => {
 
                 // If there was a PIN returned, they didn't cancel.
-                if (newPin1) {
+                if (result1.pin) {
 
                     // Show a second prompt to make sure they enter the same PIN twice.
                     // We pass in the first PIN value because we want them to be able to match it.
-                    this.UiHelper.showPinEntry(newPin1, true, "Confirm your new PIN").then((newPin2: string) => {
 
-                        // If there was a PIN returned, they didn't cancel and we know it matched.
-                        if (newPin2) {
-                            this.Preferences.pin = newPin2;
+                    model.promptText = "Confirm your new PIN";
+                    model.pinToMatch = result1.pin;
+                    options.dialogData = model;
+
+                    this.UiHelper.showDialog(this.UiHelper.DialogIds.PinEntry, options).then((result2: Models.PinEntryDialogResultModel) => {
+
+                        // If the second PIN entered matched the first one, then use it.
+                        if (result2.matches) {
+                            this.Preferences.pin = result2.pin;
                             this.viewModel.isPinSet = true;
 
-                            window.plugins.toast.showShortBottom("Your PIN has been configured.");
+                            this.UiHelper.toast.showShortBottom("Your PIN has been configured.");
                         }
                     });
                 }
@@ -49,48 +66,64 @@
         }
 
         public changePin_click() {
+            var options: Models.DialogOptions,
+                model: Models.PinEntryDialogModel;
+
+            model = new Models.PinEntryDialogModel("Enter your current PIN", this.Preferences.pin, true);
+            options = new Models.DialogOptions(model);
 
             // Show the PIN entry dialog; pass the existing PIN which they need to match.
-            this.UiHelper.showPinEntry(this.Preferences.pin, true, "Enter your current PIN").then((currentPin: string) => {
+            this.UiHelper.showDialog(this.UiHelper.DialogIds.PinEntry, options).then((result1: Models.PinEntryDialogResultModel) => {
 
-                // If there was a PIN returned, they didn't cancel, and it must have matched.
-                if (currentPin) {
+                // If the PIN matched, then we can continue.
+                if (result1.matches) {
 
-                    // Now, prompt for the new PIN.
-                    this.UiHelper.showPinEntry(null, true, "Enter your new PIN").then((newPin1: string) => {
+                    // Prompt for a new PIN.
 
-                        // If there was a PIN returned, they didn't cancel.
-                        if (newPin1) {
+                    model.promptText = "Enter your new PIN";
+                    model.pinToMatch = null;
+                    options.dialogData = model;
 
-                            // Show a second prompt to make sure they enter the same PIN twice.
-                            // We pass in the first PIN value because we want them to be able to match it.
-                            this.UiHelper.showPinEntry(newPin1, true, "Confirm your new PIN").then((newPin2: string) => {
+                    this.UiHelper.showDialog(this.UiHelper.DialogIds.PinEntry, options).then((result2: Models.PinEntryDialogResultModel) => {
 
-                                // If there was a PIN returned, they didn't cancel.
-                                if (newPin2) {
-                                    this.Preferences.pin = newPin2;
-                                    this.viewModel.isPinSet = true;
+                        // Show a second prompt to make sure they enter the same PIN twice.
+                        // We pass in the first PIN value because we want them to be able to match it.
 
-                                    window.plugins.toast.showShortBottom("Your PIN has been changed.");
-                                }
-                            });
-                        }
+                        model.promptText = "Confirm your new PIN";
+                        model.pinToMatch = result2.pin;
+                        options.dialogData = model;
+
+                        this.UiHelper.showDialog(this.UiHelper.DialogIds.PinEntry, options).then((result3: Models.PinEntryDialogResultModel) => {
+
+                            // If the second new PIN entered matched the new first one, then use it.
+                            if (result3.matches) {
+                                this.Preferences.pin = result3.pin;
+                                this.viewModel.isPinSet = true;
+
+                                this.UiHelper.toast.showShortBottom("Your PIN has been configured.");
+                            }
+                        });
                     });
                 }
             });
         }
 
         public removePin_click() {
+            var options: Models.DialogOptions,
+                model: Models.PinEntryDialogModel;
+
+            model = new Models.PinEntryDialogModel("Enter your current PIN", this.Preferences.pin, true);
+            options = new Models.DialogOptions(model);
 
             // Show the PIN entry dialog; pass the existing PIN which they need to match.
-            this.UiHelper.showPinEntry(this.Preferences.pin, true, "Enter your current PIN").then((pin: string) => {
+            this.UiHelper.showDialog(this.UiHelper.DialogIds.PinEntry, options).then((result: Models.PinEntryDialogResultModel) => {
 
-                // If there was a PIN returned, they didn't cancel and we know it matched.
-                if (pin) {
+                // If the PIN entered matched, then we can remove it.
+                if (result.matches) {
                     this.Preferences.pin = null;
                     this.viewModel.isPinSet = false;
 
-                    window.plugins.toast.showShortBottom("The PIN has been removed.");
+                    this.UiHelper.toast.showShortBottom("The PIN has been removed.");
                 }
 
             });

@@ -38,7 +38,7 @@
             this.Preferences.userId = null;
             this.Preferences.token = null;
 
-            window.plugins.toast.showLongBottom("You do not have a token (401); please login.");
+            this.UiHelper.toast.showLongBottom("You do not have a token (401); please login.");
         }
 
         private http_forbidden() {
@@ -47,12 +47,12 @@
             this.Preferences.userId = null;
             this.Preferences.token = null;
 
-            window.plugins.toast.showLongBottom("Your token has expired (403); please login again.");
+            this.UiHelper.toast.showLongBottom("Your token has expired (403); please login again.");
         }
 
         private http_notFound() {
             // The restful API services are down maybe?
-            window.plugins.toast.showLongBottom("Server not available (404); please contact your administrator.");
+            this.UiHelper.toast.showLongBottom("Server not available (404); please contact your administrator.");
         }
 
         //#endregion
@@ -60,7 +60,7 @@
         //#region Controller Methods
 
         public reorder_click() {
-            this.UiHelper.showReorder().then(() => {
+            this.UiHelper.showDialog(this.UiHelper.DialogIds.ReorderCategories).then(() => {
                 // After the re-order dialog is closed, re-populate the category
                 // items since they may have been re-ordered.
                 this.viewModel.categories = this.Utilities.categories;

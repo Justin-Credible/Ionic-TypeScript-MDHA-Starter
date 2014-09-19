@@ -24,7 +24,7 @@
 
         //#region Events
 
-        public initialize() {
+        public initialize(): void {
             // Setup the view model.
             this.viewModel.showButton = true;
             this.viewModel.showUserCount = true;
