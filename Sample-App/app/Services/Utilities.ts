@@ -339,15 +339,15 @@
                 inferContext = true;
             }
 
-            if (typeof (scopeOrPropertyString) === "string") {
+            if (typeof (objectOrPropertyString) === "string") {
                 // If the first parameter was a string, then we know they used the string only overload.
                 // In that case default the scope to be the window object.
                 scope = window;
-                propertyString = scopeOrPropertyString;
+                propertyString = objectOrPropertyString;
             }
             else {
                 // Otherwise, treat the first parameter as the scope object.
-                scope = scopeOrPropertyString;
+                scope = objectOrPropertyString;
             }
 
             // Delegate to the getValue() function to do the work.
