@@ -459,6 +459,9 @@
 
                     model = new Models.PinEntryDialogModel("PIN Required", this.Preferences.pin, false);
                     options = new Models.DialogOptions(model);
+                    options.backdropClickToClose = false;
+                    options.hardwareBackButtonClose = false;
+                    options.showBackground = false;
 
                     this.showDialog(this.DialogIds.PinEntry, options).then((result: Models.PinEntryDialogResultModel) => {
                         // Once a matching PIN is entered, then we can resolve.
