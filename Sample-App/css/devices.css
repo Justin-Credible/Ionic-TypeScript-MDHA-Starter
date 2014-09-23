@@ -1,22 +1,4 @@
 ﻿
-/* This file contains classes used to make it easier to show/hide elements given an orientation or device type. */
-
-/* Keeps Ionic's side bar menu open when on a tablet in landscape orientation. */
-/* http://forum.ionicframework.com/t/keep-side-bar-open/4660/2 */
-@media (min-width: 768px) and (orientation: landscape) {
-	/* Use a translation to push the menu back onto the screen*/
-	.menu-content {
-		-webkit-transform: translate3d(270px, 0px, 0px) !important;
-		width: calc(100% - 270px) !important;
-	}
-
-	/* The menu/nav button should always be hidden*/
-	.bar-header button.ion-navicon {
-		display: none !important;
-	}
-}
-
-/* Phone or Tablet - Portrait */
 @media only screen and (orientation: portrait) {
 	.portrait {
 		display: auto;
@@ -27,7 +9,6 @@
 	}
 }
 
-/* Phone or Tablet - Landscape */
 @media only screen and (orientation: landscape) {
 	.portrait {
 		display: none !important;
@@ -38,7 +19,7 @@
 	}
 }
 
-/* Tablet - Portrait */
+/* Phone - Portrait */
 @media only screen and (max-width: 755px) and (orientation: portrait) {
 	/* Uncomment to show a yellow bar at the top of the screen to show when this media query is in effect. */
 	/*body::before{ content: "CSS Media Query: Phone (Portrait)"; font-weight: bold; display: block; text-align: center; background: rgba(255,255,0, 0.9); position: absolute; top: 0; left: 0; right: 0; z-index: 99; }*/
@@ -73,6 +54,14 @@
 
 	.phone-landscape-tablet-both {
 		display: none !important;
+	}
+
+	.phone-both-tablet-portrait {
+		display: auto;
+	}
+
+	.phone-both-tablet-landscape {
+		display: auto;
 	}
 }
 
@@ -111,6 +100,14 @@
 	}
 
 	.phone-landscape-tablet-both {
+		display: auto;
+	}
+
+	.phone-both-tablet-portrait {
+		display: auto;
+	}
+
+	.phone-both-tablet-landscape {
 		display: auto;
 	}
 }
@@ -152,6 +149,14 @@
 	.phone-landscape-tablet-both {
 		display: auto;
 	}
+
+	.phone-both-tablet-portrait {
+		display: auto;
+	}
+
+	.phone-both-tablet-landscape {
+		display: none !important;
+	}
 }
 
 /* Tablet - Landscape */
@@ -189,6 +194,14 @@
 	}
 
 	.phone-landscape-tablet-both {
+		display: auto;
+	}
+
+	.phone-both-tablet-portrait {
+		display: none !important
+	}
+
+	.phone-both-tablet-landscape {
 		display: auto;
 	}
 }
