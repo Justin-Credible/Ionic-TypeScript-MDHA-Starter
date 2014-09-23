@@ -8,6 +8,14 @@ module JustinCredible.SampleApp.Application {
      */
     var ngModule: ng.IModule;
 
+    /**
+     * Indicates if the PIN entry dialog is currently being shown. This is used to determine
+     * if the device_pause event should update the lastPausedAt timestamp (we don't want to
+     * update the timestamp if the dialog is open because it will allow the user to pause
+     * and then kill the app and bypass the PIN entry screen on next resume).
+     */
+    var isShowingPinPrompt: boolean;
+
     //#endregion
 
 
@@ -341,9 +349,12 @@ module JustinCredible.SampleApp.Application {
      * occurs when the user presses the device's home button or switches applications.
      */
     function device_pause(Preferences: Services.Preferences) {
-        // Store the current date/time. This will be used to determine if we need to
-        // show the PIN lock screen the next time the application is resumed.
-        Preferences.lastPausedAt = moment();
+
+        if (!isShowingPinPrompt) {
+            // Store the current date/time. This will be used to determine if we need to
+            // show the PIN lock screen the next time the application is resumed.
+            Preferences.lastPausedAt = moment();
+        }
     }
 
     /**
@@ -352,8 +363,13 @@ module JustinCredible.SampleApp.Application {
      * to switch back to the application.
      */
     function device_resume(UiHelper: Services.UiHelper, Preferences: Services.Preferences) {
+
+        isShowingPinPrompt = true;
+
         // Potentially display the PIN screen.
-        UiHelper.showPinEntryAfterResume();
+        UiHelper.showPinEntryAfterResume().then(() => {
+            isShowingPinPrompt = false;
+        });
     }
 
     /**
