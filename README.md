@@ -11,7 +11,7 @@ Development is done in Visual Studio 2013 using the [Multi-Device Hybrid Applica
 
 In-browser development and debugging is possible via the [Apache Ripple](http://ripple.incubator.apache.org/) emulator. When deployed to a physical device, the application runs in the [Cordova](http://cordova.apache.org/) application container. Both of these are provided out of the box when using the MDHA project.
 
-Screenshots can be found [here](http://www.justin-credible.net/Projects/Ionic-TypeScript-MHDA-Starter).
+Screenshots can be found on the project page [here](http://www.justin-credible.net/Projects/Ionic-TypeScript-MDHA-Starter).
 
 ## Libraries Used ##
 
