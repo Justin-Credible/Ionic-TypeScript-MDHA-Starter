@@ -90,6 +90,34 @@
         </div>
 
         <div class="list card">
+            <div class="item item-divider">Toast Notifications</div>
+
+            <div class="row">
+                <div class="col col-33">
+                    <button class="button button-block button-calm" ng-click="controller.showToast_top()">Top</button>
+                </div>
+                <div class="col col-33">
+                    <button class="button button-block button-calm" ng-click="controller.showToast_center()">Center</button>
+                </div>
+                <div class="col col-33">
+                    <button class="button button-block button-calm" ng-click="controller.showToast_bottom()">Bottom</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="list card">
+            <div class="item item-divider">Clipboard</div>
+            <div class="row">
+                <div class="col col-50">
+                    <button class="button button-block button-calm" ng-click="controller.clipboard_copy()">Copy</button>
+                </div>
+                <div class="col col-50">
+                    <button class="button button-block button-calm" ng-click="controller.clipboard_paste()">Paste</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="list card">
             <div class="item item-divider">File System I/O</div>
 
             <div class="row">

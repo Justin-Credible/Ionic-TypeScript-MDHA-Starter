@@ -204,6 +204,42 @@
             }, 4000);
         }
 
+        public showToast_top(): void {
+            this.UiHelper.toast.showShortTop("This is a test toast notification.");
+        }
+
+        public showToast_center(): void {
+            this.UiHelper.toast.showShortCenter("This is a test toast notification.");
+        }
+
+        public showToast_bottom(): void {
+            this.UiHelper.toast.showShortBottom("This is a test toast notification.");
+        }
+
+        public clipboard_copy(): void {
+
+            this.UiHelper.prompt("Enter a value to copy to the clipboard.").then((result: Models.KeyValuePair<string, string>) => {
+
+                if (result.key !== "OK") {
+                    return;
+                }
+
+                this.Utilities.clipboard.copy(result.value, () => {
+                    this.UiHelper.alert("Copy OK!");
+                }, (err: Error) => {
+                    this.UiHelper.alert("Copy Failed!\n\n" + (err ? err.message : "Unknown Error"));
+                });
+            });
+        }
+
+        public clipboard_paste(): void {
+            this.Utilities.clipboard.paste((result: string) => {
+                this.UiHelper.alert("Paste OK! Value retrieved is:\n\n" + result);
+            }, (err: Error) => {
+                this.UiHelper.alert("Paste Failed!\n\n" + (err ? err.message : "Unknown Error"));
+            });
+        }
+
         public startProgress_click() {
             NProgress.start();
         }

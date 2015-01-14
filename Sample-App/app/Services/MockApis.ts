@@ -218,12 +218,44 @@
 
         //#region Clipboard
 
-        private clipboard_copy(text: string) {
-            prompt("The following text was requested for copy to the clipboard:", text);
+        private clipboard_copy(text: string, onSuccess: () => void, onFail: (err: Error) => void): void {
+            var confirmed = confirm("The following text was requested for copy to the clipboard:\n\n" +  text);
+
+            // Simulate the asynchronous operation with defer.
+            if (confirmed) {
+                _.defer(() => {
+                    if (onSuccess) {
+                        onSuccess();
+                    }
+                });
+            }
+            else {
+                _.defer(() => {
+                    if (onFail) {
+                        onFail(new Error("The operation was cancelled."));
+                    }
+                });
+            }
         }
 
-        private clipboard_paste() {
-            return prompt("A paste from clipboard was requested; enter text for the paste operation:");
+        private clipboard_paste(onSuccess: (result: string) => void, onFail: (err: Error) => void): void {
+            var result = prompt("A paste from clipboard was requested; enter text for the paste operation:");
+
+            // Simulate the asynchronous operation with defer.
+            if (result === null) {
+                _.defer(() => {
+                    if (onFail) {
+                        onFail(new Error("The operation was cancelled."));
+                    }
+                });
+            }
+            else {
+                _.defer(() => {
+                    if (onSuccess) {
+                        onSuccess(result);
+                    }
+                });
+            }
         }
 
         //#endregion

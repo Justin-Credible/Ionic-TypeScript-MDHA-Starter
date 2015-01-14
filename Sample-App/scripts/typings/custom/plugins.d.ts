@@ -182,18 +182,11 @@ interface ICordovaClipboardPlugin {
     /**
      * Retrieves the current text from the user's clipboard.
      * 
-     * @returns The text that is currently on the clipboard.
-     */
-    paste(): string;
-
-    /**
-     * Retrieves the current text from the user's clipboard.
-     * 
      * @param successCallback Executed if the toast was displayed successfully.
      * @param errorCallback Executed if the toast had problems being displayed.
      * @returns The text that is currently on the clipboard.
      */
-    paste(successCallback: () => void, errorCallback: (error: Error) => void): string;
+    paste(successCallback: (text: string) => void, errorCallback: (error: Error) => void): void;
 }
 
 /**
