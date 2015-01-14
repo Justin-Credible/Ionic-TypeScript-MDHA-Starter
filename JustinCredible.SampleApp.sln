@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		Sample-App\.jscsrc = Sample-App\.jscsrc
 		Sample-App\.jshintrc = Sample-App\.jshintrc
+		Sample-App\.weignore = Sample-App\.weignore
 		Sample-App\tslint.json = Sample-App\tslint.json
 		WebEssentials-Settings.json = WebEssentials-Settings.json
 	EndProjectSection
