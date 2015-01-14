@@ -128,7 +128,7 @@
          */
         public alert(message: string, title?: string, buttonName?: string): ng.IPromise<void> {
             var q = this.$q.defer<void>(),
-                alertCallback: () => void;
+                callback: () => void;
 
             // Default the title.
             title = title || "Alert";
@@ -136,7 +136,12 @@
             // Default the button name.
             buttonName = buttonName || "OK";
 
-            navigator.notification.alert(message, alertCallback, title, buttonName);
+            // Define the callback that is executed when the dialog is closed.
+            callback = (): void => {
+                q.resolve();
+            };
+
+            navigator.notification.alert(message, callback, title, buttonName);
 
             return q.promise;
         }

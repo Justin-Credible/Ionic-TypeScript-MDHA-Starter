@@ -274,6 +274,10 @@
             // Build each of the buttons.
             buttons.push({ text: buttonName });
 
+            // The Ionic pop-up uses HTML to display content, so for line breaks (\n) to render
+            // we need to replace them with actual line break takes.
+            message = message.replace(/\n/g, "<br/>");
+
             // Delegate to Ionic's pop-up framework.
             this.$ionicPopup.show({ title: title, template: message, buttons: buttons }).then(() => {
                 if (alertCallback) {
@@ -302,6 +306,10 @@
                 });
             });
 
+            // The Ionic pop-up uses HTML to display content, so for line breaks (\n) to render
+            // we need to replace them with actual line break takes.
+            message = message.replace(/\n/g, "<br/>");
+
             // Delegate to Ionic's pop-up framework.
             this.$ionicPopup.show({ title: title, template: message, buttons: buttons }).then((result: number) => {
                 if (confirmCallback) {
@@ -312,7 +320,14 @@
 
         private notification_prompt(message: string, promptCallback: (result: NotificationPromptResult) => void, title?: string, buttonLabels?: string[], defaultText?: string): void {
             var buttons = [],
-                template = this.Utilities.format("<p>{0}</p><input type='text' id='notification_prompt_input'/>", message);
+                template: string;
+
+            // The Ionic pop-up uses HTML to display content, so for line breaks (\n) to render
+            // we need to replace them with actual line break takes.
+            message = message.replace(/\n/g, "<br/>");
+
+            // Here we manually build the HTML template for the prompt dialog.
+            template = this.Utilities.format("<p>{0}</p><input type='text' id='notification_prompt_input' style='border: solid 1px #3e3e3e;'/>", message);
 
             // Default the title.
             title = title || "Prompt";
