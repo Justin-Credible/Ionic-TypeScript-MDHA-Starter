@@ -112,6 +112,7 @@
     <Folder Include="res\screens\wp8\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".weignore" />
     <Content Include="css\ionic-overrides.css" />
     <Content Include="css\nprogress-overrides.css" />
     <Content Include="images\about-icon.png" />
@@ -155,7 +156,6 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include=".jscsrc" />
-    <Content Include=".jshintignore" />
     <Content Include=".jshintrc" />
     <Content Include="css\devices.css" />
     <Content Include="css\style.css" />

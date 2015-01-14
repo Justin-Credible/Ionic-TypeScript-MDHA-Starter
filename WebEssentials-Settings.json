@@ -29,9 +29,11 @@
     "AutoMinify": true,
     "Autoprefix": false,
     "AutoprefixerBrowsers": null,
+    "GenerateRtlSourceMaps": true,
     "GzipMinifiedFiles": false,
     "MakeMinified": true,
     "OutputDirectory": null,
+    "RtlCss": false,
     "RunOnBuild": false,
     "ShowBrowserTooltip": true,
     "ShowInitialInherit": false,
@@ -47,10 +49,19 @@
   "General": {
     "AllMessagesToOutputWindow": false,
     "KeepImportantComments": true,
+    "ShowWEIgnoreLogs": true,
     "SvgPreviewPane": true
   },
+  "Handlebars": {
+    "CompileOnBuild": false,
+    "CompileOnSave": true,
+    "MinifyInPlace": false,
+    "OutputDirectory": null
+  },
   "Html": {
+    "AttributeQuotesRemovalMode": "KeepQuotes",
     "AutoMinify": false,
+    "CustomAngularDirectiveList": null,
     "EnableAngularValidation": true,
     "EnableBootstrapValidation": true,
     "EnableEnterFormat": true,
@@ -75,21 +86,26 @@
       }
     ],
     "MakeMinified": true,
-    "MinificationMode": "KeepQuotes",
+    "MinifyAngularBindingExpressions": false,
+    "MinifyKnockoutBindingExpressions": false,
     "OutputDirectory": null,
+    "ProcessableScriptTypeList": null,
     "RunOnBuild": false
   },
   "JavaScript": {
-    "AutoMinify": true,
+    "AutoMinify": false,
     "BlockCommentCompletion": true,
+    "EvalTreatment": "MakeImmediateSafe",
     "GenerateSourceMaps": true,
     "GzipMinifiedFiles": false,
-    "LintOnBuild": true,
+    "LintOnBuild": false,
     "LintOnSave": true,
     "LintResultLocation": "Error",
     "MakeMinified": true,
     "OutputDirectory": null,
-    "RunOnBuild": false
+    "RootDirectory": "/Scripts/",
+    "RunOnBuild": false,
+    "TermSemicolons": true
   },
   "Less": {
     "CompileOnBuild": false,
@@ -135,12 +151,14 @@
     "OutputDirectory": null,
     "OutputStyle": "Expanded",
     "ProcessSourceMapsForEditorEnhancements": true,
-    "ShowPreviewPane": true
+    "ShowPreviewPane": true,
+    "UseRubyRuntime": false
   },
   "Sprite": {
     "CssOutputDirectory": null,
     "IsVertical": true,
     "LessOutputDirectory": null,
+    "Margin": 1,
     "Optimize": true,
     "OutputDirectory": null,
     "RunOnBuild": false,
@@ -158,7 +176,7 @@
     "ShowPreviewPane": true
   },
   "TypeScript": {
-    "LintOnBuild": true,
+    "LintOnBuild": false,
     "LintOnSave": true,
     "LintResultLocation": "Error",
     "ShowPreviewPane": true

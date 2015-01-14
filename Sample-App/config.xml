@@ -8,15 +8,16 @@
   <preference name="SplashScreen" value="screen" />
   <preference name="AndroidPersistentFileLocation" value="Internal" />
   <preference name="iosPersistentFileLocation" value="Library" />
-  <vs:features>
-    <vs:feature>org.apache.cordova.console@0.2.8</vs:feature>
-    <vs:feature>org.apache.cordova.device@0.2.9</vs:feature>
-    <vs:feature>org.apache.cordova.statusbar@0.1.6</vs:feature>
-    <vs:feature>org.apache.cordova.file@1.2.0</vs:feature>
-    <vs:feature>org.apache.cordova.dialogs@0.2.8</vs:feature>
-    <!--<vs:feature>org.pbernasconi.progressindicator</vs:feature>-->
-    <vs:feature>com.jamiestarke.webviewdebug@1.0.8</vs:feature>
-  </vs:features>
+  <vs:plugin name="org.apache.cordova.console" version="0.2.8" />
+  <vs:plugin name="org.apache.cordova.device" version="0.2.9" />
+  <vs:plugin name="org.apache.cordova.statusbar" version="0.1.6" />
+  <vs:plugin name="org.apache.cordova.file" version="1.2.0" />
+  <vs:plugin name="org.apache.cordova.dialogs" version="0.2.8" />
+  <vs:plugin name="com.jamiestarke.webviewdebug" version="1.0.8" />
+  <vs:plugin name="com.verso.cordova.clipboard" version="0.1.0" />
+  <vs:plugin name="net.justin-credible.iosname" version="1.0" />
+  <vs:plugin name="nl.x-services.plugins.toast" version="2.0" />
+  <vs:plugin name="org.pbernasconi.progressIndicator" version="1.0.0" />
   <vs:platformSpecificValues>
     <vs:platformSpecificWidget platformName="windows8" id="JustinCredible.SampleApp">
       <vs:name>Sample App</vs:name>
