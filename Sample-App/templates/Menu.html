@@ -20,7 +20,7 @@
                 <ion-item class="item-divider">Categories</ion-item>
 
                 <ion-item ng-repeat="category in viewModel.categories"
-                          class="item menu-close item-icon-left nav-clear" href="{{category.href}}">
+                          class="item menu-close item-icon-left" href="{{category.href}}">
                     <i class="icon ion-{{category.icon}}"></i>
                     {{category.name}}
                 </ion-item>
@@ -32,7 +32,7 @@
                     Reorder Categories
                 </ion-item>
 
-                <ion-item class="item-icon-left menu-close nav-clear" href="#/app/settings/list">
+                <ion-item class="item-icon-left menu-close" href="#/app/settings/list">
                     <i class="icon ion-android-mixer"></i>
                     Settings
                 </ion-item>

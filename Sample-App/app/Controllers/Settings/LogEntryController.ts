@@ -32,7 +32,7 @@
 
         //#region BaseController Overrides
 
-        public initialize(): void {
+        public view_beforeEnter(): void {
             this.Logger.getLog(this.$stateParams.id).then(_.bind(this.getLogEntry_success, this));
         }
 

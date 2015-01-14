@@ -22,7 +22,7 @@
 
         //#region Controller Events
 
-        public initialize() {
+        public view_beforeEnter(): void {
             // Set the category number into the view model using the value as provided
             // in the view route (via the $stateParameters).
             this.viewModel.categoryNumber = this.$stateParams.categoryNumber;

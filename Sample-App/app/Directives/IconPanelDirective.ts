@@ -51,7 +51,7 @@
         private _iconElement: ng.IAugmentedJQuery;
         private _textContainer: ng.IAugmentedJQuery;
 
-        public initialize() {
+        public initialize(): void {
 
             // Grab a reference to the canvas element.
             this._rootElement = <HTMLDivElement>this.element[0];

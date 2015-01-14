@@ -24,7 +24,7 @@
 
         //#region Events
 
-        public initialize(): void {
+        public view_beforeEnter(): void {
             // Setup the view model.
             this.viewModel.showButton = true;
             this.viewModel.showUserCount = true;
@@ -32,7 +32,7 @@
             this.viewModel.userCount = 2344;
         }
 
-        public destroy() {
+        public view_leave(): void {
             // Stop the toggleIcon function from firing.
             clearInterval(this.updateInterval);
         }

@@ -32,7 +32,15 @@
 
             /*tslint:enable no-string-literals*/
 
-            // Subscribe to the destroy event so we can perform clean-up etc.
+            // Subscribe to various events.
+            this.scope.$on("$ionicView.loaded", _.bind(this.view_loaded, this));
+            this.scope.$on("$ionicView.enter", _.bind(this.view_enter, this));
+            this.scope.$on("$ionicView.leave", _.bind(this.view_leave, this));
+            this.scope.$on("$ionicView.beforeEnter", _.bind(this.view_beforeEnter, this));
+            this.scope.$on("$ionicView.beforeLeave", _.bind(this.view_beforeLeave, this));
+            this.scope.$on("$ionicView.afterEnter", _.bind(this.view_afterEnter, this));
+            this.scope.$on("$ionicView.afterLeave", _.bind(this.view_afterLeave, this));
+            this.scope.$on("$ionicView.unloaded", _.bind(this.view_unloaded, this));
             this.scope.$on("$destroy", _.bind(this.destroy, this));
 
             // Now that everything else is done, we can initialize.
@@ -49,9 +57,89 @@
          * 
          * Can be overridden by implementing controllers.
          */
-        public initialize() {
-            // No logic should be placed here, since TypeScript doesn't currently support
-            // protected members, so descendants may not be delegating to super.initialize().
+        public initialize(): void {
+            // No logic should be placed here, since TypeScript 1.0 does not currently support
+            // protected members, so descendants may not be delegating to this method.
+        }
+
+        /**
+         * Ionic's view event: $ionicView.loaded
+         * 
+         * Can be overridden by implementing controllers.
+         */
+        public view_loaded(): void {
+            // No logic should be placed here, since TypeScript 1.0 does not currently support
+            // protected members, so descendants may not be delegating to this method.
+        }
+
+        /**
+         * Ionic's view event: $ionicView.enter
+         * 
+         * Can be overridden by implementing controllers.
+         */
+        public view_enter(): void {
+            // No logic should be placed here, since TypeScript 1.0 does not currently support
+            // protected members, so descendants may not be delegating to this method.
+        }
+
+        /**
+         * Ionic's view event: $ionicView.leave
+         * 
+         * Can be overridden by implementing controllers.
+         */
+        public view_leave(): void {
+            // No logic should be placed here, since TypeScript 1.0 does not currently support
+            // protected members, so descendants may not be delegating to this method.
+        }
+
+        /**
+         * Ionic's view event: $ionicView.beforeEnter
+         * 
+         * Can be overridden by implementing controllers.
+         */
+        public view_beforeEnter(): void {
+            // No logic should be placed here, since TypeScript 1.0 does not currently support
+            // protected members, so descendants may not be delegating to this method.
+        }
+
+        /**
+         * Ionic's view event: $ionicView.beforeLeave
+         * 
+         * Can be overridden by implementing controllers.
+         */
+        public view_beforeLeave(): void {
+            // No logic should be placed here, since TypeScript 1.0 does not currently support
+            // protected members, so descendants may not be delegating to this method.
+        }
+
+        /**
+         * Ionic's view event: $ionicView.afterEnter
+         * 
+         * Can be overridden by implementing controllers.
+         */
+        public view_afterEnter(): void {
+            // No logic should be placed here, since TypeScript 1.0 does not currently support
+            // protected members, so descendants may not be delegating to this method.
+        }
+
+        /**
+         * Ionic's view event: $ionicView.afterLeave
+         * 
+         * Can be overridden by implementing controllers.
+         */
+        public view_afterLeave(): void {
+            // No logic should be placed here, since TypeScript 1.0 does not currently support
+            // protected members, so descendants may not be delegating to this method.
+        }
+
+        /**
+         * Ionic's view event: $ionicView.unloaded
+         * 
+         * Can be overridden by implementing controllers.
+         */
+        public view_unloaded(): void {
+            // No logic should be placed here, since TypeScript 1.0 does not currently support
+            // protected members, so descendants may not be delegating to this method.
         }
 
         /**
@@ -59,9 +147,9 @@
          * 
          * Can be overridden by implementing controllers.
          */
-        public destroy() {
-            // No logic should be placed here, since TypeScript doesn't currently support
-            // protected members, so descendants may not be delegating to super.initialize().
+        public destroy(): void {
+            // No logic should be placed here, since TypeScript 1.0 does not currently support
+            // protected members, so descendants may not be delegating to this method.
         }
     }
 }

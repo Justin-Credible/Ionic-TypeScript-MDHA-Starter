@@ -18,9 +18,9 @@
             this.Preferences = Preferences;
         }
 
-        //#region BaseController Overrides
+        //#region BaseDialogController Overrides
 
-        public initialize() {
+        public dialog_shown(): void {
             // Grab the available categories.
             this.viewModel.categories = this.Utilities.categories;
         }

@@ -20,7 +20,7 @@
 
         //#region BaseController Overrides
 
-        public initialize(): void {
+        public view_beforeEnter(): void {
             this.viewModel.isDebugMode = this.Utilities.isDebugMode;
             this.viewModel.isDeveloperMode = this.Preferences.enableDeveloperTools;
         }
