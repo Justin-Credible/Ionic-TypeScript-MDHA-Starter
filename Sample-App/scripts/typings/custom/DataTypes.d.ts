@@ -5,29 +5,8 @@
  */
 declare module JustinCredible.SampleApp.DataTypes {
 
-    //#region Client-side only types
-
-    interface IVersionInfo {
-        majorVersion: number;
-        minorVersion: number;
-        releaseVersion: number;
-        revisionVersion: number;
-        versionString: string;
-        buildTimestamp: string;
-        applicationName: string;
-        websiteUrl: string;
-        githubUrl: string;
-        email: string;
-    }
-
-    //#endregion
-
-    //#region Tokens, etc
-
-    interface ITokenResponse {
+    interface TokenResponse {
         expires: number;
         token: string;
     }
-
-    //#endregion
 }

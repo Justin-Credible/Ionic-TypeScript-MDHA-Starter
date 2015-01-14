@@ -16,11 +16,11 @@
         private Logger: Services.Logger;
         private UiHelper: Services.UiHelper;
         private Utilities: Services.Utilities;
-        private versionInfo: DataTypes.IVersionInfo;
+        private versionInfo: Interfaces.VersionInfo;
 
         private _fullLogEntry: Models.LogEntry;
 
-        constructor($scope: ng.IScope, $stateParams: ILogEntryStateParams, Logger: Services.Logger, UiHelper: Services.UiHelper, Utilities: Services.Utilities, versionInfo: DataTypes.IVersionInfo) {
+        constructor($scope: ng.IScope, $stateParams: ILogEntryStateParams, Logger: Services.Logger, UiHelper: Services.UiHelper, Utilities: Services.Utilities, versionInfo: Interfaces.VersionInfo) {
             super($scope, ViewModels.LogEntryViewModel);
 
             this.$stateParams = $stateParams;

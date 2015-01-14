@@ -8,10 +8,10 @@
 declare module JustinCredible.SampleApp.Interfaces {
 
     /**
-     * An extension of the Angular IRequestConfig interface which allows us to pass along a
+     * An extension of the Angular RequestConfig interface which allows us to pass along a
      * few extra flags to control some featuers as defined in our HttpInterceptor.
      */
-    interface IRequestConfig extends ng.IRequestConfig {
+    interface RequestConfig extends ng.IRequestConfig {
 
         /**
          * Indicates that the user should be blocked during this request.
@@ -30,5 +30,18 @@ declare module JustinCredible.SampleApp.Interfaces {
          * HttpInterceptor defaults this to true.
          */
         showSpinner?: boolean;
+    }
+
+    interface VersionInfo {
+        majorVersion: number;
+        minorVersion: number;
+        releaseVersion: number;
+        revisionVersion: number;
+        versionString: string;
+        buildTimestamp: string;
+        applicationName: string;
+        websiteUrl: string;
+        githubUrl: string;
+        email: string;
     }
 }

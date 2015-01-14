@@ -29,7 +29,7 @@ module JustinCredible.SampleApp.Application {
      * configure its controllers, services, etc.
      */
     function main() {
-        var versionInfo: DataTypes.IVersionInfo;
+        var versionInfo: Interfaces.VersionInfo;
 
         // Set the default error handler for all uncaught exceptions.
         window.onerror = window_onerror;

@@ -12,9 +12,9 @@
         private Utilities: Services.Utilities;
         private Preferences: Services.Preferences;
         private UiHelper: Services.UiHelper;
-        private versionInfo: JustinCredible.SampleApp.DataTypes.IVersionInfo;
+        private versionInfo: Interfaces.VersionInfo;
 
-        constructor($scope: ng.IScope, $location: ng.ILocationService, Utilities: Services.Utilities, Preferences: Services.Preferences, UiHelper: Services.UiHelper, versionInfo: JustinCredible.SampleApp.DataTypes.IVersionInfo) {
+        constructor($scope: ng.IScope, $location: ng.ILocationService, Utilities: Services.Utilities, Preferences: Services.Preferences, UiHelper: Services.UiHelper, versionInfo: Interfaces.VersionInfo) {
             super($scope, ViewModels.AboutViewModel);
 
             this.$location = $location;

@@ -180,7 +180,7 @@
         }
 
         public apiGetToken_click() {
-            var httpConfig: Interfaces.IRequestConfig;
+            var httpConfig: Interfaces.RequestConfig;
 
             httpConfig = {
                 method: "GET",
@@ -190,7 +190,7 @@
                 blockingText: "Retrieving Token Info..."
             };
 
-            this.$http(httpConfig).then((response: ng.IHttpPromiseCallbackArg<DataTypes.ITokenResponse>) => {
+            this.$http(httpConfig).then((response: ng.IHttpPromiseCallbackArg<DataTypes.TokenResponse>) => {
                 var message = this.Utilities.format("Token: {0}\nExpires: {1}", response.data.token, response.data.expires);
                 this.UiHelper.alert(message);
             });
