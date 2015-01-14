@@ -9,3 +9,5 @@
 **/templates/**
 **/*.d.ts
 *.d.ts
+**/*.html
+*.html
