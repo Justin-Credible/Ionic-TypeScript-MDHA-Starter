@@ -28,7 +28,7 @@ module JustinCredible.SampleApp.Application {
      * This is the main entry point for the application. It is used to setup Angular and
      * configure its controllers, services, etc.
      */
-    function main() {
+    function main(): void {
         var versionInfo: Interfaces.VersionInfo;
 
         // Set the default error handler for all uncaught exceptions.
@@ -143,18 +143,18 @@ module JustinCredible.SampleApp.Application {
     /**
      * The main initialize/run function for Angular; fired once the AngularJs framework is done loading.
      */
-    function angular_initialize($rootScope: ng.IScope, $ionicPlatform: Ionic.IPlatform, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences, MockApis: Services.MockApis): void {
+    function angular_initialize($rootScope: ng.IScope, $location: ng.ILocationService, $ionicViewService: any, $ionicPlatform: Ionic.IPlatform, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences, MockApis: Services.MockApis): void {
 
         // Once AngularJs has loaded we'll wait for the Ionic platform's ready event.
         // This event will be fired once the device ready event fires via Cordova.
         $ionicPlatform.ready(function () {
-            ionicPlatform_ready($rootScope, $ionicPlatform, UiHelper, Utilities, Preferences, MockApis);
+            ionicPlatform_ready($rootScope, $location, $ionicViewService, $ionicPlatform, UiHelper, Utilities, Preferences, MockApis);
         });
 
         if (Utilities.isRipple) {
             // If we are in the Ripple emulator, Cordova will never fire it's ready event which
             // means Ionic will never fire it's platform ready. We'll do it here manually.
-            ionicPlatform_ready($rootScope, $ionicPlatform, UiHelper, Utilities, Preferences, MockApis);
+            ionicPlatform_ready($rootScope, $location, $ionicViewService, $ionicPlatform, UiHelper, Utilities, Preferences, MockApis);
         }
 
         // Mock up or allow HTTP responses.
@@ -167,7 +167,7 @@ module JustinCredible.SampleApp.Application {
      * Note that this will not fire in the Ripple emulator because it relies
      * on the Codrova device ready event.
      */
-    function ionicPlatform_ready($rootScope: ng.IScope, $ionicPlatform: Ionic.IPlatform, UiHelper: Services.UiHelper, Utilities: Services.Utilities, Preferences: Services.Preferences, MockApis: Services.MockApis): void {
+    function ionicPlatform_ready($rootScope: ng.IScope, $location: ng.ILocationService, $ionicViewService: any, $ionicPlatform: Ionic.IPlatform, UiHelper: Services.UiHelper, Utilities: Services.Utilities, Preferences: Services.Preferences, MockApis: Services.MockApis): void {
 
         // Mock up APIs for the various platforms. This allows us to "polyfill" functionality
         // that isn't available on all platforms.
@@ -187,7 +187,7 @@ module JustinCredible.SampleApp.Application {
 
         // Subscribe to device events.
         document.addEventListener("pause", _.bind(device_pause, null, Preferences));
-        document.addEventListener("resume", _.bind(device_resume, null, UiHelper, Preferences));
+        document.addEventListener("resume", _.bind(device_resume, null, $location, $ionicViewService, UiHelper, Preferences));
         document.addEventListener("menubutton", _.bind(device_menuButton, null, $rootScope));
 
         // Subscribe to Angular events.
@@ -196,7 +196,7 @@ module JustinCredible.SampleApp.Application {
         // Now that the platform is ready, we'll delegate to the resume event.
         // We do this so the same code that fires on resume also fires when the
         // application is started for the first time.
-        device_resume(UiHelper, Preferences);
+        device_resume($location, $ionicViewService, Utilities, UiHelper, Preferences);
     }
 
     /**
@@ -232,7 +232,7 @@ module JustinCredible.SampleApp.Application {
      * Used to define all of the client-side routes for the application.
      * This maps routes to the controller/view that should be used.
      */
-    function setupAngularRoutes($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider) {
+    function setupAngularRoutes($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider): void {
 
         // Setup an abstract state for the tabs directive.
         $stateProvider.state("app", {
@@ -350,7 +350,7 @@ module JustinCredible.SampleApp.Application {
      * Fired when the OS decides to minimize or pause the application. This usually
      * occurs when the user presses the device's home button or switches applications.
      */
-    function device_pause(Preferences: Services.Preferences) {
+    function device_pause(Preferences: Services.Preferences): void {
 
         if (!isShowingPinPrompt) {
             // Store the current date/time. This will be used to determine if we need to
@@ -364,13 +364,28 @@ module JustinCredible.SampleApp.Application {
      * when the user launches an app that is already open or uses the OS task manager
      * to switch back to the application.
      */
-    function device_resume(UiHelper: Services.UiHelper, Preferences: Services.Preferences) {
+    function device_resume($location: ng.ILocationService, $ionicViewService: any, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences): void {
 
         isShowingPinPrompt = true;
 
         // Potentially display the PIN screen.
         UiHelper.showPinEntryAfterResume().then(() => {
             isShowingPinPrompt = false;
+
+            // If the user is still at the blank sreen, then push them to their default view.
+            if ($location.url() === "/app/blank") {
+
+                // Tell Ionic to not animate and clear the history (hide the back button)
+                // for the next view that we'll be navigating to below.
+                $ionicViewService.nextViewOptions({
+                    disableAnimate: true,
+                    disableBack: true
+                });
+
+                // Navigate the user to their default view.
+                $location.path(Utilities.defaultCategory.href.substring(1));
+                $location.replace();
+            }
         });
     }
 
@@ -378,7 +393,7 @@ module JustinCredible.SampleApp.Application {
      * Fired when the menu hard (or soft) key is pressed on the device (eg Android menu key).
      * This isn't used for iOS devices because they do not have a menu button key.
      */
-    function device_menuButton($rootScope: ng.IScope) {
+    function device_menuButton($rootScope: ng.IScope): void {
         // Broadcast this event to all child scopes. This allows controllers for individual
         // views to handle this event and show a contextual menu etc.
         $rootScope.$broadcast("menubutton");
@@ -387,7 +402,7 @@ module JustinCredible.SampleApp.Application {
     /**
      * Fired when Angular's route/location (eg URL hash) is changing.
      */
-    function angular_locationChangeStart(event: ng.IAngularEvent, newRoute: string, oldRoute: string) {
+    function angular_locationChangeStart(event: ng.IAngularEvent, newRoute: string, oldRoute: string): void {
         console.log("Location change, old Route: " + oldRoute);
         console.log("Location change, new Route: " + newRoute);
     };
@@ -395,7 +410,7 @@ module JustinCredible.SampleApp.Application {
     /**
      * Fired when an unhandled JavaScript exception occurs outside of Angular.
      */
-    function window_onerror(message: any, uri: string, lineNumber: number, columnNumber?: number) {
+    function window_onerror(message: any, uri: string, lineNumber: number, columnNumber?: number): void {
         var Logger: Services.Logger;
 
         console.error("Unhandled JS Exception", message, uri, lineNumber, columnNumber);
@@ -421,7 +436,7 @@ module JustinCredible.SampleApp.Application {
      * 
      * This includes uncaught exceptions in ng-click methods for example.
      */
-    function angular_exceptionHandler(exception: Error, cause: string) {
+    function angular_exceptionHandler(exception: Error, cause: string): void {
         var message = exception.message,
             Logger: Services.Logger;
 

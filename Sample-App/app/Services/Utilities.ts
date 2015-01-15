@@ -487,6 +487,15 @@
             return categories;
         }
 
+        /**
+         * Returns the view that is set as the default.
+         * 
+         * Currently, this is the category that is set in the first position.
+         */
+        public get defaultCategory(): ViewModels.CategoryItemViewModel {
+            return this.categories[0];
+        }
+
         //#endregion
     }
 }
