@@ -11,12 +11,17 @@
     <keywords>progress,indicator,activity,loading,load,progressindicator</keywords>
     <license>Apache 2.0 License</license>
 
+    <!--
     <js-module src="www/progressIndicator.js" name="ProgressIndicator">
         <clobbers target="ProgressIndicator"/>
     </js-module>
+    -->
 
     <!-- iOS -->
     <platform name="ios">
+        <js-module src="www/progressIndicator.js" name="ProgressIndicator">
+            <clobbers target="ProgressIndicator"/>
+        </js-module>
         <config-file target="config.xml" parent="/*">
             <feature name="ProgressIndicator">
                 <param name="ios-package" value="ProgressIndicator"/>
@@ -29,6 +34,7 @@
     </platform>
 
     <!-- Android -->
+    <!--
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="ProgressIndicator">
@@ -37,5 +43,5 @@
         </config-file>
         <source-file src="src/android/ActivityIndicator.java" target-dir="src/org/apache/cordova/plugin"/>
     </platform>
-
+    -->
 </plugin>
