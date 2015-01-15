@@ -13,7 +13,7 @@
         public scope: ng.IScope;
         public viewModel: T;
 
-        constructor(scope: ng.IScope, ModelType) {
+        constructor(scope: ng.IScope, ModelType: { new (): T; }) {
             // Save a reference to Angular's scope object.
             this.scope = scope;
 
