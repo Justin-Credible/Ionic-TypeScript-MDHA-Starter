@@ -284,8 +284,8 @@
                 }
 
                 this.FileUtilities.readTextFile(result.value)
-                    .then((text) => { console.log(text); this.UiHelper.alert(text);; },
-                    (err) => { console.error(err); this.alertFileIoError(err); });
+                    .then((text: string) => { console.log(text); this.UiHelper.alert(text);; },
+                    (err: Error) => { console.error(err); this.alertFileIoError(err); });
             });
         }
 
@@ -311,7 +311,7 @@
 
                     this.FileUtilities.writeTextFile(path, contents, false)
                         .then(() => { console.log("WRITE OK"); this.UiHelper.alert("WRITE OK"); },
-                        (err) => { console.error(err); this.alertFileIoError(err); });
+                        (err: Error) => { console.error(err); this.alertFileIoError(err); });
                 });
             });
         }
@@ -336,7 +336,7 @@
 
                     this.FileUtilities.writeTextFile(path, contents, true)
                         .then(() => { console.log("APPEND OK"); this.UiHelper.alert("APPEND OK"); },
-                        (err) => { console.error(err); this.alertFileIoError(err); });
+                        (err: Error) => { console.error(err); this.alertFileIoError(err); });
                 });
             });
         }
@@ -354,7 +354,7 @@
 
                 this.FileUtilities.createDirectory(path)
                     .then(() => { console.log("CREATE DIR OK"); this.UiHelper.alert("CREATE DIR OK"); },
-                    (err) => { console.error(err); this.alertFileIoError(err); });
+                    (err: Error) => { console.error(err); this.alertFileIoError(err); });
             });
         }
 
@@ -371,7 +371,7 @@
                 path = result.value;
 
                 this.FileUtilities.getFilePaths(path)
-                    .then((files) => {
+                    .then((files: any) => {
                         console.log(files);
 
                         files.forEach((value: string) => {
@@ -380,7 +380,7 @@
 
                         this.UiHelper.alert(list);
                     },
-                    (err) => {
+                    (err: Error) => {
                         console.error(err);
                         this.alertFileIoError(err);
                     });
@@ -400,7 +400,7 @@
                 path = result.value;
 
                 this.FileUtilities.getDirectoryPaths(path)
-                    .then((dirs) => {
+                    .then((dirs: any) => {
                         console.log(dirs);
 
                         dirs.forEach((value: string) => {
@@ -409,7 +409,7 @@
 
                         this.UiHelper.alert(list);
                     },
-                    (err) => {
+                    (err: Error) => {
                         console.error(err);
                         this.alertFileIoError(err);
                     });
@@ -429,7 +429,7 @@
 
                 this.FileUtilities.deleteFile(path)
                     .then(() => { console.log("DELETE FILE OK"); this.UiHelper.alert("DELETE FILE OK"); },
-                    (err) => { console.error(err); this.alertFileIoError(err); });
+                    (err: Error) => { console.error(err); this.alertFileIoError(err); });
             });
         }
 
@@ -446,7 +446,7 @@
 
                 this.FileUtilities.deleteDirectory(path)
                     .then(() => { console.log("DELETE DIR OK"); this.UiHelper.alert("DELETE FILE OK"); },
-                    (err) => { console.error(err); this.alertFileIoError(err); });
+                    (err: Error) => { console.error(err); this.alertFileIoError(err); });
             });
         }
 

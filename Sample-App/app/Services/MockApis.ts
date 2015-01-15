@@ -1,10 +1,12 @@
 ﻿module JustinCredible.SampleApp.Services {
 
+    /*tslint:disable typedef*/
+
     /**
-    * Provides a set of mocked up APIs for functions that aren't available in the Apache
-    * Ripple Emulator. Also allows us to mock up responses to API requests when the application
-    * is in "Mock API" mode (via the development tools).
-    */
+     * Provides a set of mocked up APIs for functions that aren't available in the Apache
+     * Ripple Emulator. Also allows us to mock up responses to API requests when the application
+     * is in "Mock API" mode (via the development tools).
+     */
     export class MockApis {
 
         public static $inject = ["$q", "$httpBackend", "$ionicPopup", "$ionicLoading", "Utilities"];
@@ -150,7 +152,7 @@
                 showBar: _.bind(this.progressIndicator_show, this),
                 showBarWithLabel: _.bind(this.progressIndicator_show, this),
                 showSuccess: _.bind(this.progressIndicator_show, this),
-                showText: _.bind(this.progressIndicator_show, this),
+                showText: _.bind(this.progressIndicator_show, this)
             };
 
             if (cordova) {
@@ -178,7 +180,7 @@
                 showBar: _.bind(this.progressIndicator_show, this),
                 showBarWithLabel: _.bind(this.progressIndicator_show, this),
                 showSuccess: _.bind(this.progressIndicator_show, this),
-                showText: _.bind(this.progressIndicator_show, this),
+                showText: _.bind(this.progressIndicator_show, this)
             };
         }
 
@@ -188,7 +190,7 @@
 
         //#region Toast
 
-        private toast(message) {
+        private toast(message: string) {
             var div: HTMLDivElement,
                 existingToasts: number;
 
@@ -299,7 +301,7 @@
             buttonLabels.forEach((value: string, index: number) => {
                 buttons.push({
                     text: value,
-                    onTap: function (e) {
+                    onTap: function (e: MouseEvent) {
                         // The native confirm API uses a 1 based button index (not zero based!).
                         return index + 1;
                     }
@@ -339,7 +341,7 @@
             buttonLabels.forEach((value: string, index: number) => {
                 buttons.push({
                     text: value,
-                    onTap: function (e) {
+                    onTap: function (e: MouseEvent) {
                         var result: NotificationPromptResult,
                             input: HTMLInputElement;
 

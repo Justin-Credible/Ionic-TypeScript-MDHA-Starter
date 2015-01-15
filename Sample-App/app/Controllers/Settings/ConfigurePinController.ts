@@ -11,8 +11,6 @@
         private UiHelper: Services.UiHelper;
         private Preferences: Services.Preferences;
 
-        private modalInstance: any;
-
         constructor($scope: ng.IScope, UiHelper: Services.UiHelper, Preferences: Services.Preferences) {
             super($scope, ViewModels.ConfigurePinViewModel);
 

@@ -18,9 +18,6 @@
         public httpStatusText: string;
         public httpHeaders: string;
         public httpBody: string;
-
-        constructor() {
-        }
     }
 
 }

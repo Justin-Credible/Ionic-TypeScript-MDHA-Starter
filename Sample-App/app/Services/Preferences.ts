@@ -1,11 +1,11 @@
 ﻿module JustinCredible.SampleApp.Services {
 
     /**
-    * Provides a way to easily get/set user preferences.
-    * 
-    * The current backing store is local storage and/or session storage:
-    * https://cordova.apache.org/docs/en/3.0.0/cordova_storage_storage.md.html#localStorage
-    */
+     * Provides a way to easily get/set user preferences.
+     * 
+     * The current backing store is local storage and/or session storage:
+     * https://cordova.apache.org/docs/en/3.0.0/cordova_storage_storage.md.html#localStorage
+     */
     export class Preferences {
 
         public static $inject = [];
@@ -22,9 +22,6 @@
 
         // Default setting is 10 minutes.
         private static REQUIRE_PIN_THRESHOLD_DEFAULT = 10;
-
-        constructor() {
-        }
 
         get apiUrl(): string {
             //return localStorage.getItem(Preferences.API_URL);

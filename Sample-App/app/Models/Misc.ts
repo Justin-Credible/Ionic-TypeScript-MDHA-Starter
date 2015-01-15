@@ -1,8 +1,8 @@
 ﻿module JustinCredible.SampleApp.Models {
 
     /**
-    * A simple class that can be used to define a key/value pair of objects.
-    */
+     * A simple class that can be used to define a key/value pair of objects.
+     */
     export class KeyValuePair<T, U> {
         public key: T;
         public value: U;

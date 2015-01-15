@@ -1,8 +1,8 @@
 ﻿module JustinCredible.SampleApp.Services {
 
     /**
-    * Provides a common set of helper/utility methods for logging errors.
-    */
+     * Provides a common set of helper/utility methods for logging errors.
+     */
     export class Logger {
 
         public static $inject = ["$q", "Utilities", "FileUtilities"];
@@ -58,8 +58,7 @@
 
                 try {
                     json = JSON.stringify(logEntry);
-                }
-                catch (exception) {
+                } catch (exception) {
                     // If for some reason we couldn't stringify the log entry (circular reference perhaps?)
                     // then we'll just emit the log entry and error to the console.
                     console.error("Unable to stringify the log entry.", logEntry, exception);

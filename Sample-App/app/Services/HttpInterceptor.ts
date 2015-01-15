@@ -1,12 +1,12 @@
 ﻿module JustinCredible.SampleApp.Services {
 
     /**
-    * This is a custom interceptor for Angular's $httpProvider.
-    * 
-    * It allows us to inject the token into the header, log request and responses,
-    * and handle the showing and hiding of the user blocking UI elements, progress
-    * bar and spinner.
-    */
+     * This is a custom interceptor for Angular's $httpProvider.
+     * 
+     * It allows us to inject the token into the header, log request and responses,
+     * and handle the showing and hiding of the user blocking UI elements, progress
+     * bar and spinner.
+     */
     export class HttpInterceptor {
 
         private $rootScope: ng.IRootScopeService;

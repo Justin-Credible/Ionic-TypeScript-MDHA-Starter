@@ -1,10 +1,10 @@
 ﻿module JustinCredible.SampleApp.Services {
 
     /**
-    * Provides a common set of helper/utility methods for performing file I/O.
-    * 
-    * Note that all I/O operations are asynchronous.
-    */
+     * Provides a common set of helper/utility methods for performing file I/O.
+     * 
+     * Note that all I/O operations are asynchronous.
+     */
     export class FileUtilities {
 
         public static $inject = ["$q", "Utilities"];
@@ -951,8 +951,7 @@
             }
 
             window.resolveLocalFileSystemURL(rootPath, function (rootEntry: DirectoryEntry) {
-                var flags: Flags,
-                    directory: DirectoryEntry;
+                var flags: Flags;
 
                 flags = {
                     create: true, // Specify true here to create the directory.
@@ -1108,7 +1107,7 @@
 
             path = this.preparePath(path);
 
-            this.directoryExists(path, rootPath).then(function (exists) {
+            this.directoryExists(path, rootPath).then(function (exists: boolean) {
 
                 // If the directory we are attempting to delete doesn't exist, then
                 // return without failing.
@@ -1222,7 +1221,7 @@
 
             path = this.preparePath(path);
 
-            this.fileExists(path, rootPath).then(function (exists) {
+            this.fileExists(path, rootPath).then(function (exists: boolean) {
 
                 // If the file we are attempting to delete doesn't exist, then
                 // return without failing.
@@ -1327,8 +1326,7 @@
             path = this.preparePath(path);
 
             window.resolveLocalFileSystemURL(rootPath, function (rootEntry: DirectoryEntry) {
-                var flags: Flags,
-                    directory: DirectoryEntry;
+                var flags: Flags;
 
                 flags = {
                     create: false,
@@ -1384,8 +1382,7 @@
             path = this.preparePath(path);
 
             window.resolveLocalFileSystemURL(rootPath, function (rootEntry: DirectoryEntry) {
-                var flags: Flags,
-                    directory: DirectoryEntry;
+                var flags: Flags;
 
                 flags = {
                     create: false,

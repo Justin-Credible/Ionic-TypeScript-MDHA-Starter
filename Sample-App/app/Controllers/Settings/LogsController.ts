@@ -92,12 +92,6 @@
             this.UiHelper.toast.showShortBottom("An error occurred while retrieving the logs.");
         }
 
-        private deleteActionSheet_destructiveButtonClicked(buttonIndex: number) {
-            this.Logger.clearLogs();
-            this.viewModel.logs = {};
-            return true;
-        }
-
         //#endregion
 
         //#region Controller Methods

@@ -1,8 +1,8 @@
 ﻿module JustinCredible.SampleApp.Services {
 
     /**
-    * Provides a common set of helper/utility methods.
-    */
+     * Provides a common set of helper/utility methods.
+     */
     export class Utilities {
 
         public static $inject = ["isRipple", "isDebug", "Preferences"];
@@ -135,21 +135,21 @@
             }
 
             // http://stackoverflow.com/questions/196972/convert-string-to-title-case-with-javascript
-            return str.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
+            return str.replace(/\w\S*/g, function (txt: string) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
         }
 
         /**
-        * Used to format a string by replacing values with the given arguments.
-        * Arguments should be provided in the format of {x} where x is the index
-        * of the argument to be replaced corresponding to the arguments given.
-        * 
-        * For example, the string t = "Hello there {0}, it is {1} to meet you!"
-        * used like this: Utilities.format(t, "dude", "nice") would result in:
-        * "Hello there dude, it is nice to meet you!".
-        * 
-        * @param str The string value to use for formatting.
-        * @param ... args The values to inject into the format string.
-        */
+         * Used to format a string by replacing values with the given arguments.
+         * Arguments should be provided in the format of {x} where x is the index
+         * of the argument to be replaced corresponding to the arguments given.
+         * 
+         * For example, the string t = "Hello there {0}, it is {1} to meet you!"
+         * used like this: Utilities.format(t, "dude", "nice") would result in:
+         * "Hello there dude, it is nice to meet you!".
+         * 
+         * @param str The string value to use for formatting.
+         * @param ... args The values to inject into the format string.
+         */
         public format(formatString: string, ...args: any[]): string {
             var i, reg;
             i = 0;
