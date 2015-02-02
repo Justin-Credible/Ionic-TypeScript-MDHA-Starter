@@ -17,8 +17,8 @@ Screenshots can be found on the project page [here](http://www.justin-credible.n
 
 The following is a list of JavaScript libraries that are included.
 
-* [Ionic](http://ionicframework.com/) (1.0.0-beta11)
-* [AngularJS](https://angularjs.org/) (1.2.17 via the Ionic bundle)
+* [Ionic](http://ionicframework.com/) (1.0.0-beta14)
+* [AngularJS](https://angularjs.org/) (1.3.6 via the Ionic bundle)
 * [lodash](http://lodash.com/) (2.4.1)
 * [Moment.js](http://momentjs.com/) (2.7.0)
 * [NProgress.js](http://ricostacruz.com/nprogress/) (0.1.6)
