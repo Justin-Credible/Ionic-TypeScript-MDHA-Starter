@@ -355,8 +355,8 @@
     <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
     <TypeScriptSourceMap>false</TypeScriptSourceMap>
   </PropertyGroup>
-  <Import Project="$(AppData)\npm\node_modules\vs-mda-targets\Microsoft.MDA.targets" />
-  <Import Project="$(AppData)\npm\node_modules\vs-mda-targets\Microsoft.TypeScript.MDA.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\CordovaTools\vs-mda-targets\Microsoft.MDA.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\CordovaTools\vs-mda-targets\Microsoft.TypeScript.MDA.targets" />
   <PropertyGroup>
     <ProjectUISubcaption>Multi-Device Hybrid App</ProjectUISubcaption>
   </PropertyGroup>
