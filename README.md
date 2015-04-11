@@ -7,7 +7,7 @@ It utilizes the [Ionic](http://ionicframework.com/) framework to achieve a user 
 
 The application is written primarily in [TypeScript](http://www.typescriptlang.org/) which brings object oriented paradigms, type-safety, compile-time checking, and IDE tooling (refactoring! code completion! huzzah!).
 
-Development is done in Visual Studio 2013 using the [Multi-Device Hybrid Application](http://msdn.microsoft.com/en-us/vstudio/dn722381.aspx) (MDHA) project template. This sample was built using the CTP 2.0 version.
+Development can be done in the preview version of Visual Studio 2015 (or 2013 using [Visual Studio Tools for Apache Cordova](https://www.visualstudio.com/en-US/explore/cordova-vs), which were previously known as the MDHA or Multi-Device Hybrid Application project template).
 
 In-browser development and debugging is possible via the [Apache Ripple](http://ripple.incubator.apache.org/) emulator. When deployed to a physical device, the application runs in the [Cordova](http://cordova.apache.org/) application container. Both of these are provided out of the box when using the MDHA project.
 
@@ -39,7 +39,9 @@ The following is a list of Cordova plug-ins that are used:
 
 ## Getting Started ##
 
-First, you'll need to install the [Multi-Device Hybrid Application](http://msdn.microsoft.com/en-us/vstudio/dn722381.aspx) (MDHA) project template/extension. As of this writing, the app works with CTP 2.0 (vs2013mda_0.2.exe).
+If you are using Visual Studio 2013 you'll need Update 4 as well as the [Visual Studio Tools for Apache Cordova](https://www.visualstudio.com/en-US/explore/cordova-vs). As of this writing, this starter application works with the customer technology preview (CTP) version 3.1 (vs2013mda_0.3.1.exe).
+
+If you are using a preview version of Visual Studio 2015, these tools are built in.
 
 The installer will take care of downloading and setting up Node.js, Apache Ant, Oracle JDK 7, the Android SDK, Google Chrome and more. An in-depth install guide can be found [here](http://msdn.microsoft.com/en-us/library/dn757054.aspx).
 
@@ -224,6 +226,6 @@ There are two sample dialogs provided; one for PIN entry and one for re-ordering
 
 ## License ##
 
-Copyright © 2014 Justin Unterreiner.
+Copyright © 2015 Justin Unterreiner.
 
 Released under an MIT license; see [LICENSE](https://github.com/Justin-Credible/Ionic-TypeScript-MDHA-Starter/blob/master/LICENSE) for more information.
