@@ -202,7 +202,7 @@ module JustinCredible.SampleApp.Application {
     /**
      * Function that is used to configure AngularJs.
      */
-    function angular_configure($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider, $provide: ng.auto.IProvideService, $httpProvider: ng.IHttpProvider): void {
+    function angular_configure($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider, $provide: ng.auto.IProvideService, $httpProvider: ng.IHttpProvider, $compileProvider: ng.ICompileProvider): void {
 
         // Intercept the default Angular exception handler.
         $provide.decorator("$exceptionHandler", function ($delegate: ng.IExceptionHandlerService) {
@@ -214,6 +214,11 @@ module JustinCredible.SampleApp.Application {
                 $delegate(exception, cause);
             };
         });
+
+        // Whitelist several URI schemes to prevent Angular from marking them as un-safe.
+        // http://stackoverflow.com/questions/19590818/angularjs-and-windows-8-route-error
+        $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|ghttps?|ms-appx|x-wmapp0):/);
+        $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|file|ms-appx|x-wmapp0):|data:image\//);
 
         // Register our custom interceptor with the HTTP provider so we can hook into AJAX request events.
         $httpProvider.interceptors.push("HttpInterceptor");
