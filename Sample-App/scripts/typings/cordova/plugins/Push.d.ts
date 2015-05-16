@@ -6,16 +6,21 @@
 // Copyright (c) Microsoft Open Technologies, Inc.
 // Licensed under the MIT license.
 
-//interface Window {
-//    plugins: {
-//        /**
-//         * This plugin allows to receive push notifications. The Android implementation uses
-//         * Google's GCM (Google Cloud Messaging) service,
-//         * whereas the iOS version is based on Apple APNS Notifications
-//         */
-//        pushNotification: PushNotification
-//    }
+/*
+interface Window {
+    plugins: Plugins
+}
+*/
+
+//interface Plugins {
+//    /**
+//     * This plugin allows to receive push notifications. The Android implementation uses
+//     * Google's GCM (Google Cloud Messaging) service,
+//     * whereas the iOS version is based on Apple APNS Notifications
+//     */
+//    pushNotification: PushNotification
 //}
+
 
 /**
  * This plugin allows to receive push notifications. The Android implementation uses

@@ -2,6 +2,14 @@
 
 for Android, iOS and WP8, by [Eddy Verbruggen](http://www.x-services.nl/phonegap-toast-plugin/796)
 
+
+<table width="100%">
+    <tr>
+        <td width="100"><a href="http://plugins.telerik.com/plugin/toast"><img src="http://www.x-services.nl/github-images/telerik-verified-plugins-marketplace.png" width="97px" height="71px" alt="Marketplace logo"/></a></td>
+        <td>For a quick demo app and easy code samples, check out the plugin page at the Verified Plugins Marketplace: http://plugins.telerik.com/plugin/toast</td>
+    </tr>
+</table>
+
 ## 0. Index
 
 1. [Description](#1-description)
@@ -53,13 +61,15 @@ Windows Phone 8
 ### Automatically (CLI / Plugman)
 Toast is compatible with [Cordova Plugman](https://github.com/apache/cordova-plugman), compatible with [PhoneGap 3.0 CLI](http://docs.phonegap.com/en/3.0.0/guide_cli_index.md.html#The%20Command-line%20Interface_add_features), here's how it works with the CLI (backup your project first!):
 
+Using the Cordova CLI and the [Cordova Plugin Registry](http://plugins.cordova.io)
 ```
-$ phonegap local plugin add https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git
-```
-or
-```
-$ cordova plugin add https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git
+$ cordova plugin add nl.x-services.plugins.toast
 $ cordova prepare
+```
+
+Or using the phonegap CLI
+```
+$ phonegap local plugin add nl.x-services.plugins.toast
 ```
 
 Toast.js is brought in automatically. There is no need to change or add anything in your html.
@@ -152,6 +162,8 @@ The Android code was entirely created by me.
 For iOS most credits go to this excellent [Toast for iOS project by Charles Scalesse] (https://github.com/scalessec/Toast).
 
 ## 6. CHANGELOG
+2.0.1: iOS messages are hidden when another one is shown. [Thanks Richie Min!](https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin/pull/13)
+
 2.0: WP8 support
 
 1.0: initial version supporting Android and iOS

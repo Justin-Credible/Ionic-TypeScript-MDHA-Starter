@@ -2,21 +2,23 @@
 # Build working directories
 Sample-App/bin
 Sample-App/bld
+Sample-App/platforms
 
 # Generated TypeScript artifacts
-Sample-App/app/**/*.js
-Sample-App/app/**/*.js.map
+Sample-App/www/scripts/appBundle.*
 
 # Local nu-get packages
 packages/*/
 
 # Build-time variables
-Sample-App/scripts/BuildVars.js
+Sample-App/www/scripts/BuildVars.js
 
 # Visual Studio user preferences etc
 *.docstates
 *.suo
 *.jsproj.user
+.vs/*
+Sample-App/changeList.json
 
 # Windows thumbnail cache
 Thumbs.db

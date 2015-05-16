@@ -46,6 +46,8 @@ static const BOOL CSToastHidesOnTap             = YES;     // excludes activity 
 static const NSString * CSToastTimerKey         = @"CSToastTimerKey";
 static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
 
+static UIView *prevToast = NULL;
+
 @interface UIView (ToastPrivate)
 
 - (void)hideToast:(UIView *)toast;
@@ -68,7 +70,7 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
 
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position {
     UIView *toast = [self viewForMessage:message title:nil image:nil];
-    [self showToast:toast duration:duration position:position];  
+    [self showToast:toast duration:duration position:position];
 }
 
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position title:(NSString *)title {
@@ -91,6 +93,10 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
 }
 
 - (void)showToast:(UIView *)toast duration:(NSTimeInterval)duration position:(id)point {
+    if(prevToast){
+        [self hideToast:prevToast];
+    }
+    prevToast = toast;
     toast.center = [self centerPointForPosition:point withToast:toast];
     toast.alpha = 0.0;
     
@@ -100,8 +106,9 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
         toast.userInteractionEnabled = YES;
         toast.exclusiveTouch = YES;
     }
-    
-    [self addSubview:toast];
+  
+    // make sure that if InAppBrowser is active, we're still showing Toasts on top of it
+    [self.superview.superview addSubview:toast];
     
     [UIView animateWithDuration:CSToastFadeDuration
                           delay:0.0

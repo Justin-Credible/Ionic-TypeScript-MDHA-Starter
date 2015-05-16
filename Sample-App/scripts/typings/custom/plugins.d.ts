@@ -9,13 +9,6 @@
 interface ICordovaPlugins {
 
     /**
-    * This plugin allows to receive push notifications. The Android implementation uses
-    * Google's GCM (Google Cloud Messaging) service,
-    * whereas the iOS version is based on Apple APNS Notifications
-    */
-    pushNotification: PushNotification;
-
-    /**
      * This plugin allows access to the user's clipboard.
      */
     clipboard: ICordovaClipboardPlugin;
@@ -29,6 +22,13 @@ interface ICordovaWindowPlugins {
      * This plugin allows showing toast messages cross platform for Android, iOS, and WP8.
      */
     toast: ICordovaToastPlugin;
+
+    /**
+     * This plugin allows to receive push notifications. The Android implementation uses
+     * Google's GCM (Google Cloud Messaging) service,
+     * whereas the iOS version is based on Apple APNS Notifications
+     */
+    pushNotification: PushNotification;
 }
 
 /**

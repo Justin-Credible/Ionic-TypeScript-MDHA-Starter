@@ -8,13 +8,6 @@
 interface Window {
 
     /**
-     * The StatusBar object provides some functions to customize the iOS and Android StatusBar.
-     * 
-     * http://plugins.cordova.io/#/package/org.apache.cordova.statusbar
-     */
-    StatusBar: ICordovaStatusBar;
-
-    /**
      * The ProgressIndicator provides some full screen user blocking spinners etc.
      */
     ProgressIndicator: ICordovaProgressIndicator;
@@ -62,8 +55,7 @@ interface Window {
 
         majorVersion: number;
         minorVersion: number;
-        releaseVersion: number;
-        revisionVersion: number
+        buildVersion: number;
     }
 }
 

@@ -5,23 +5,25 @@
 
 /// <reference path="../angularjs/angular.d.ts" />
 
-declare module ng.ui {
+declare module angular.ui {
 
     interface IState {
         name?: string;
         template?: any;
         templateUrl?: any;
-        templateProvider?: () => string;
+        templateProvider?: any;
         controller?: any;
+        controllerAs?: string;
         controllerProvider?: any;
         resolve?: {};
         url?: string;
-        params?: any[];
+        params?: any;
         views?: {};
         abstract?: boolean;
         onEnter?: any;
         onExit?: any;
         data?: any;
+        reloadOnSearch?: boolean;
     }
 
     interface IStateProvider extends IServiceProvider {
@@ -40,6 +42,7 @@ declare module ng.ui {
     interface IUrlMatcherFactory {
         compile(pattern: string): IUrlMatcher;
         isMatcher(o: any): boolean;
+        type(name: string, definition: any, definitionFn?: any): any;
     }
 
     interface IUrlRouterProvider extends IServiceProvider {
@@ -106,10 +109,10 @@ declare module ng.ui {
     	 */
         sync(): void;
     }
-    
+
     interface IUiViewScrollProvider {
         /*
-         * Reverts back to using the core $anchorScroll service for scrolling 
+         * Reverts back to using the core $anchorScroll service for scrolling
          * based on the url anchor.
          */
         useAnchorScroll(): void;

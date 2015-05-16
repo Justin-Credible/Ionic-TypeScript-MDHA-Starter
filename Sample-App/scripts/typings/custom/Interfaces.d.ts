@@ -35,8 +35,7 @@ declare module JustinCredible.SampleApp.Interfaces {
     interface VersionInfo {
         majorVersion: number;
         minorVersion: number;
-        releaseVersion: number;
-        revisionVersion: number;
+        buildVersion: number;
         versionString: string;
         buildTimestamp: string;
         applicationName: string;

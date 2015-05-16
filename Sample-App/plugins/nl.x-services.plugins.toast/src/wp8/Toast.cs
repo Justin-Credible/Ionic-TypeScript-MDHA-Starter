@@ -1,3 +1,5 @@
+using System;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,13 +28,40 @@ namespace WPCordovaClassLib.Cordova.Commands
             }
         }
 
+        [DataContract]
+        public class ToastOptions
+        {
+            [DataMember(IsRequired = true, Name = "message")]
+            public string message { get; set; }
+
+            [DataMember(IsRequired = true, Name = "duration")]
+            public string duration { get; set; }
+
+            [DataMember(IsRequired = true, Name = "position")]
+            public string position { get; set; }
+        }
+
         public void show(string options)
         {
+            ToastOptions toastOptions;
             string[] args = JSON.JsonHelper.Deserialize<string[]>(options);
-            var message = args[0];
-            var duration = args[1];
-            var position = args[2];
-            string aliasCurrentCommandCallbackId = args[3];
+            String jsonOptions = args[0];
+
+            try
+            {
+                toastOptions = JSON.JsonHelper.Deserialize<ToastOptions>(jsonOptions);
+            }
+            catch (Exception)
+            {
+                DispatchCommandResult(new PluginResult(PluginResult.Status.JSON_EXCEPTION));
+                return;
+            }
+
+            var message = toastOptions.message;
+            var duration = toastOptions.duration;
+            var position = toastOptions.position;
+
+            string aliasCurrentCommandCallbackId = args[1];
 
             Deployment.Current.Dispatcher.BeginInvoke(() =>
             {
@@ -82,16 +111,30 @@ namespace WPCordovaClassLib.Cordova.Commands
                             popup.VerticalAlignment = VerticalAlignment.Bottom;
                             popup.VerticalOffset = -100; // TODO can do better
                         }
-                        else // center
+                        else if ("center".Equals(position))
                         {
                             popup.VerticalAlignment = VerticalAlignment.Center;
                             popup.VerticalOffset = -50; // TODO can do way better
                         }
+                        else
+                        {
+                            DispatchCommandResult(new PluginResult(PluginResult.Status.ERROR, "invalid position. valid options are 'top', 'center' and 'bottom'"));
+                            return;
+                        }
+
+                        int hideDelay = 2800;
+                        if ("long".Equals(duration))
+                        {
+                            hideDelay = 5500;
+                        }
+                        else if (!"short".Equals(duration))
+                        {
+                            DispatchCommandResult(new PluginResult(PluginResult.Status.ERROR, "invalid duration. valid options are 'short' and 'long'"));
+                            return;
+                        }
 
                         grid.Children.Add(popup);
                         popup.IsOpen = true;
-
-                        int hideDelay = "long".Equals(duration) ? 5500 : 2800;
                         this.hidePopup(hideDelay);
                     }
                 }

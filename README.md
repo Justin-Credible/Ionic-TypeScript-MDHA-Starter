@@ -7,9 +7,9 @@ It utilizes the [Ionic](http://ionicframework.com/) framework to achieve a user 
 
 The application is written primarily in [TypeScript](http://www.typescriptlang.org/) which brings object oriented paradigms, type-safety, compile-time checking, and IDE tooling (refactoring! code completion! huzzah!).
 
-Development can be done in the preview version of Visual Studio 2015 (or 2013 using [Visual Studio Tools for Apache Cordova](https://www.visualstudio.com/en-US/explore/cordova-vs), which were previously known as the MDHA or Multi-Device Hybrid Application project template).
+Development is done in Visual Studio 2015 using the [Visual Studio Tools for Apache Cordova](https://www.visualstudio.com/en-us/features/cordova-vs.aspx).
 
-In-browser development and debugging is possible via the [Apache Ripple](http://ripple.incubator.apache.org/) emulator. When deployed to a physical device, the application runs in the [Cordova](http://cordova.apache.org/) application container. Both of these are provided out of the box when using the MDHA project.
+In-browser development and debugging is possible via the [Apache Ripple](http://ripple.incubator.apache.org/) emulator. When deployed to a physical device, the application runs in the [Cordova](http://cordova.apache.org/) application container. Both of these are provided out of the box when using VS2015.
 
 Screenshots can be found on the project page [here](http://www.justin-credible.net/Projects/Ionic-TypeScript-MDHA-Starter).
 
@@ -27,45 +27,49 @@ The following is a list of JavaScript libraries that are included.
 
 The following is a list of Cordova plug-ins that are used:
 
-* org.apache.cordova.console (0.2.8)
-* org.apache.cordova.device (0.2.9)
-* org.apache.cordova.statusbar (0.1.6)
-* org.apache.cordova.file (1.2.0)
-* org.apache.cordova.dialogs (0.2.8)
-* com.jamiestarke.webviewdebug (1.0.8)
+* org.apache.cordova.console (0.2.13)
+* org.apache.cordova.device (0.3.0)
+* org.apache.cordova.file (1.3.3)
+* org.apache.cordova.dialogs (0.3.0)
 * com.verso.cordova.clipboard (0.1.0)
-* nl.x-services.plugins.toast (2.0)
-* org.pbernasconi.progressIndicator (1.0.0)
+* nl.x-services.plugins.toast (2.0.5)
+* org.pbernasconi.progressIndicator (1.1.0)
 
 ## Getting Started ##
 
-If you are using Visual Studio 2013 you'll need Update 4 as well as the [Visual Studio Tools for Apache Cordova](https://www.visualstudio.com/en-US/explore/cordova-vs). As of this writing, this starter application works with the customer technology preview (CTP) version 3.1 (vs2013mda_0.3.1.exe).
+The Visual Studio Tools for Apache Cordova are now included with Visual Studio 2015 and can be downloaded [here](https://www.visualstudio.com/en-us/features/cordova-vs.aspx).
 
-If you are using a preview version of Visual Studio 2015, these tools are built in.
-
-The installer will take care of downloading and setting up Node.js, Apache Ant, Oracle JDK 7, the Android SDK, Google Chrome and more. An in-depth install guide can be found [here](http://msdn.microsoft.com/en-us/library/dn757054.aspx).
+In addition to installing Visual Studio, the installer will take care of downloading and setting up all the dependencies you need for developing Cordova applications (Node.js, Apache Ant, Oracle JDK 7, the Android SDK, Google Chrome and more).
 
 You can clone the repository to your machine using:
 
 	$ git clone https://github.com/Justin-Credible/Ionic-TypeScript-MDHA-Starter
 
-Once you've installed the extension, and cloned this repository you should be able to open the solution file:
+Once you've installed VS2015, and cloned this repository you should be able to open the solution file:
 
 	JustinCredible.SampleApp.sln
 
 ## Running ##
 
-The MDHA extension makes it easy to build and run your mobile application for multiple platforms. You can simply choose the build type, platform and action (which can either be to run on the device, run on the device emulator, or run in the Apache Ripple in-browser simulator. This is done via the configuration drop downs on the Visual Studio's standard toolbar.
+The VS Cordova Tools make it easy to build and run your mobile application for multiple platforms. You can simply choose the build type, platform and action (which can either be to run on the device, run on the device emulator, or run in the Apache Ripple in-browser simulator. This is done via the configuration drop downs on the Visual Studio's standard toolbar.
 
 The project has been written to work well with the Ripple emulator; while in the browser several device only features (toast notifications, clipboard access, dialogs) will be mocked up and replaced with versions that will work on the browser. For example, the Ionic dialogs will be used in the emulator, but the native OS dialogs will be used when running on the device.
 
 This is taken care of via the RippleMockApi.js and MockApis.ts files.
 
-When you click the play button (or press F5), the build process will kick off. The MDHA extension will perform TypeScript compilation, setup a Cordova project, and then copy in all of the resources.
+When you click the play button (or press F5), the build process will kick off. The VS Cordova Tools will perform TypeScript compilation, setup a Cordova project, and then copy in all of the resources.
 
 If you are using the Ripple emulator a Chrome instance will be started and Visual Studio will attach to it to enable DOM inspection and JavaScript debugging.
 
-## Debugging ##
+## Debugging in Visual Studio ##
+
+While debugging, any changes to files in the `www` directory should cause the Ripple emulator to refresh. You can also force a refresh by building using Build > Build Solution.
+
+You may notice that if you try to open Chrome's F12 Developer Tools while Visual Studio is attached, the Chrome instance may crash. This has gotten much better in recent versions, so you may not encounter this issue, but if you do you can simply detach VS (Debug > Detach All) before opening the Developer Tools in Chrome.
+
+## Debugging in Chrome ##
+
+*The following information is now out of date, but I'm leaving it here because it is still useful to know how to start an instance of the Ripple Emulator manually.*
 
 Personally, I find the VS attachment to the Chrome process takes too long and I also prefer Chrome's debugging tools over those provided in Visual Studio. If you want a faster debug/refresh cycle, you can install the Ripple emulator manually by using npm:
 
@@ -108,9 +112,6 @@ The "Development Tools" view is available via the settings menu and houses sever
 
 It can be used to enable the Mock API mode (described below), change the logging mode, test dialogs and/or toast notifications, and get information about the platform.
 
-HTTP progress indicators
-mock HTTP requests
-
 ## HTTP API Requests ##
 
 A custom HTTP Interceptor is provided via `HttpInterceptor.ts`. It is responsible for several things:
@@ -149,9 +150,13 @@ The responses for the HTTP requests are defined in the `mockHttpCalls` method in
 
 ## Project Structure ##
 
-The file layout is mostly self describing via the directory names. All of the application code is located in the `app` directory, with sub-directories for controllers, directives, view models, services, etc.
+The file layout is mostly self describing via the directory names. All of the application code is located in the `scripts/app` directory, with sub-directories for controllers, directives, view models, services, etc.
 
 `Application.ts` is the main file that bootstraps the application. It is responsible for setting up Ionic/Angular and registering the controllers, directives, routes, etc. It also takes care of device level events and handling exceptions.
+
+Visual Studio will compile the TypeScript and bundle it all into a single file located at `www/scripts/appBundle.js`.
+
+Third party JavaScript libraries are stored in `www/lib`. I'm not currently using NuGet for third party libraries because I can't control the location of the scripts. 
 
 #### TypeScript ####
 
@@ -188,7 +193,7 @@ Injection for controllers is done by setting a public static variable named `$in
 
 The `Utilities.ts` file defines a `Utilities` service which provides several convenience methods for checking the device version, build mode (debug vs release), application version numbers.
 
-It also includes helpers for manipulating strings (startsWith, endsWith, format), creating GUIDs, and working with the clipboard.
+It also includes helpers for manipulating strings (`startsWith`, `endsWith`, `format`), creating GUIDs, and working with the clipboard.
 
 ### UI Helper ###
 

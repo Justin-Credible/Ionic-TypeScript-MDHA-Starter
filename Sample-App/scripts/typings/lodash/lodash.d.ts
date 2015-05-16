@@ -17,7 +17,7 @@ declare module _ {
         * explicitly included in the build.
         *
         * The chainable wrapper functions are:
-        * after, assign, bind, bindAll, bindKey, chain, compact, compose, concat, countBy, 
+        * after, assign, bind, bindAll, bindKey, chain, chunk, compact, compose, concat, countBy, 
         * createCallback, curry, debounce, defaults, defer, delay, difference, filter, flatten, 
         * forEach, forEachRight, forIn, forInRight, forOwn, forOwnRight, functions, groupBy, 
         * indexBy, initial, intersection, invert, invoke, keys, map, max, memoize, merge, min, 
@@ -254,6 +254,30 @@ declare module _ {
     /*********
     * Arrays *
     **********/
+    
+    //_.chunk
+    interface LoDashStatic {
+        /**
+        * Creates an array of elements split into groups the length of size. If collection can’t be
+        * split evenly, the final chunk will be the remaining elements.
+        * @param array The array to process.
+        * @param size The length of each chunk.
+        * @return Returns the new array containing chunks.
+        **/
+        chunk<T>(array: Array<T>, size?: number): T[][];
+
+        /**
+        * @see _.chunk
+        **/
+        chunk<T>(array: List<T>, size?: number): T[][];
+    }
+    
+    interface LoDashArrayWrapper<T> {
+        /**
+        * @see _.chunk
+        **/
+        chunk(size?: number): LoDashArrayWrapper<T>;
+    }
 
     //_.compact
     interface LoDashStatic {
@@ -2027,6 +2051,18 @@ declare module _ {
         unzip(...arrays: any[]): any[];
     }
 
+    interface LoDashArrayWrapper<T> {
+        /**
+        * @see _.zip
+        **/
+        zip(...arrays: any[][]): _.LoDashArrayWrapper<any[][]>;
+
+        /**
+        * @see _.zip
+        **/
+        unzip(...arrays: any[]): _.LoDashArrayWrapper<any[][]>;
+    }
+
     //_.zipObject
     interface LoDashStatic {
         /**
@@ -2629,6 +2665,15 @@ declare module _ {
             whereValue: W): LoDashArrayWrapper<T>;
     }
 
+    interface LoDashObjectWrapper<T> {
+        /**
+        * @see _.filter
+        **/
+        filter<T extends {}>(
+            callback: ObjectIterator<T, boolean>,
+            thisArg?: any): LoDashObjectWrapper<T>;
+    }
+
     //_.find
     interface LoDashStatic {
         /**
@@ -2860,6 +2905,28 @@ declare module _ {
             pluckValue: string): T;
     }
 
+    interface LoDashArrayWrapper<T> {
+        /**
+        * @see _.find
+        */
+        find(
+            callback: ListIterator<T, boolean>,
+            thisArg?: any): T;
+        /**
+        * @see _.find
+        * @param _.where style callback
+        */
+        find<W>(
+            whereValue: W): T;
+
+        /**
+        * @see _.find
+        * @param _.where style callback
+        */
+        find(
+            pluckValue: string): T;
+    }
+
     //_.findLast
     interface LoDashStatic {
         /**
@@ -2937,6 +3004,28 @@ declare module _ {
         **/
         findLast<T>(
             collection: Dictionary<T>,
+            pluckValue: string): T;
+    }
+
+    interface LoDashArrayWrapper<T> {
+        /**
+        * @see _.findLast
+        */
+        findLast(
+            callback: ListIterator<T, boolean>,
+            thisArg?: any): T;
+        /**
+        * @see _.findLast
+        * @param _.where style callback
+        */
+        findLast<W>(
+            whereValue: W): T;
+
+        /**
+        * @see _.findLast
+        * @param _.where style callback
+        */
+        findLast(
             pluckValue: string): T;
     }
 
@@ -3620,6 +3709,29 @@ declare module _ {
             whereValue: W): T;
     }
 
+    interface LoDashArrayWrapper<T> {
+        /**
+        * @see _.max
+        **/
+        max(
+            callback?: ListIterator<T, any>,
+            thisArg?: any): LoDashWrapper<T>;
+
+        /**
+        * @see _.max
+        * @param pluckValue _.pluck style callback
+        **/
+        max(
+            pluckValue: string): LoDashWrapper<T>;
+
+        /**
+        * @see _.max
+        * @param whereValue _.where style callback
+        **/
+        max<W>(
+            whereValue: W): LoDashWrapper<T>;
+    }
+
     //_.min
     interface LoDashStatic {
         /**
@@ -3706,6 +3818,29 @@ declare module _ {
         min<W, T>(
             collection: Dictionary<T>,
             whereValue: W): T;
+    }
+
+    interface LoDashArrayWrapper<T> {
+        /**
+        * @see _.min
+        **/
+        min(
+            callback?: ListIterator<T, any>,
+            thisArg?: any): LoDashWrapper<T>;
+
+        /**
+        * @see _.min
+        * @param pluckValue _.pluck style callback
+        **/
+        min(
+            pluckValue: string): LoDashWrapper<T>;
+
+        /**
+        * @see _.min
+        * @param whereValue _.where style callback
+        **/
+        min<W>(
+            whereValue: W): LoDashWrapper<T>;
     }
 
     //_.pluck
@@ -4285,6 +4420,20 @@ declare module _ {
         * @see _.shuffle
         **/
         shuffle<T>(collection: Dictionary<T>): T[];
+    }
+
+    interface LoDashArrayWrapper<T> {
+        /**
+         * @see _.shuffle
+         **/
+        shuffle(): LoDashArrayWrapper<T>;
+    }
+
+    interface LoDashObjectWrapper<T> {
+        /**
+         * @see _.shuffle
+         **/
+        shuffle(): LoDashArrayWrapper<T>;
     }
 
     //_.size
@@ -5620,6 +5769,18 @@ declare module _ {
         **/
         isEmpty(value: any): boolean;
     }
+    
+    //_.isError
+    interface LoDashStatic {
+        /**
+        * Checks if value is an Error, EvalError, RangeError, ReferenceError, SyntaxError, TypeError,
+        * or URIError object.
+        * @param value The value to check.
+        * @return True if value is an error object, else false.
+        */
+        isError(value: any): boolean;
+    }
+
 
     //_.isEqual
     interface LoDashStatic {
@@ -6022,6 +6183,50 @@ declare module _ {
         values(object: any): any[];
     }
 
+    /**********
+     * String *
+     **********/
+
+    interface LoDashStatic {
+        camelCase(str?: string): string;
+        capitalize(str?: string): string;
+        deburr(str?: string): string;
+        endsWith(str?: string, target?: string, position?: number): boolean;
+        escape(str?: string): string;
+        escapeRegExp(str?: string): string;
+        kebabCase(str?: string): string;
+        pad(str?: string, length?: number, chars?: string): string;
+        padLeft(str?: string, length?: number, chars?: string): string;
+        padRight(str?: string, length?: number, chars?: string): string;
+        repeat(str?: string, n?: number): string;
+        snakeCase(str?: string): string;
+        startCase(str?: string): string;
+        startsWith(str?: string, target?: string, position?: number): boolean;
+        trim(str?: string, chars?: string): string;
+        trimLeft(str?: string, chars?: string): string;
+        trimRight(str?: string, chars?: string): string;
+        trunc(str?: string, len?: number): string;
+        trunc(str?: string, options?: { length?: number; omission?: string; separator?: string }): string;
+        trunc(str?: string, options?: { length?: number; omission?: string; separator?: RegExp }): string;
+        words(str?: string, pattern?: string): string[];
+        words(str?: string, pattern?: RegExp): string[];
+    }
+
+    //_.parseInt
+    interface LoDashStatic {
+        /**
+        * Converts the given value into an integer of the specified radix. If radix is undefined or 0 a 
+        * radix of 10 is used unless the value is a hexadecimal, in which case a radix of 16 is used.
+        *
+        * Note: This method avoids differences in native ES3 and ES5 parseInt implementations. See 
+        * http://es5.github.io/#E.
+        * @param value The value to parse.
+        * @param radix The radix used to interpret the value to parse.
+        * @return The new integer value.
+        **/
+        parseInt(value: string, radix?: number): number;
+    }
+
     /*************
      * Utilities *
      *************/
@@ -6063,19 +6268,15 @@ declare module _ {
         noConflict(): typeof _;
     }
 
-    //_.parseInt
+    //_.property
     interface LoDashStatic {
         /**
-        * Converts the given value into an integer of the specified radix. If radix is undefined or 0 a 
-        * radix of 10 is used unless the value is a hexadecimal, in which case a radix of 16 is used.
-        *
-        * Note: This method avoids differences in native ES3 and ES5 parseInt implementations. See 
-        * http://es5.github.io/#E.
-        * @param value The value to parse.
-        * @param radix The radix used to interpret the value to parse.
-        * @return The new integer value.
-        **/
-        parseInt(value: string): number;
+         * # Ⓢ
+         * Creates a "_.pluck" style function, which returns the key value of a given object.
+         * @param key (string)
+         * @return the value of that key on the object
+         **/
+        property<T,RT>(key: string): (obj: T) => RT;
     }
 
     //_.random
@@ -6201,7 +6402,33 @@ declare module _ {
         **/
         uniqueId(prefix?: string): string;
     }
+    
+    //_.noop
+    interface LoDashStatic {
+        /**
+         * A no-operation function.
+         **/
+        noop(): void;
+    }
 
+    //_.constant
+    interface LoDashStatic {
+        /**
+         * Creates a function that returns value..
+         **/
+        constant<T>(value: T): () => T;
+    }
+
+    //_.create
+    interface LoDashStatic {
+        /**
+         * Creates an object that inherits from the given prototype object. If a properties object is provided its own enumerable properties are assigned to the created object.
+         * @param prototype The object to inherit from.
+         * @param properties The properties to assign to the object.
+         */
+        create<T>(prototype: Object, properties?: Object): Object;
+    }
+    
     interface ListIterator<T, TResult> {
         (value: T, index: number, list: T[]): TResult;
     }
