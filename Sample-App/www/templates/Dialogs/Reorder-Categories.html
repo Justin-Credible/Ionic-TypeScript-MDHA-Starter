@@ -9,8 +9,8 @@
 
         <ion-list show-reorder="true">
             <ion-item class="item-icon-left" ng-repeat="categoryItem in viewModel.categories">
-                <i class="icon ion-{{categoryItem.icon}}" style="margin-left: 50px;"></i>
-                <span style="margin-left: 50px;">{{categoryItem.name}}</span>
+                <i class="icon ion-{{categoryItem.icon}}"></i>
+                <span>{{categoryItem.name}}</span>
                 <ion-reorder-button class="ion-navicon" on-reorder="controller.item_reorder(categoryItem, $fromIndex, $toIndex)"></ion-reorder-button>
             </ion-item>
         </ion-list>

@@ -28,7 +28,7 @@
             // Setup the view model.
             this.viewModel.showButton = true;
             this.viewModel.showUserCount = true;
-            this.viewModel.icon = "ios7-cloud-upload-outline";
+            this.viewModel.icon = "ios-cloud-upload-outline";
             this.viewModel.userCount = 2344;
         }
 
@@ -52,11 +52,11 @@
         private toggleIcon() {
 
             // Simply switch the icon depending on which icon is currently set.
-            if (this.cloudIconPanel.getIcon() === "ios7-cloud-upload-outline") {
-                this.cloudIconPanel.setIcon("ios7-cloud-download-outline");
+            if (this.cloudIconPanel.getIcon() === "ios-cloud-upload-outline") {
+                this.cloudIconPanel.setIcon("ios-cloud-download-outline");
             }
             else {
-                this.cloudIconPanel.setIcon("ios7-cloud-upload-outline");
+                this.cloudIconPanel.setIcon("ios-cloud-upload-outline");
             }
 
             // We have to notify Angular that we want an update manually since the
@@ -78,8 +78,8 @@
 
             // Can change the icon via a setIcon call on the directive instance
             // or by changing the view model property that it is bound to.
-            //this.iconPanel.setIcon("ios7-rainy"); // Change via directly the instance.
-            this.viewModel.icon = "ios7-rainy"; // Change via view model binding.
+            //this.iconPanel.setIcon("ios-rainy"); // Change via directly the instance.
+            this.viewModel.icon = "ios-rainy"; // Change via view model binding.
 
             // Hide the button and user count text.
             this.viewModel.showButton = false;
