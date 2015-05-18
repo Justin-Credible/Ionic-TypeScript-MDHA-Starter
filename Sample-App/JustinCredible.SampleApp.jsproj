@@ -131,6 +131,35 @@
     <!-- Installs (if necessary) the supporting Nodejs module -->
     <Exec Command="&quot;$(MDAVsixDir)&quot;\packages\vs-tac\install &quot;$(NodeJsDir)&quot; &quot;$(MDAVsixDir)&quot;\packages\vs-tac" />
   </Target>
+  <Target Name="BeforeBuild">
+    <!-- Get the version numbers from the Cordova config.xml file. -->
+    <GetVersionNumbers ConfigFile="$(MSBuildProjectDirectory)/config.xml">
+      <Output PropertyName="MajorVersion" TaskParameter="MajorVersion" />
+      <Output PropertyName="MinorVersion" TaskParameter="MinorVersion" />
+      <Output PropertyName="BuildVersion" TaskParameter="BuildVersion" />
+    </GetVersionNumbers>
+    <!--
+      Create the BuildVars.js file; this allows us to pass in build
+      time arguments which can be used by the application at runtime.
+    -->
+    <CreateBuildVarsJs FilePath="$(MSBuildProjectDirectory)/scripts/BuildVars.js" IsDebug="'$(Configuration)' == 'Debug'" MajorVersion="$(MajorVersion)" MinorVersion="$(MinorVersion)" BuildVersion="$(BuildVersion)" />
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  <Target Name="AfterClean">
+    <!-- Remove the BuildVars.js file that was generated via BeforeBuild. -->
+    <Delete Files="$(MSBuildProjectDirectory)/scripts/BuildVars.js" TreatErrorsAsWarnings="true" />
+    <!-- Create a list of files to clean-up. -->
+    <ItemGroup>
+      <GeneratedJsFiles Include="$(MSBuildProjectDirectory)\www\scripts\appBundle.js" />
+      <GeneratedJsMapFiles Include="$(MSBuildProjectDirectory)\www\scripts\appBundle.map.js" />
+    </ItemGroup>
+    <!-- Perform clean-up of files that the Clean target leaves behind. -->
+    <Delete Files="@(GeneratedJsFiles)" TreatErrorsAsWarnings="true" />
+    <Delete Files="@(GeneratedJsMapFiles)" TreatErrorsAsWarnings="true" />
+    <RemoveDir Directories="$(MSBuildProjectDirectory)\bin" ContinueOnError="true" />
+    <RemoveDir Directories="$(MSBuildProjectDirectory)\bld" ContinueOnError="true" />
+  </Target>
   <ProjectExtensions>
     <VisualStudio>
       <UserProperties project_1json__JSONSchema="http://www.asp.net/media/4878834/project.json" />
