@@ -134,7 +134,7 @@
     <!-- Create a list of files to clean-up. -->
     <ItemGroup>
       <GeneratedJsFiles Include="$(MSBuildProjectDirectory)\www\scripts\appBundle.js" />
-      <GeneratedJsMapFiles Include="$(MSBuildProjectDirectory)\www\scripts\appBundle.map.js" />
+      <GeneratedJsMapFiles Include="$(MSBuildProjectDirectory)\www\scripts\appBundle.js.map" />
     </ItemGroup>
     <!-- Perform clean-up of files that the Clean target leaves behind. -->
     <Delete Files="@(GeneratedJsFiles)" TreatErrorsAsWarnings="true" />
