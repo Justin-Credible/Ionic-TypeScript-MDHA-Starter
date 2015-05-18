@@ -100,24 +100,6 @@
   <PropertyGroup>
     <TargetPlatformIdentifier>MDD</TargetPlatformIdentifier>
   </PropertyGroup>
-  <Target Name="BeforeBuild">
-    <!-- Get the version numbers from the Cordova config.xml file. -->
-    <GetVersionNumbers ConfigFile="$(MSBuildProjectDirectory)/config.xml">
-      <Output PropertyName="MajorVersion" TaskParameter="MajorVersion" />
-      <Output PropertyName="MinorVersion" TaskParameter="MinorVersion" />
-      <Output PropertyName="BuildVersion" TaskParameter="BuildVersion" />
-    </GetVersionNumbers>
-    <!--
-      Create the BuildVars.js file; this allows us to pass in build
-      time arguments which can be used by the application at runtime.
-    -->
-    <CreateBuildVarsJs FilePath="$(MSBuildProjectDirectory)/www/scripts/BuildVars.js" IsDebug="'$(Configuration)' == 'Debug'" MajorVersion="$(MajorVersion)" MinorVersion="$(MinorVersion)" BuildVersion="$(BuildVersion)" />
-  </Target>
-  <Target Name="BeforeClean">
-    <Delete Files="$(MSBuildProjectDirectory)/www/scripts/BuildVars.js" />
-    <Delete Files="$(MSBuildProjectDirectory)/www/scripts/appBundle.js" />
-    <Delete Files="$(MSBuildProjectDirectory)/www/scripts/appBundle.js.map" />
-  </Target>
   <Target Name="EnsureBuildPrerequisites">
     <!-- These errors will trigger if building from inside Visual Studio and requirements could not be determined -->
     <Error Condition="$(MDAPropertiesEvaluated) == 'true' And $(NodeJsDir) == ''" Text="Path to NodeJs could not be determined. Please check that NodeJs has been installed." />
@@ -127,7 +109,7 @@
     <Error Condition="$(MDAPropertiesEvaluated) == '' And $(MDAVsixDir) == ''" Text="Path to Visual Studio Extension for Tools for Apache Cordova has not been specified. Please install it and set the MDAVsixDir environment variable before building." />
     <!-- Sanity check that things exist in the specified places. These are more likely to fail if building outside Visual Studio and the required environment variables have not been set, or set incorrectly. -->
     <Error Condition="!Exists('$(NodeJsDir)') Or !Exists('$(NodeJsDir)\node.exe')" Text="The specified NodeJs directory $(NodeJsDir) either does not exist, or does not contain node.exe. Please check that NodeJs has been installed, and set the NodeJsDir variable to the correct directory." />
-    <Error Condition="!Exists('$(MDAVsixDir)') Or !Exists('$(MDAVsixDir)\packages\vs-tac')" Text="The specified directory to the Visual Studio extension $(MDAVsixDir)\node.exe either does not exist, or does not contain a packages\vs-tac sub-directory. Please check that the extension directory exists and set the MDAVsixDir variable to the correct directory." />
+    <Error Condition="!Exists('$(MDAVsixDir)') Or !Exists('$(MDAVsixDir)\packages\vs-tac')" Text="The specified directory to the Visual Studio extension $(MDAVsixDir)\packages\vs-tac either does not exist, or does not contain a packages\vs-tac sub-directory. Please check that the extension directory exists and set the MDAVsixDir variable to the correct directory." />
     <!-- Installs (if necessary) the supporting Nodejs module -->
     <Exec Command="&quot;$(MDAVsixDir)&quot;\packages\vs-tac\install &quot;$(NodeJsDir)&quot; &quot;$(MDAVsixDir)&quot;\packages\vs-tac" />
   </Target>
@@ -142,13 +124,13 @@
       Create the BuildVars.js file; this allows us to pass in build
       time arguments which can be used by the application at runtime.
     -->
-    <CreateBuildVarsJs FilePath="$(MSBuildProjectDirectory)/scripts/BuildVars.js" IsDebug="'$(Configuration)' == 'Debug'" MajorVersion="$(MajorVersion)" MinorVersion="$(MinorVersion)" BuildVersion="$(BuildVersion)" />
+    <CreateBuildVarsJs FilePath="$(MSBuildProjectDirectory)/www/scripts/BuildVars.js" IsDebug="'$(Configuration)' == 'Debug'" MajorVersion="$(MajorVersion)" MinorVersion="$(MinorVersion)" BuildVersion="$(BuildVersion)" />
   </Target>
   <Target Name="AfterBuild">
   </Target>
   <Target Name="AfterClean">
     <!-- Remove the BuildVars.js file that was generated via BeforeBuild. -->
-    <Delete Files="$(MSBuildProjectDirectory)/scripts/BuildVars.js" TreatErrorsAsWarnings="true" />
+    <Delete Files="$(MSBuildProjectDirectory)/scripts/www/BuildVars.js" TreatErrorsAsWarnings="true" />
     <!-- Create a list of files to clean-up. -->
     <ItemGroup>
       <GeneratedJsFiles Include="$(MSBuildProjectDirectory)\www\scripts\appBundle.js" />
