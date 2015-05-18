@@ -215,7 +215,7 @@ module JustinCredible.SampleApp.Application {
 
         // Whitelist several URI schemes to prevent Angular from marking them as un-safe.
         // http://stackoverflow.com/questions/19590818/angularjs-and-windows-8-route-error
-        $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|ghttps?|ms-appx|x-wmapp0):/);
+        $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|ghttps?|ms-appx|x-wmapp0|chrome-extension):/);
         $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|file|ms-appx|x-wmapp0):|data:image\//);
 
         // Register our custom interceptor with the HTTP provider so we can hook into AJAX request events.

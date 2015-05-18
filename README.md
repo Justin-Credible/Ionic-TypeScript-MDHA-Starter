@@ -7,9 +7,11 @@ It utilizes the [Ionic](http://ionicframework.com/) framework to achieve a user 
 
 The application is written primarily in [TypeScript](http://www.typescriptlang.org/) which brings object oriented paradigms, type-safety, compile-time checking, and IDE tooling (refactoring! code completion! huzzah!).
 
-Development is done in Visual Studio 2015 using the [Visual Studio Tools for Apache Cordova](https://www.visualstudio.com/en-us/features/cordova-vs.aspx).
+Development is done in Visual Studio 2015 using the [Visual Studio Tools for Apache Cordova](https://www.visualstudio.com/en-us/features/cordova-vs.aspx) (previously known as Multi-Device Hybrid Applications project).
 
 In-browser development and debugging is possible via the [Apache Ripple](http://ripple.incubator.apache.org/) emulator. When deployed to a physical device, the application runs in the [Cordova](http://cordova.apache.org/) application container. Both of these are provided out of the box when using VS2015.
+
+Applications created with this starter project can target iOS, Android, Windows, and Chrome (as an extension).
 
 Screenshots can be found on the project page [here](http://www.justin-credible.net/Projects/Ionic-TypeScript-MDHA-Starter).
 
@@ -87,6 +89,13 @@ This will start the Ripple emulator's web server on port 4400 and open your defa
 	http://localhost:4400/?enableripple=cordova-3.0.0
 
 At this point you can run/test/debug and when you make a change you can just do a build again via F6 and then refresh your browser. This allows for much quicker development in my opinion.
+
+## Building as a Chrome Extension ##
+
+I've included a simple batch file `Build-Chrome-Extension.cmd` which will generate an extension that can be loaded in Chrome.
+
+Once built, the extension can be loaded into Chrome using the `chrome://extensions` URL and enabling development mode. The extension payload will be located at `bin\Chrome`.
+
 
 ## Basic Functionality ##
 

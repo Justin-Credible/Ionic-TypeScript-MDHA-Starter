@@ -6,7 +6,6 @@
         <title></title>
 
         <!-- Include the platform specific compatibility code. -->
-        <!--<script src="scripts/winstore-jscompat.js"></script>-->
         <script src="scripts/platformOverrides.js"></script>
 
         <!-- Exposes certain build flags (version, build time, debug, etc). -->
@@ -51,10 +50,8 @@
         <!-- Include the bulk of the main application; this contains all the compiled TypeScript. -->
         <script src="scripts/appBundle.js"></script>
 
-        <!-- Here we kick off the application by invoking the main method. -->
-        <script type="text/javascript">
-            JustinCredible.SampleApp.Application.main();
-        </script>
+        <!-- This main script handles starting the application, typically by invoking the main method. -->
+        <script src="scripts/Main.js"></script>
 
     </head>
 
