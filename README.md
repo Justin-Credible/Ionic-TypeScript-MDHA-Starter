@@ -7,13 +7,15 @@ It utilizes the [Ionic](http://ionicframework.com/) framework to achieve a user 
 
 The application is written primarily in [TypeScript](http://www.typescriptlang.org/) which brings object oriented paradigms, type-safety, compile-time checking, and IDE tooling (refactoring! code completion! huzzah!).
 
-Development is done in Visual Studio 2015 using the [Visual Studio Tools for Apache Cordova](https://www.visualstudio.com/en-us/features/cordova-vs.aspx) (previously known as Multi-Device Hybrid Applications project).
+Development is done in Visual Studio 2015 using the [Visual Studio Tools for Apache Cordova](https://www.visualstudio.com/en-us/features/cordova-vs.aspx) (previously known as **M**ulti-**D**evice **H**ybrid **A**pplications project).
 
 In-browser development and debugging is possible via the [Apache Ripple](http://ripple.incubator.apache.org/) emulator. When deployed to a physical device, the application runs in the [Cordova](http://cordova.apache.org/) application container. Both of these are provided out of the box when using VS2015.
 
 Applications created with this starter project can target iOS, Android, Windows, and Chrome (as an extension).
 
 Screenshots can be found on the project page [here](http://www.justin-credible.net/Projects/Ionic-TypeScript-MDHA-Starter).
+
+*If you are looking for a version of this project that is IDE and platform agnostic, you can check out it's sister project: [Ionic-TypeScript-Starter](https://github.com/Justin-Credible/Ionic-TypeScript-Starter).*
 
 ## Libraries Used ##
 
