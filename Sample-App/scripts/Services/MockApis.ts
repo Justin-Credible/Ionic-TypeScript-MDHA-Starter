@@ -161,8 +161,13 @@
             // Cast to any so we can avoid TypeScript's interface enforcement.
             var windowObj = <any>window;
 
-            if (typeof(windowObj.cordova) === "undefined") {
-                windowObj.cordova = {};
+            if (typeof (windowObj.cordova) === "undefined") {
+                try {
+                    windowObj.cordova = {};
+                }
+                catch (ex) {
+                    console.log("An error occurred when mocking up the global Cordova object instance; this usually is caused by Ripple and can be ignored.", ex);
+                }
             }
 
             if (typeof(windowObj.cordova.plugins) === "undefined") {
