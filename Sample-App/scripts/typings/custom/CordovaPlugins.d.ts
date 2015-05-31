@@ -1,35 +1,7 @@
 ﻿
 /**
- * This file contains definitions for Cordova plug-ins.
+ * This file contains definitions for additional Cordova plug-ins.
  */
-
-/**
- * These are the Cordova plug-ins that are available via the global Cordova.plugins object.
- */
-interface ICordovaPlugins {
-
-    /**
-     * This plugin allows access to the user's clipboard.
-     */
-    clipboard: ICordovaClipboardPlugin;
-}
-
-/**
- * These are the Cordova plug-ins that are available via the global window.plugins object.
- */
-interface ICordovaWindowPlugins {
-    /**
-     * This plugin allows showing toast messages cross platform for Android, iOS, and WP8.
-     */
-    toast: ICordovaToastPlugin;
-
-    /**
-     * This plugin allows to receive push notifications. The Android implementation uses
-     * Google's GCM (Google Cloud Messaging) service,
-     * whereas the iOS version is based on Apple APNS Notifications
-     */
-    pushNotification: PushNotification;
-}
 
 /**
  * Describes the PhoneGap Toast Plugin.

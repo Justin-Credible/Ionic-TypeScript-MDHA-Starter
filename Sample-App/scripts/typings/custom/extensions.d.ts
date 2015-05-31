@@ -1,9 +1,12 @@
 ﻿
 /**
  * This file contains definition extensions to base browser interfaces which are
- * available via third party plug-ins.
+ * available via third party plug-ins as well as extensions for existing interfaces.
  * 
  */
+
+/** Google Chrome instance */
+declare var chrome: any;
 
 interface Window {
 
@@ -31,7 +34,7 @@ interface Window {
      * 
      * If your plug-in isn't available here, check Cordova.plugins.
      */
-    plugins: ICordovaWindowPlugins;
+    //plugins: ICordovaWindowPlugins;
 
     /**
      * The Ripple API for the Apache Ripple Emulator.
@@ -56,15 +59,29 @@ interface Window {
         majorVersion: number;
         minorVersion: number;
         buildVersion: number;
-    }
+    };
 }
 
 
-interface Cordova {
+/**
+ * These are the Cordova plug-ins that are available via the global Cordova.plugins object.
+ */
+interface CordovaPlugins {
+
     /**
-     * The available Cordova plug-ins.
-     * 
-     * If your plug-in isn't available here, check window.plugins.
+     * This plugin allows access to the user's clipboard.
      */
-    plugins: ICordovaPlugins;
+    clipboard: ICordovaClipboardPlugin;
 }
+
+/**
+ * These are the Cordova plug-ins that are available via the global window.plugins object.
+ */
+interface Plugins {
+    /**
+     * This plugin allows showing toast messages cross platform for Android, iOS, and WP8.
+     */
+    toast: ICordovaToastPlugin;
+}
+
+

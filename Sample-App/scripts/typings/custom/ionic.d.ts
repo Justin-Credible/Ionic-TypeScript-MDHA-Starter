@@ -47,11 +47,6 @@ declare module Ionic {
         setGrade(grade): void;
 
         /**
-         * Return the current device (given by Cordova).
-         */
-        device(): Device;
-
-        /**
          * Check if we are running within a WebView (such as Cordova).
          */
         isWebView(): boolean;
