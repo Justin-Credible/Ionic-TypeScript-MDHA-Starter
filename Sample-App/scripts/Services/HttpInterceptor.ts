@@ -96,7 +96,7 @@
             // endpoints. In this case, we'll add our required headers, authorization token, and the
             // base URL for the current data source.
             if (this.Utilities.startsWith(config.url, "~")) {
-                /*tslint:disable no-string-literals*/
+                /* tslint:disable:no-string-literal */
 
                 // Specify the version of the API we can consume.
                 config.headers["X-API-Version"] = this.apiVersion;
@@ -110,7 +110,7 @@
                     config.headers["Authorization"] = this.getAuthorizationHeader(this.Preferences.userId, this.Preferences.token);
                 }
 
-                /*tslint:enable no-string-literals*/
+                /* tslint:enable:no-string-literal */
 
                 if (this.Preferences.apiUrl && this.Preferences.apiUrl) {
 

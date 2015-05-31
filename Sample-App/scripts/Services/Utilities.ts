@@ -5,16 +5,20 @@
      */
     export class Utilities {
 
-        public static $inject = ["isRipple", "isDebug", "Preferences"];
+        public static $inject = ["isRipple", "isCordova", "isDebug", "isChromeExtension", "Preferences"];
 
         private Preferences: Services.Preferences;
 
         private _isRipple: boolean;
+        private _isCordova: boolean;
         private _isDebug: boolean;
+        private _isChromeExtension: boolean;
 
-        constructor(isRipple: boolean, isDebug: boolean, Preferences: Services.Preferences) {
+        constructor(isRipple: boolean, isCordova: boolean, isDebug: boolean, isChromeExtension: boolean, Preferences: Services.Preferences) {
             this._isRipple = isRipple;
+            this._isCordova = isCordova;
             this._isDebug = isDebug;
+            this._isChromeExtension = isChromeExtension;
             this.Preferences = Preferences;
         }
 
@@ -24,10 +28,20 @@
          * Can be used to determine if this application is being run in the Apache
          * Ripple Emulator, which runs in a desktop browser, and not Cordova.
          * 
-         * @ returns True if the application is running in the Ripple emulator, false otherwise.
+         * @returns True if the application is running in the Ripple emulator, false otherwise.
          */
         public get isRipple(): boolean {
             return this._isRipple;
+        }
+
+        /**
+         * Can be used to determine if this application is being run in the Apache
+         * Cordova runtime.
+         * 
+         * @returns True if the application is running in the Apache Cordova runtime, false otherwise.
+         */
+        public get isCordova(): boolean {
+            return this._isCordova;
         }
 
         /**
@@ -37,6 +51,15 @@
          */
         public get isDebugMode(): boolean {
             return this._isDebug;
+        }
+        
+        /**
+         * Can be used to determine if the application is running as a Chrome browser Extension.
+         * 
+         * @returns True if the application is running as a Chrome Extension, false otherwise.
+         */
+        public get isChromeExtension(): boolean {
+            return this._isChromeExtension;
         }
 
         /**

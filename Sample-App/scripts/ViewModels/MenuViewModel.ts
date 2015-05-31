@@ -3,5 +3,4 @@
     export class MenuViewModel {
         public categories: ViewModels.CategoryItemViewModel[];
     }
-
 }

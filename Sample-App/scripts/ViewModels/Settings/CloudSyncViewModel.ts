@@ -6,5 +6,4 @@
         public icon: string;
         public userCount: number;
     }
-
 }

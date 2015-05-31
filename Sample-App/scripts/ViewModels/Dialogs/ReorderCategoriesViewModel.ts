@@ -3,5 +3,4 @@
     export class ReorderCategoriesViewModel {
         public categories: ViewModels.CategoryItemViewModel [];
     }
-
 }

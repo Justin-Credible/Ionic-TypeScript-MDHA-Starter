@@ -30,7 +30,7 @@
             }
 
             // On Android platforms the default root path can contain a trailing forward slash
-            // and it can't handle two consecutive forward slashes  in a path. Here we remove the
+            // and it can't handle two consecutive forward slashes in a path. Here we remove the
             // leading backslash from the given path, if it is present (iOS on the other had requires
             // a leading slash).
             if (this.Utilities.isAndroid && this.Utilities.startsWith(path, "/")) {
@@ -53,14 +53,24 @@
          * on non-rooted devices (while the dataDirectory is only available if you have root).
          */
         public getDefaultRootPath(): string {
-            return cordova.file.externalDataDirectory ? cordova.file.externalDataDirectory : cordova.file.dataDirectory;
+            if (typeof(cordova) === "undefined" || typeof(cordova.file) === "undefined") {
+                return "";
+            }
+            else {
+                return cordova.file.externalDataDirectory ? cordova.file.externalDataDirectory : cordova.file.dataDirectory;
+            }
         }
 
         /**
          * Used to get the ID of the default root directory for file I/O on local storage.
          */
         public getDefaultRootPathId(): string {
-            return cordova.file.externalDataDirectory ? "cordova.file.externalDataDirectory" : "cordova.file.dataDirectory";
+            if (typeof(cordova) === "undefined" || typeof(cordova.file) === "undefined") {
+                return "";
+            }
+            else {
+                return cordova.file.externalDataDirectory ? "cordova.file.externalDataDirectory" : "cordova.file.dataDirectory";
+            }
         }
 
         /**
@@ -102,6 +112,11 @@
             }
 
             path = this.preparePath(path);
+
+            if (typeof(window.resolveLocalFileSystemURL) === "undefined") {
+                q.reject(new Error("window.resolveLocalFileSystemURL was not available; ensure that the Cordova file plugin (cordova-plugin-file) is installed properly."));
+                return q.promise;
+            }
 
             window.resolveLocalFileSystemURL(rootPath, function (rootEntry: DirectoryEntry) {
 
@@ -190,6 +205,11 @@
                 append = false;
             }
 
+            if (typeof(window.resolveLocalFileSystemURL) === "undefined") {
+                q.reject(new Error("window.resolveLocalFileSystemURL was not available; ensure that the Cordova file plugin (cordova-plugin-file) is installed properly."));
+                return q.promise;
+            }
+
             window.resolveLocalFileSystemURL(rootPath, function (rootEntry: DirectoryEntry) {
 
                 var flags: Flags = {
@@ -261,6 +281,11 @@
             var q = this.$q.defer<DirectoryEntry[]>();
 
             path = this.preparePath(path);
+
+            if (typeof(window.resolveLocalFileSystemURL) === "undefined") {
+                q.reject(new Error("window.resolveLocalFileSystemURL was not available; ensure that the Cordova file plugin (cordova-plugin-file) is installed properly."));
+                return q.promise;
+            }
 
             window.resolveLocalFileSystemURL(rootPath, function (rootEntry: DirectoryEntry) {
 
@@ -361,6 +386,11 @@
 
             path = this.preparePath(path);
 
+            if (typeof(window.resolveLocalFileSystemURL) === "undefined") {
+                q.reject(new Error("window.resolveLocalFileSystemURL was not available; ensure that the Cordova file plugin (cordova-plugin-file) is installed properly."));
+                return q.promise;
+            }
+
             window.resolveLocalFileSystemURL(rootPath, function (rootEntry: DirectoryEntry) {
 
                 var flags: Flags = {
@@ -430,6 +460,11 @@
 
             path = this.preparePath(path);
 
+            if (typeof(window.resolveLocalFileSystemURL) === "undefined") {
+                q.reject(new Error("window.resolveLocalFileSystemURL was not available; ensure that the Cordova file plugin (cordova-plugin-file) is installed properly."));
+                return q.promise;
+            }
+
             window.resolveLocalFileSystemURL(rootPath, function (rootEntry: DirectoryEntry) {
 
                 var flags: Flags = {
@@ -498,6 +533,11 @@
             }
 
             path = this.preparePath(path);
+
+            if (typeof(window.resolveLocalFileSystemURL) === "undefined") {
+                q.reject(new Error("window.resolveLocalFileSystemURL was not available; ensure that the Cordova file plugin (cordova-plugin-file) is installed properly."));
+                return q.promise;
+            }
 
             window.resolveLocalFileSystemURL(rootPath, function (rootEntry: DirectoryEntry) {
 
@@ -598,6 +638,11 @@
 
             path = this.preparePath(path);
 
+            if (typeof(window.resolveLocalFileSystemURL) === "undefined") {
+                q.reject(new Error("window.resolveLocalFileSystemURL was not available; ensure that the Cordova file plugin (cordova-plugin-file) is installed properly."));
+                return q.promise;
+            }
+
             window.resolveLocalFileSystemURL(rootPath, function (rootEntry: DirectoryEntry) {
 
                 var flags: Flags = {
@@ -664,6 +709,11 @@
             }
 
             path = this.preparePath(path);
+
+            if (typeof(window.resolveLocalFileSystemURL) === "undefined") {
+                q.reject(new Error("window.resolveLocalFileSystemURL was not available; ensure that the Cordova file plugin (cordova-plugin-file) is installed properly."));
+                return q.promise;
+            }
 
             window.resolveLocalFileSystemURL(rootPath, function (rootEntry: DirectoryEntry) {
 
@@ -950,6 +1000,11 @@
                 throw new Error("FileUtilities.createDirectory() createParents=true not implemented.");
             }
 
+            if (typeof(window.resolveLocalFileSystemURL) === "undefined") {
+                q.reject(new Error("window.resolveLocalFileSystemURL was not available; ensure that the Cordova file plugin (cordova-plugin-file) is installed properly."));
+                return q.promise;
+            }
+
             window.resolveLocalFileSystemURL(rootPath, function (rootEntry: DirectoryEntry) {
                 var flags: Flags;
 
@@ -1115,6 +1170,11 @@
                     q.resolve();
                 }
 
+                if (typeof(window.resolveLocalFileSystemURL) === "undefined") {
+                    q.reject(new Error("window.resolveLocalFileSystemURL was not available; ensure that the Cordova file plugin (cordova-plugin-file) is installed properly."));
+                    return q.promise;
+                }
+
                 window.resolveLocalFileSystemURL(rootPath, function (rootEntry: DirectoryEntry) {
 
                     var flags: Flags = {
@@ -1229,6 +1289,11 @@
                     q.resolve();
                 }
 
+                if (typeof(window.resolveLocalFileSystemURL) === "undefined") {
+                    q.reject(new Error("window.resolveLocalFileSystemURL was not available; ensure that the Cordova file plugin (cordova-plugin-file) is installed properly."));
+                    return q.promise;
+                }
+
                 window.resolveLocalFileSystemURL(rootPath, function (rootEntry: DirectoryEntry) {
 
                     var flags: Flags = {
@@ -1325,6 +1390,11 @@
 
             path = this.preparePath(path);
 
+            if (typeof(window.resolveLocalFileSystemURL) === "undefined") {
+                q.reject(new Error("window.resolveLocalFileSystemURL was not available; ensure that the Cordova file plugin (cordova-plugin-file) is installed properly."));
+                return q.promise;
+            }
+
             window.resolveLocalFileSystemURL(rootPath, function (rootEntry: DirectoryEntry) {
                 var flags: Flags;
 
@@ -1380,6 +1450,11 @@
             }
 
             path = this.preparePath(path);
+
+            if (typeof(window.resolveLocalFileSystemURL) === "undefined") {
+                q.reject(new Error("window.resolveLocalFileSystemURL was not available; ensure that the Cordova file plugin (cordova-plugin-file) is installed properly."));
+                return q.promise;
+            }
 
             window.resolveLocalFileSystemURL(rootPath, function (rootEntry: DirectoryEntry) {
                 var flags: Flags;

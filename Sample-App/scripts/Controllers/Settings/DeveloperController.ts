@@ -115,13 +115,13 @@
         }
 
         public addModulesToGlobalScope_click() {
-            /*tslint:disable no-string-literals*/
+            /* tslint:disable:no-string-literal */
             window["__FileUtilities"] = this.FileUtilities;
             window["__Logger"] = this.Logger;
             window["__Utilities"] = this.Utilities;
             window["__UiHelper"] = this.UiHelper;
             window["__Preferences"] = this.Preferences;
-            /*tslint:enable no-string-literals*/
+            /* tslint:enable:no-string-literal */
 
             this.UiHelper.alert("Added the following services to the global window scope: __FileUtilities, __Logger, __Utilities, __UiHelper, __Preferences");
         }
@@ -159,7 +159,7 @@
         }
 
         public testJsException_click() {
-            /*tslint:disable no-string-literal*/
+            /* tslint:disable:no-string-literal */
 
             // Cause an exception by referencing an undefined variable.
             // We use defer so we can execute outside of the context of Angular.
@@ -167,16 +167,16 @@
                 var x = window["____asdf"].blah();
             });
 
-            /*tslint:enable no-string-literal*/
+            /* tslint:enable:no-string-literal */
         }
 
         public testAngularException_click() {
-            /*tslint:disable no-string-literal*/
-            
+            /* tslint:disable:no-string-literal */
+
             // Cause an exception by referencing an undefined variable.
             var x = window["____asdf"].blah();
 
-            /*tslint:enable no-string-literal*/
+            /* tslint:enable:no-string-literal */
         }
 
         public apiGetToken_click() {
@@ -284,7 +284,7 @@
                 }
 
                 this.FileUtilities.readTextFile(result.value)
-                    .then((text: string) => { console.log(text); this.UiHelper.alert(text);; },
+                    .then((text: string) => { console.log(text); this.UiHelper.alert(text); },
                     (err: Error) => { console.error(err); this.alertFileIoError(err); });
             });
         }

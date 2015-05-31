@@ -19,9 +19,9 @@
             this.Utilities = Utilities;
             this.FileUtilities = FileUtilities;
 
-            // If we aren't in the Ripple emulator, then we'll default to using local storage
+            // If we are in the running in Cordova, then we'll default to using local storage
             // to store the log files.
-            this.logToLocalStorage = !Utilities.isRipple;
+            this.logToLocalStorage = Utilities.isCordova;
 
             this.logs = [];
         }

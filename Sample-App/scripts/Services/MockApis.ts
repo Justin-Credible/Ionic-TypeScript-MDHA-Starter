@@ -1,7 +1,5 @@
 ﻿module JustinCredible.SampleApp.Services {
 
-    /*tslint:disable typedef*/
-
     /**
      * Provides a set of mocked up APIs for functions that aren't available in the Apache
      * Ripple Emulator. Also allows us to mock up responses to API requests when the application
@@ -65,11 +63,11 @@
                     return $delegate.call(this, method, url, data, interceptor, headers);
                 };
 
-                /*tslint:disable forin*/
+                /* tslint:disable:forin */
                 for (var key in $delegate) {
                     proxy[key] = $delegate[key];
                 }
-                /*tslint:enable forin*/
+                /* tslint:enable:forin */
 
                 return proxy;
             });
@@ -106,10 +104,10 @@
         }
 
         /**
-         * Used to mock up the APIs that are not present when running in the Apache Ripple
-         * emulator so that we can control what happens in the emulator.
+         * Used to mock up the plugin APIs that are not present when running in the Apache
+         * Cordova runtime so that we can polyfill functionality for testing etc.
          */
-        public mockForRippleEmulator() {
+        public mockCordovaPlugins() {
             var mockToastPlugin: ICordovaToastPlugin,
                 mockPushNotificationPlugin: PushNotification,
                 mockClipboardPlugin: ICordovaClipboardPlugin;
@@ -145,11 +143,6 @@
                 cancelVibration: _.bind(this.notification_cancelVibration, this)
             };
 
-            window.plugins = {
-                toast: mockToastPlugin,
-                pushNotification: mockPushNotificationPlugin
-            };
-
             window.ProgressIndicator = {
                 hide: _.bind(this.progressIndicator_hide, this),
                 showSimple: _.bind(this.progressIndicator_show, this),
@@ -165,12 +158,24 @@
                 showText: _.bind(this.progressIndicator_show, this)
             };
 
-            if (cordova) {
-                cordova.plugins = {
-                    clipboard: mockClipboardPlugin,
-                    pushNotification: null
-                };
+            // Cast to any so we can avoid TypeScript's interface enforcement.
+            var windowObj = <any>window;
+
+            if (typeof(windowObj.cordova) === "undefined") {
+                windowObj.cordova = {};
             }
+
+            if (typeof(windowObj.cordova.plugins) === "undefined") {
+                windowObj.cordova.plugins = {};
+            }
+
+            if (typeof(windowObj.plugins) === "undefined") {
+                windowObj.plugins = {};
+            }
+
+            windowObj.cordova.plugins.clipboard = mockClipboardPlugin;
+            windowObj.plugins.toast = mockToastPlugin;
+            windowObj.plugins.pushNotification = mockPushNotificationPlugin;
         }
 
         /**

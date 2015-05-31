@@ -7,5 +7,4 @@
         defaultStoragePathId: string;
         defaultStoragePath: string;
     }
-
 }

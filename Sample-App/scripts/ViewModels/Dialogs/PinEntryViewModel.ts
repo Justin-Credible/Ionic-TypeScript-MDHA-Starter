@@ -6,5 +6,4 @@
         public showBackButton: boolean;
         public promptText: string;
     }
-
 }

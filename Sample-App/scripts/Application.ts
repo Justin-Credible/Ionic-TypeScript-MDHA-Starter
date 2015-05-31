@@ -18,14 +18,11 @@ module JustinCredible.SampleApp.Application {
 
     //#endregion
 
-
-    // Bootstrap the application!
-    //main();
-
-
     /**
      * This is the main entry point for the application. It is used to setup Angular and
      * configure its controllers, services, etc.
+     * 
+     * It is invoked via the Main.js script included from the index.html page.
      */
     export function main(): void {
         var versionInfo: Interfaces.VersionInfo;
@@ -50,7 +47,9 @@ module JustinCredible.SampleApp.Application {
 
         // Define our constants.
         ngModule.constant("isRipple", !!(window.parent && window.parent.ripple));
+        ngModule.constant("isCordova", typeof(cordova) !== "undefined");
         ngModule.constant("isDebug", window.buildVars.debug);
+        ngModule.constant("isChromeExtension", typeof (chrome) !== "undefined" && typeof (chrome.runtime) !== "undefined" && typeof (chrome.runtime.id) !== "undefined");
         ngModule.constant("versionInfo", versionInfo);
         ngModule.constant("apiVersion", "1.0");
 
@@ -98,7 +97,7 @@ module JustinCredible.SampleApp.Application {
     function getDirectiveFactoryFunction(Directive: Directives.IDirectiveClass): () => ng.IDirective {
         var descriptor: ng.IDirective = {};
 
-        /*tslint:disable no-string-literals*/
+        /* tslint:disable:no-string-literal */
 
         // Here we set the options for the Angular directive descriptor object.
         // We get these values from the static fields on the class reference.
@@ -108,7 +107,7 @@ module JustinCredible.SampleApp.Application {
         descriptor.transclude = Directive["transclude"];
         descriptor.scope = Directive["scope"];
 
-        /*tslint:disable no-string-literals*/
+        /* tslint:enable:no-string-literal */
 
         // Here we define the link function that Angular invokes when it is linking the
         // directive to the element.
@@ -149,12 +148,6 @@ module JustinCredible.SampleApp.Application {
             ionicPlatform_ready($rootScope, $location, $ionicViewService, $ionicPlatform, UiHelper, Utilities, Preferences, MockApis);
         });
 
-        if (Utilities.isRipple) {
-            // If we are in the Ripple emulator, Cordova will never fire it's ready event which
-            // means Ionic will never fire it's platform ready. We'll do it here manually.
-            ionicPlatform_ready($rootScope, $location, $ionicViewService, $ionicPlatform, UiHelper, Utilities, Preferences, MockApis);
-        }
-
         // Mock up or allow HTTP responses.
         MockApis.mockHttpCalls(Preferences.enableMockHttpCalls);
     };
@@ -170,18 +163,13 @@ module JustinCredible.SampleApp.Application {
         // Mock up APIs for the various platforms. This allows us to "polyfill" functionality
         // that isn't available on all platforms.
 
-        if (Utilities.isRipple) {
-            setTimeout(function () { MockApis.mockForRippleEmulator(); }, 1000);
+        if (!Utilities.isCordova) {
+            setTimeout(function () { MockApis.mockCordovaPlugins(); }, 1000);
         }
 
         if (Utilities.isAndroid) {
             setTimeout(function () { MockApis.mockForAndroid(); }, 1000);
         }
-
-        // This makes the status bar not overlay the webview, but unfortunately
-        // doesn't free up the tall space on top of the ionic header element.
-        //window.StatusBar.styleLightContent();
-        //window.StatusBar.overlaysWebView(false);
 
         // Subscribe to device events.
         document.addEventListener("pause", _.bind(device_pause, null, Preferences));
@@ -426,12 +414,14 @@ module JustinCredible.SampleApp.Application {
             window.ProgressIndicator.hide();
         }
 
+        /* tslint:disable:no-empty */
         try {
-        Logger = angular.element(document.body).injector().get("Logger");
-        Logger.logWindowError(message, uri, lineNumber, columnNumber);
+            Logger = angular.element(document.body).injector().get("Logger");
+            Logger.logWindowError(message, uri, lineNumber, columnNumber);
         }
         catch (ex) {
         }
+        /* tslint:disable:no-empty */
     }
 
     /**
@@ -457,13 +447,15 @@ module JustinCredible.SampleApp.Application {
             window.ProgressIndicator.hide();
         }
 
+        /* tslint:disable:no-empty */
         try {
-        Logger = angular.element(document.body).injector().get("Logger");
-        Logger.logError("Angular exception caused by " + cause, exception);
+            Logger = angular.element(document.body).injector().get("Logger");
+            Logger.logError("Angular exception caused by " + cause, exception);
         }
         catch (ex) {
         }
-    };
+        /* tslint:enable:no-empty */
+    }
 
     //#endregion
 }

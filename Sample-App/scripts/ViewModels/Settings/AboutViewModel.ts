@@ -8,5 +8,4 @@
         public websiteUrl: string;
         public githubUrl: string;
     }
-
 }

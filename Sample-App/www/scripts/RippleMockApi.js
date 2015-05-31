@@ -1,5 +1,4 @@
 ﻿
-/*globals buildVars*/
 
 /**
  * This script is loaded very early, before all other frameworks. It allows us to perform
