@@ -97,4 +97,8 @@
   <vs:plugin name="com.verso.cordova.clipboard" version="0.1.0" />
   <vs:plugin name="org.pbernasconi.progressindicator" version="1.1.0" />
   <vs:plugin name="org.apache.cordova.dialogs" version="0.3.0" />
+  <preference name="KeepRunning" value="False" />
+  <preference name="ShowTitle" value="True" />
+  <preference name="InAppBrowserStorageEnabled" value="False" />
+  <preference name="SuppressesIncrementalRendering" value="True" />
 </widget>
