@@ -31,6 +31,10 @@
                         {
                             "xml": "<feature name=\"ProgressIndicator\"><param name=\"android-package\" value=\"org.apache.cordova.plugin.ProgressIndicator\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"InAppBrowser\"><param name=\"android-package\" value=\"org.apache.cordova.inappbrowser.InAppBrowser\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -70,6 +74,9 @@
             "PACKAGE_NAME": "io.cordova.myapp8cabaf9443bd4a2c9e460c183f78a0f0"
         },
         "org.pbernasconi.progressindicator": {
+            "PACKAGE_NAME": "JustinCredible.SampleApp"
+        },
+        "cordova-plugin-inappbrowser": {
             "PACKAGE_NAME": "JustinCredible.SampleApp"
         }
     },

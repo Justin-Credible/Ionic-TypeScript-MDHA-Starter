@@ -36,5 +36,14 @@
             "type": "registry",
             "id": "org.apache.cordova.dialogs"
         }
+    },
+    "cordova-plugin-inappbrowser": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/apache/cordova-plugin-inappbrowser",
+            "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }

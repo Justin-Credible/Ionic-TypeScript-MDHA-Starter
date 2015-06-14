@@ -6,6 +6,7 @@ Sample-App/platforms
 
 # Generated TypeScript artifacts
 Sample-App/www/scripts/appBundle.*
+Sample-App/jsFileList.json
 
 # Local nu-get packages
 packages/*/

@@ -101,4 +101,5 @@
   <preference name="ShowTitle" value="True" />
   <preference name="InAppBrowserStorageEnabled" value="False" />
   <preference name="SuppressesIncrementalRendering" value="True" />
+  <vs:plugin name="cordova-plugin-inappbrowser" version="1.0.1-dev" />
 </widget>
