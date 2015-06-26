@@ -158,6 +158,11 @@
             this.UiHelper.alert(message, "Reset PIN Timeout");
         }
 
+        protected reEnableOnboarding_click(): void {
+            this.Preferences.hasCompletedOnboarding = false;
+            this.UiHelper.alert("Onboarding has been enabled and will occur upon next app boot.");
+        }
+
         protected testJsException_click() {
             /* tslint:disable:no-string-literal */
 
