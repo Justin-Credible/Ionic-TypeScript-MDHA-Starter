@@ -6,6 +6,8 @@
 
     export class CategoryController extends BaseController<ViewModels.CategoryViewModel> {
 
+        public static ID = "CategoryController";
+
         public static $inject = ["$scope", "$stateParams"];
 
         private $stateParams: ICategoryStateParams;
@@ -16,7 +18,7 @@
             this.$stateParams = $stateParams;
         }
 
-        //#region BaseController Overrides
+        //#region BaseController Events
 
         protected view_beforeEnter(): void {
             super.view_beforeEnter();

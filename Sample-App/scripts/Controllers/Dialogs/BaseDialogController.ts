@@ -100,6 +100,8 @@
          * Can be overridden by implementing controllers.
          */
         protected dialog_shown(): void {
+            /* tslint:disable:no-empty */
+            /* tslint:enable:no-empty */
         }
 
         /**
@@ -108,6 +110,8 @@
          * Can be overridden by implementing controllers.
          */
         protected dialog_hidden(): void {
+            /* tslint:disable:no-empty */
+            /* tslint:enable:no-empty */
         }
 
         //#endregion

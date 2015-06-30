@@ -5,6 +5,8 @@
      */
     export class MockPlatformApis {
 
+        public static ID = "MockPlatformApis";
+
         public static $inject = ["$q", "$ionicPopup", "$ionicLoading", "Utilities"];
 
         private $q: ng.IQService;
@@ -36,7 +38,7 @@
                 showShortTop: _.bind(this.toast, this)
             };
         }
-        
+
         public getPushNotificationPlugin(): PushNotification {
             return {
                 register: _.bind(this.pushNotification_register, this),
@@ -44,7 +46,7 @@
                 setApplicationIconBadgeNumber: _.bind(this.pushNotification_setApplicationIconBadgeNumber, this)
             };
         }
-        
+
         public getClipboardPlugin(): ICordovaClipboardPlugin {
             return {
                 copy: _.bind(this.clipboard_copy, this),

@@ -2,6 +2,8 @@
 
     export class CloudSyncController extends BaseController<ViewModels.CloudSyncViewModel> {
 
+        public static ID = "CloudSyncController";
+
         public static $inject = ["$scope", "$ionicViewService"];
 
         private $ionicViewService: any;
@@ -18,7 +20,7 @@
             this.scope.$on("icon-panel.cloud-icon-panel.created", _.bind(this.iconPanel_created, this));
         }
 
-        //#region Events
+        //#region BaseController Overrides
 
         protected view_beforeEnter(): void {
             super.view_beforeEnter();

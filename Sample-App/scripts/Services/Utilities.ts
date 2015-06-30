@@ -5,6 +5,8 @@
      */
     export class Utilities {
 
+        public static ID = "Utilities";
+
         public static $inject = ["isRipple", "isCordova", "isDebug", "isChromeExtension", "Preferences"];
 
         private Preferences: Services.Preferences;
@@ -52,7 +54,7 @@
         public get isDebugMode(): boolean {
             return this._isDebug;
         }
-        
+
         /**
          * Can be used to determine if the application is running as a Chrome browser Extension.
          * 

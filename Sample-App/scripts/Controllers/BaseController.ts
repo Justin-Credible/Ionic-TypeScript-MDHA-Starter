@@ -58,6 +58,8 @@
          * Can be overridden by implementing controllers.
          */
         protected initialize(): void {
+            /* tslint:disable:no-empty */
+            /* tslint:enable:no-empty */
         }
 
         /**
@@ -66,6 +68,8 @@
          * Can be overridden by implementing controllers.
          */
         protected view_loaded(): void {
+            /* tslint:disable:no-empty */
+            /* tslint:enable:no-empty */
         }
 
         /**
@@ -74,6 +78,8 @@
          * Can be overridden by implementing controllers.
          */
         protected view_enter(): void {
+            /* tslint:disable:no-empty */
+            /* tslint:enable:no-empty */
         }
 
         /**
@@ -82,6 +88,8 @@
          * Can be overridden by implementing controllers.
          */
         protected view_leave(): void {
+            /* tslint:disable:no-empty */
+            /* tslint:enable:no-empty */
         }
 
         /**
@@ -90,6 +98,8 @@
          * Can be overridden by implementing controllers.
          */
         protected view_beforeEnter(): void {
+            /* tslint:disable:no-empty */
+            /* tslint:enable:no-empty */
         }
 
         /**
@@ -98,6 +108,8 @@
          * Can be overridden by implementing controllers.
          */
         protected view_beforeLeave(): void {
+            /* tslint:disable:no-empty */
+            /* tslint:enable:no-empty */
         }
 
         /**
@@ -106,6 +118,8 @@
          * Can be overridden by implementing controllers.
          */
         protected view_afterEnter(): void {
+            /* tslint:disable:no-empty */
+            /* tslint:enable:no-empty */
         }
 
         /**
@@ -114,6 +128,8 @@
          * Can be overridden by implementing controllers.
          */
         protected view_afterLeave(): void {
+            /* tslint:disable:no-empty */
+            /* tslint:enable:no-empty */
         }
 
         /**
@@ -122,6 +138,8 @@
          * Can be overridden by implementing controllers.
          */
         protected view_unloaded(): void {
+            /* tslint:disable:no-empty */
+            /* tslint:enable:no-empty */
         }
 
         /**
@@ -130,6 +148,8 @@
          * Can be overridden by implementing controllers.
          */
         protected destroy(): void {
+            /* tslint:disable:no-empty */
+            /* tslint:enable:no-empty */
         }
     }
 }

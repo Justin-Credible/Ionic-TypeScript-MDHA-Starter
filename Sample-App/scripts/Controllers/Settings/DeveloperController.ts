@@ -2,6 +2,8 @@
 
     export class DeveloperController extends BaseController<ViewModels.DeveloperViewModel> {
 
+        public static ID = "DeveloperController";
+
         public static $inject = ["$scope", "$http", "Utilities", "UiHelper", "FileUtilities", "Logger", "Preferences"];
 
         private $http: ng.IHttpService;
@@ -129,7 +131,7 @@
 
             this.UiHelper.prompt(message, "Require PIN Threshold", null, this.Preferences.requirePinThreshold.toString()).then((result: Models.KeyValuePair<string, string>) => {
 
-                if (result.key !== "OK") {
+            if (result.key !== "OK") {
                     return;
                 }
 

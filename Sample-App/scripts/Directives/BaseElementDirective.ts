@@ -1,7 +1,7 @@
 ﻿module JustinCredible.SampleApp.Directives {
 
     /**
-     * Describes what our directive objects look like.
+     * Describes what our element directive objects look like.
      */
     export interface IElementDirective {
         initialize();
@@ -9,14 +9,14 @@
     }
 
     /**
-     * Describes the constructor for the an class implementing IDirective.
+     * Describes the constructor for the an class implementing IElementDirective.
      */
     export interface IElementDirectiveClass {
         new (scope: ng.IScope, instanceElement: ng.IAugmentedJQuery, instanceAttributes: ng.IAttributes, controller: any, transclude: ng.ITranscludeFunction);
     }
 
     /**
-     * This is the base directive that all other directives should utilize.
+     * This is the base directive that all other directives for elements should utilize.
      * 
      * It handles saving references to the various objects in its constructor.
      * 
@@ -42,11 +42,11 @@
         }
 
         public initialize() {
-            throw new Error("Directives that extend BaseDirective should implement their own initialize method.");
+            throw new Error("Directives that extend BaseElementDirective should implement their own initialize method.");
         }
 
         public render() {
-            throw new Error("Directives that extend BaseDirective should implement their own render method.");
+            throw new Error("Directives that extend BaseElementDirective should implement their own render method.");
         }
     }
 }

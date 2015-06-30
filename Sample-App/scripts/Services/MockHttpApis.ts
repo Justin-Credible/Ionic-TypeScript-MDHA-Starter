@@ -8,16 +8,18 @@ module JustinCredible.SampleApp.Services {
      */
     export class MockHttpApis {
 
+        public static ID = "MockHttpApis";
+
         public static $inject = ["$httpBackend"];
-        
+
         private $httpBackend: ng.IHttpBackendService;
-        
+
         constructor($httpBackend: ng.IHttpBackendService) {
             this.$httpBackend = $httpBackend;
         }
-        
+
         //#region Public API
-        
+
         /**
          * Used to setup a random delay time for mock HTTP requests.
          * 
@@ -91,11 +93,11 @@ module JustinCredible.SampleApp.Services {
                 this.$httpBackend.whenPUT(/.*/).passThrough();
             }
         }
-        
+
         //#endregion
-        
+
         //#region
-        
+
         /*
         private getMockTokenGetResponse(): any {
             // Return the response object for your mocked up API request.
@@ -104,7 +106,7 @@ module JustinCredible.SampleApp.Services {
             };
         }
         */
-        
+
         //#endregion
     }
 }
