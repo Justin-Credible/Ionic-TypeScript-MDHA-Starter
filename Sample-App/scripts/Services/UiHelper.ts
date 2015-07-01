@@ -48,7 +48,9 @@
 
         //#endregion
 
-        public static $inject = ["$rootScope", "$q", "$http", "$ionicModal", "MockPlatformApis", "Utilities", "Preferences"];
+        public static get $inject(): string[] {
+            return ["$rootScope", "$q", "$http", "$ionicModal", MockPlatformApis.ID, Utilities.ID, Preferences.ID];
+        }
 
         private $rootScope: ng.IRootScopeService;
         private $q: ng.IQService;
