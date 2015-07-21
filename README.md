@@ -41,9 +41,11 @@ The following is a list of Cordova plug-ins that are used:
 
 ## Getting Started ##
 
-The Visual Studio Tools for Apache Cordova are now included with Visual Studio 2015 and can be downloaded [here](https://www.visualstudio.com/en-us/features/cordova-vs.aspx).
+The Visual Studio Tools for Apache Cordova are now included with Visual Studio 2015 RC and can be downloaded [here](https://www.visualstudio.com/en-us/features/cordova-vs.aspx).
 
 In addition to installing Visual Studio, the installer will take care of downloading and setting up all the dependencies you need for developing Cordova applications (Node.js, Apache Ant, Oracle JDK 7, the Android SDK, Google Chrome and more).
+
+Finally, you'll need the 1.5 beta version of TypeScript (VS2015RC currently ships with TypeScript 1.4). The 1.5 beta can be obtained from the [TypeScript Homepage](http://www.typescriptlang.org) or via the direct [download page](https://visualstudiogallery.msdn.microsoft.com/3e5ba71c-abea-4d00-b81b-a62de3ad3d53).
 
 You can clone the repository to your machine using:
 
