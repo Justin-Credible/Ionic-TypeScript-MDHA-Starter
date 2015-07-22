@@ -8,6 +8,11 @@ Sample-App/platforms
 Sample-App/www/scripts/appBundle.*
 Sample-App/jsFileList.json
 
+# Include plugin sub-directories, but not top level files (except for fetch.json)
+Sample-App/plugins/*
+!Sample-App/plugins/*/
+!Sample-App/plugins/fetch.json
+
 # Local nu-get packages
 packages/*/
 
