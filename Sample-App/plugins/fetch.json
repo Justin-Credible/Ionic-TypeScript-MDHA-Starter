@@ -45,5 +45,21 @@
         },
         "is_top_level": true,
         "variables": {}
+    },
+    "org.apache.cordova.statusbar": {
+        "source": {
+            "type": "registry",
+            "id": "org.apache.cordova.statusbar@0.1.10"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "com.ionic.keyboard": {
+        "source": {
+            "type": "registry",
+            "id": "com.ionic.keyboard@1.0.4"
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }
