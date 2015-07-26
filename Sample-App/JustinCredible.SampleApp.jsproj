@@ -114,6 +114,19 @@
     <Exec Command="&quot;$(MDAVsixDir)&quot;\packages\vs-tac\install &quot;$(NodeJsDir)&quot; &quot;$(MDAVsixDir)&quot;\packages\vs-tac" />
   </Target>
   <Target Name="BeforeBuild">
+    <!-- Get the API URL from the Cordova config.xml file. -->
+    <GetPreferenceFromConfigXml
+      Condition="'$(Configuration)' == 'Release'"
+      ConfigFile="$(MSBuildProjectDirectory)/config.xml"
+      PreferenceName="ApiUrl">
+      <Output PropertyName="ApiUrl" TaskParameter="PreferenceValue" />
+    </GetPreferenceFromConfigXml>
+    <GetPreferenceFromConfigXml
+      Condition="'$(Configuration)' == 'Debug'"
+      ConfigFile="$(MSBuildProjectDirectory)/config.xml"
+      PreferenceName="ApiUrlDebug">
+      <Output PropertyName="ApiUrl" TaskParameter="PreferenceValue" />
+    </GetPreferenceFromConfigXml>
     <!-- Get the version numbers from the Cordova config.xml file. -->
     <GetVersionNumbers ConfigFile="$(MSBuildProjectDirectory)/config.xml">
       <Output PropertyName="MajorVersion" TaskParameter="MajorVersion" />
@@ -124,7 +137,7 @@
       Create the BuildVars.js file; this allows us to pass in build
       time arguments which can be used by the application at runtime.
     -->
-    <CreateBuildVarsJs FilePath="$(MSBuildProjectDirectory)/www/scripts/BuildVars.js" IsDebug="'$(Configuration)' == 'Debug'" MajorVersion="$(MajorVersion)" MinorVersion="$(MinorVersion)" BuildVersion="$(BuildVersion)" />
+    <CreateBuildVarsJs FilePath="$(MSBuildProjectDirectory)/www/scripts/BuildVars.js" IsDebug="'$(Configuration)' == 'Debug'" MajorVersion="$(MajorVersion)" MinorVersion="$(MinorVersion)" BuildVersion="$(BuildVersion)" ApiUrl="$(ApiUrl)" />
   </Target>
   <Target Name="AfterBuild">
   </Target>

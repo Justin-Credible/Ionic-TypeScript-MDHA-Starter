@@ -36,6 +36,36 @@ return true;
     </Task>
   </UsingTask>
 
+  <!-- Used to get an arbitrary preference value from a Cordova configuration XML file. -->
+  <UsingTask
+    TaskName="GetPreferenceFromConfigXml"
+    TaskFactory="CodeTaskFactory"
+    AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v12.0.dll" >
+    <ParameterGroup>
+      <ConfigFile ParameterType="System.String" Required="true" Output="false" />
+      <PreferenceName ParameterType="System.String" Required="true" Output="false" />
+      <PreferenceValue ParameterType="System.String" Required="false" Output="true" />
+    </ParameterGroup>
+    <Task>
+      <Reference Include="System.Xml" />
+      <Reference Include="System.Xml.Linq"/>
+      <Using Namespace="System"/>
+      <Using Namespace="System.Linq"/>
+      <Using Namespace="System.Xml.Linq"/>
+      <Using Namespace="System.Xml.XPath"/>
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+var document = new XPathDocument(this.ConfigFile);
+var query = String.Format("/*[local-name() = 'widget']/*[local-name() = 'preference'][@name='{0}']/@value", this.PreferenceName);
+var node = document.CreateNavigator().SelectSingleNode(query);
+this.PreferenceValue = node.Value;
+
+return true;
+]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
   <!--
     Used to create a JavaScript file which declares global variables for
     use in the application during runtime.
@@ -50,6 +80,7 @@ return true;
       <MajorVersion ParameterType="System.String" Required="true" />
       <MinorVersion ParameterType="System.String" Required="true" />
       <BuildVersion ParameterType="System.String" Required="true" />
+      <ApiUrl ParameterType="System.String" Required="true" />
     </ParameterGroup>
     <Task>
       <Using Namespace="System"/>
@@ -70,6 +101,8 @@ jsSource.AppendFormat(",");
 jsSource.AppendFormat("minorVersion: {0}", MinorVersion);
 jsSource.AppendFormat(",");
 jsSource.AppendFormat("buildVersion: {0}", BuildVersion);
+jsSource.AppendFormat(",");
+jsSource.AppendFormat("apiUrl: '{0}'", ApiUrl);
 jsSource.Append("};");
 
 File.WriteAllText(FilePath, jsSource.ToString());

@@ -9,6 +9,8 @@
   <preference name="SplashScreen" value="screen" />
   <preference name="windows-target-version" value="8.1" />
   <preference name="windows-phone-target-version" value="8.1" />
+  <preference name="ApiUrl" value="https://services.yoursite.com/api"/>
+  <preference name="ApiUrlDebug" value="https://services.devel.yoursite.com/api"/>
   <platform name="android">
     <icon src="res/icons/android/icon-36-ldpi.png" density="ldpi" />
     <icon src="res/icons/android/icon-48-mdpi.png" density="mdpi" />
