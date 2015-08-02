@@ -115,16 +115,10 @@
   </Target>
   <Target Name="BeforeBuild">
     <!-- Get the API URL from the Cordova config.xml file. -->
-    <GetPreferenceFromConfigXml
-      Condition="'$(Configuration)' == 'Release'"
-      ConfigFile="$(MSBuildProjectDirectory)/config.xml"
-      PreferenceName="ApiUrl">
+    <GetPreferenceFromConfigXml Condition="'$(Configuration)' == 'Release'" ConfigFile="$(MSBuildProjectDirectory)/config.xml" PreferenceName="ApiUrl">
       <Output PropertyName="ApiUrl" TaskParameter="PreferenceValue" />
     </GetPreferenceFromConfigXml>
-    <GetPreferenceFromConfigXml
-      Condition="'$(Configuration)' == 'Debug'"
-      ConfigFile="$(MSBuildProjectDirectory)/config.xml"
-      PreferenceName="ApiUrlDebug">
+    <GetPreferenceFromConfigXml Condition="'$(Configuration)' == 'Debug'" ConfigFile="$(MSBuildProjectDirectory)/config.xml" PreferenceName="ApiUrlDebug">
       <Output PropertyName="ApiUrl" TaskParameter="PreferenceValue" />
     </GetPreferenceFromConfigXml>
     <!-- Get the version numbers from the Cordova config.xml file. -->
@@ -157,7 +151,7 @@
   </Target>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties project_1json__JSONSchema="http://www.asp.net/media/4878834/project.json" />
+      <UserProperties />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="_apacheCordovaProjectSourceItems.Targets" Condition="Exists('_apacheCordovaProjectSourceItems.Targets')" />
