@@ -72,7 +72,7 @@
     <Service Include="{4a0dddb5-7a95-4fbf-97cc-616d07737a77}" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>60161c8e-bcd7-45f7-90cf-4b76f2d1b30a</ProjectGuid>
+    <ProjectGuid>e9c5a4a2-06f7-4024-91ae-301e702e17e6</ProjectGuid>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup Condition="'$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0'">
@@ -80,17 +80,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <TypeScriptToolsVersion>1.5</TypeScriptToolsVersion>
-    <DefaultReferenceGroup>Implicit (Apache Cordova)</DefaultReferenceGroup>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+  <PropertyGroup>
     <TypeScriptCompileOnSaveEnabled>false</TypeScriptCompileOnSaveEnabled>
-    <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
-    <TypeScriptSourceMap>true</TypeScriptSourceMap>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-    <TypeScriptCompileOnSaveEnabled>false</TypeScriptCompileOnSaveEnabled>
-    <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
-    <TypeScriptSourceMap>false</TypeScriptSourceMap>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\ApacheCordovaTools\vs-mda-targets\Microsoft.TypeScript.MDA.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\ApacheCordovaTools\vs-mda-targets\Microsoft.MDA.FileMirroring.targets" />
@@ -109,7 +101,7 @@
     <Error Condition="$(MDAPropertiesEvaluated) == '' And $(MDAVsixDir) == ''" Text="Path to Visual Studio Extension for Tools for Apache Cordova has not been specified. Please install it and set the MDAVsixDir environment variable before building." />
     <!-- Sanity check that things exist in the specified places. These are more likely to fail if building outside Visual Studio and the required environment variables have not been set, or set incorrectly. -->
     <Error Condition="!Exists('$(NodeJsDir)') Or !Exists('$(NodeJsDir)\node.exe')" Text="The specified NodeJs directory $(NodeJsDir) either does not exist, or does not contain node.exe. Please check that NodeJs has been installed, and set the NodeJsDir variable to the correct directory." />
-    <Error Condition="!Exists('$(MDAVsixDir)') Or !Exists('$(MDAVsixDir)\packages\vs-tac')" Text="The specified directory to the Visual Studio extension $(MDAVsixDir)\packages\vs-tac either does not exist, or does not contain a packages\vs-tac sub-directory. Please check that the extension directory exists and set the MDAVsixDir variable to the correct directory." />
+    <Error Condition="!Exists('$(MDAVsixDir)') Or !Exists('$(MDAVsixDir)\packages\vs-tac')" Text="The specified directory to the Visual Studio extension $(MDAVsixDir)\node.exe either does not exist, or does not contain a packages\vs-tac sub-directory. Please check that the extension directory exists and set the MDAVsixDir variable to the correct directory." />
     <!-- Installs (if necessary) the supporting Nodejs module -->
     <Exec Command="&quot;$(MDAVsixDir)&quot;\packages\vs-tac\install &quot;$(NodeJsDir)&quot; &quot;$(MDAVsixDir)&quot;\packages\vs-tac" />
   </Target>
