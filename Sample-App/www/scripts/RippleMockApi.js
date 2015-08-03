@@ -10,7 +10,7 @@
         originalBridgeExecFn,
         isRunningInRipple;
 
-    isRunningInRipple = window.top && window.top.ripple;
+    isRunningInRipple = !!(window.top && window.top.ripple);
 
     /**
      * These are the APIs for the services that we want to ignore (eg suppress the "cheeseburger"
@@ -18,7 +18,8 @@
      */
     apisToIgnore = {
         "File": ["requestAllPaths"],
-        "StatusBar": ["_ready"]
+        "StatusBar": ["_ready"],
+        "Console": ["logLevel"]
     };
 
 

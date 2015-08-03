@@ -54,7 +54,7 @@
          * Exposes an API for showing toast messages.
          */
         get toast(): ICordovaToastPlugin {
-            if (window.plugins && window.plugins.toast) {
+            if (!this.Utilities.isRipple && window.plugins && window.plugins.toast) {
                 return window.plugins.toast;
             }
             else {
@@ -66,7 +66,7 @@
          * Exposes an API for working with progress indicators.
          */
         get progressIndicator(): ICordovaProgressIndicator {
-            if (window.ProgressIndicator && !this.Utilities.isAndroid) {
+            if (!this.Utilities.isRipple && window.ProgressIndicator && !this.Utilities.isAndroid) {
                 return window.ProgressIndicator;
             }
             else {
@@ -78,7 +78,7 @@
          * Exposes an API for working with the operating system's clipboard.
          */
         get clipboard(): ICordovaClipboardPlugin {
-            if (typeof(cordova) !== "undefined" && cordova.plugins && cordova.plugins.clipboard) {
+            if (!this.Utilities.isRipple && typeof(cordova) !== "undefined" && cordova.plugins && cordova.plugins.clipboard) {
                 return cordova.plugins.clipboard;
             }
             else if (this.Utilities.isChromeExtension) {
@@ -93,7 +93,7 @@
          * Exposes an API for manipulating the device's native status bar.
          */
         get statusBar(): StatusBar {
-            if (window.StatusBar) {
+            if (!this.Utilities.isRipple && window.StatusBar) {
                 return window.StatusBar;
             }
             else {
@@ -105,7 +105,7 @@
          * Exposes an API for adjusting keyboard behavior.
          */
         get keyboard(): Ionic.Keyboard {
-            if (typeof (cordova) !== "undefined" && cordova.plugins && cordova.plugins.Keyboard) {
+            if (!this.Utilities.isRipple && typeof (cordova) !== "undefined" && cordova.plugins && cordova.plugins.Keyboard) {
                 return cordova.plugins.Keyboard;
             }
             else {
@@ -117,7 +117,7 @@
          * Exposes an API for logging exception information to the Crashlytics backend service.
          */
         get crashlytics(): ICordovaCrashlyticsPlugin {
-            if (typeof (navigator) !== "undefined" && navigator.crashlytics) {
+            if (!this.Utilities.isRipple && typeof (navigator) !== "undefined" && navigator.crashlytics) {
                 return navigator.crashlytics;
             }
             else {
@@ -185,7 +185,7 @@
             };
 
             // Obtain the notification plugin implementation.
-            if (navigator.notification) {
+            if (!this.Utilities.isRipple && navigator.notification) {
                 notificationPlugin = navigator.notification;
             }
             else {
@@ -260,7 +260,7 @@
             };
 
             // Obtain the notification plugin implementation.
-            if (navigator.notification) {
+            if (!this.Utilities.isRipple && navigator.notification) {
                 notificationPlugin = navigator.notification;
             }
             else {
@@ -354,7 +354,7 @@
             };
 
             // Obtain the notification plugin implementation.
-            if (navigator.notification) {
+            if (!this.Utilities.isRipple && navigator.notification) {
                 notificationPlugin = navigator.notification;
             }
             else {
