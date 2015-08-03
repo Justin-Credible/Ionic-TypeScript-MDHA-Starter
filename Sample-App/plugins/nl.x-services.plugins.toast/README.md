@@ -118,20 +118,22 @@ Toast works with PhoneGap build too, but only with PhoneGap 3.0 and up.
 
 Just add the following xml to your `config.xml` to always use the latest version of this plugin:
 ```xml
-<gap:plugin name="nl.x-services.plugins.toast" />
+<gap:plugin name="nl.x-services.plugins.toast" source="plugins.cordova.io" />
 ```
-or to use this exact version:
+or to use a specific version:
 ```xml
-<gap:plugin name="nl.x-services.plugins.toast" version="1.0" />
+<gap:plugin name="nl.x-services.plugins.toast" source="plugins.cordova.io" version="2.0.6" />
 ```
 
 Toast.js is brought in automatically. There is no need to change or add anything in your html.
 
 ## 4. Usage
+
+### Showing a Toast
 You have two choices to make when showing a Toast: where to show it and for how long.
 * show(message, duration, position)
- * duration: 'short', 'long'
- * position: 'top', 'center', 'bottom'
+* duration: 'short', 'long'
+* position: 'top', 'center', 'bottom'
 
 You can also use any of these convenience methods:
 * showShortTop(message)
@@ -146,6 +148,33 @@ You can copy-paste these lines of code for a quick test:
 <button onclick="window.plugins.toast.showShortTop('Hello there!', function(a){console.log('toast success: ' + a)}, function(b){alert('toast error: ' + b)})">Toast showShortTop</button>
 <button onclick="window.plugins.toast.showLongBottom('Hello there!', function(a){console.log('toast success: ' + a)}, function(b){alert('toast error: ' + b)})">Toast showLongBottom</button>
 <button onclick="window.plugins.toast.show('Hello there!', 'long', 'center', function(a){console.log('toast success: ' + a)}, function(b){alert('toast error: ' + b)})">Toast show long center</button>
+```
+
+#### Tweaking the vertical position
+Since 2.1.0 you can add pixels to move the toast up or down.
+Note that `showWithOptions` can be used instead of the functions above, but it's not useful unless you want to pass `addPixelsY`.
+```js
+function showTop() {
+  window.plugins.toast.showWithOptions(
+    {
+      message: "hey there",
+      duration: "short",
+      position: "bottom",
+      addPixelsY: -40  // added a negative value to move it up a bit (default 0)
+    },
+    onSuccess, // optional
+    onError    // optional
+  );
+}
+```
+
+### Hiding a Toast
+In case you want to hide a Toast manually, call this:
+```js
+function hide() {
+  // this function takes an optional success callback, but you can do without just as well
+  window.plugins.toast.hide();
+}
 ```
 
 ### WP8 quircks

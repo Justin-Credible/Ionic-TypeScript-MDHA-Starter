@@ -7,6 +7,7 @@ Toast.prototype.optionsBuilder = function () {
   var message = null;
   var duration = "short";
   var position = "center";
+  var addPixelsY = 0;
 
   return {
     withMessage: function(m) {
@@ -24,11 +25,17 @@ Toast.prototype.optionsBuilder = function () {
       return this;
     },
 
+    withAddPixelsY: function(y) {
+      addPixelsY = y;
+      return this;
+    },
+
     build: function() {
       return {
         message: message,
         duration: duration,
-        position: position
+        position: position,
+        addPixelsY: addPixelsY
       }
     }
   }
@@ -72,6 +79,10 @@ Toast.prototype.showLongCenter = function (message, successCallback, errorCallba
 
 Toast.prototype.showLongBottom = function (message, successCallback, errorCallback) {
   this.show(message, "long", "bottom", successCallback, errorCallback);
+};
+
+Toast.prototype.hide = function (successCallback, errorCallback) {
+  cordova.exec(successCallback, errorCallback, "Toast", "hide", []);
 };
 
 Toast.install = function () {
