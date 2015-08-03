@@ -46,6 +46,10 @@
             return this.$injector.get(Preferences.ID);
         }
 
+        private get Configuration(): Configuration {
+            return this.$injector.get(Configuration.ID);
+        }
+
         private get Logger(): Logger {
             return this.$injector.get(Logger.ID);
         }
@@ -102,7 +106,7 @@
             console.log("HttpInterceptor.request: " + config.url, [config]);
 
             // Log the request data to disk.
-            if (this.Preferences.enableFullHttpLogging) {
+            if (this.Configuration.enableFullHttpLogging) {
                 this.Logger.logHttpRequestConfig(config);
             }
 
@@ -129,10 +133,10 @@
 
                 /* tslint:enable:no-string-literal */
 
-                if (this.Preferences.apiUrl && this.Preferences.apiUrl) {
+                if (this.Configuration.apiUrl && this.Configuration.apiUrl) {
 
                     // Grab the base data source URL.
-                    baseUrl = this.Preferences.apiUrl;
+                    baseUrl = this.Configuration.apiUrl;
 
                     // Remove the leading tilde character.
                     config.url = config.url.substring(1);
@@ -179,7 +183,7 @@
             console.log("HttpInterceptor.response: " + httpResponse.config.url, [httpResponse]);
 
             // Log the response data to disk.
-            if (this.Preferences.enableFullHttpLogging) {
+            if (this.Configuration.enableFullHttpLogging) {
                 this.Logger.logHttpResponse(httpResponse);
             }
 
