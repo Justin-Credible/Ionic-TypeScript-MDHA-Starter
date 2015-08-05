@@ -9,6 +9,22 @@ module JustinCredible.SampleApp.Application {
     var ngModule: ng.IModule;
 
     /**
+     * Used to hold references to several of the Angular-injected services for use within
+     * this local scope. These references are populated in angular_initialize().
+     */
+    var services: {
+        $rootScope: ng.IRootScopeService,
+        $location: ng.ILocationService,
+        $ionicHistory: any,
+        Utilities: Services.Utilities,
+        UiHelper: Services.UiHelper,
+        Preferences: Services.Preferences,
+        Configuration: Services.Configuration,
+        MockHttpApis: Services.MockHttpApis,
+        Logger: Services.Logger
+    };
+
+    /**
      * Indicates if the PIN entry dialog is currently being shown. This is used to determine
      * if the device_pause event should update the lastPausedAt timestamp (we don't want to
      * update the timestamp if the dialog is open because it will allow the user to pause
@@ -50,16 +66,16 @@ module JustinCredible.SampleApp.Application {
         // Define our constants.
         ngModule.constant("isRipple", !!(window.parent && window.parent.ripple));
         ngModule.constant("isCordova", typeof(cordova) !== "undefined");
-        ngModule.constant("isDebug", window.buildVars.debug);
+        ngModule.constant("buildVars", window.buildVars);
         ngModule.constant("isChromeExtension", typeof (chrome) !== "undefined" && typeof (chrome.runtime) !== "undefined" && typeof (chrome.runtime.id) !== "undefined");
         ngModule.constant("versionInfo", versionInfo);
         ngModule.constant("apiVersion", "1.0");
 
         // Register the services, directives, filters, and controllers with Angular.
-        registerServices(ngModule);
-        registerDirectives(ngModule);
-        registerFilters(ngModule);
-        registerControllers(ngModule);
+        registerServices();
+        registerDirectives();
+        registerFilters();
+        registerControllers();
 
         // Specify the initialize/run and configuration functions.
         ngModule.run(angular_initialize);
@@ -88,10 +104,8 @@ module JustinCredible.SampleApp.Application {
     /**
      * Used to register each of the services that exist in the Service namespace
      * with the given Angular module.
-     * 
-     * @param ngModule The Angular module with which to register.
      */
-    function registerServices(ngModule: ng.IModule): void {
+    function registerServices(): void {
         // Register each of the services that exist in the Service namespace.
         _.each(Services, (Service: any) => {
             // A static ID property is required to register a service.
@@ -113,10 +127,8 @@ module JustinCredible.SampleApp.Application {
     /**
      * Used to register each of the directives that exist in the Directives namespace
      * with the given Angular module.
-     * 
-     * @param ngModule The Angular module with which to register.
      */
-    function registerDirectives(ngModule: ng.IModule): void {
+    function registerDirectives(): void {
 
         _.each(Directives, (Directive: any) => {
             if (Directive.ID) {
@@ -134,10 +146,8 @@ module JustinCredible.SampleApp.Application {
     /**
      * Used to register each of the filters that exist in the Filters namespace
      * with the given Angular module.
-     * 
-     * @param ngModule The Angular module with which to register.
      */
-    function registerFilters(ngModule: ng.IModule): void {
+    function registerFilters(): void {
 
         _.each(Filters, (Filter: any) => {
             if (Filter.ID && typeof(Filter.filter) === "function") {
@@ -150,10 +160,8 @@ module JustinCredible.SampleApp.Application {
     /**
      * Used to register each of the controllers that exist in the Controller namespace
      * with the given Angular module.
-     * 
-     * @param ngModule The Angular module with which to register.
      */
-    function registerControllers(ngModule: ng.IModule): void {
+    function registerControllers(): void {
 
         // Register each of the controllers that exist in the Controllers namespace.
         _.each(Controllers, (Controller: any) => {
@@ -167,11 +175,8 @@ module JustinCredible.SampleApp.Application {
     /**
      * Used to register each of the Controller classes that extend BaseDialog as dialogs
      * with the UiHelper.
-     * 
-     * @param Utilities The utilities instance; used to invoke derivesFrom().
-     * @param UiHelper The UiHelper instance; used to invoke registerDialog().
      */
-    function registerDialogs(Utilities: Services.Utilities, UiHelper: Services.UiHelper): void {
+    function registerDialogs(): void {
 
         // Loop over each of the controllers, and for any controller that dervies from BaseController
         // register it as a dialog using its ID with the UiHelper.
@@ -182,8 +187,8 @@ module JustinCredible.SampleApp.Application {
                 return; // Continue
             }
 
-            if (Utilities.derivesFrom(Controller, Controllers.BaseDialogController)) {
-                UiHelper.registerDialog(Controller.ID, Controller.TemplatePath);
+            if (services.Utilities.derivesFrom(Controller, Controllers.BaseDialogController)) {
+                services.UiHelper.registerDialog(Controller.ID, Controller.TemplatePath);
             }
         });
     }
@@ -196,10 +201,18 @@ module JustinCredible.SampleApp.Application {
      * @param Directive A class reference (not instance) to a element directive class that implements Directives.IElementDirective.
      * @returns A factory function that can be used by Angular to create an instance of the element directive.
      */
-    function getElementDirectiveFactoryFunction(Directive: Directives.IElementDirectiveClass): () => ng.IDirective {
-        var descriptor: ng.IDirective = {};
+    function getElementDirectiveFactoryFunction(Directive: Directives.IElementDirectiveClass): any[] {
+        var params = [],
+            injectedArguments: IArguments = null,
+            descriptor: ng.IDirective = {};
 
         /* tslint:disable:no-string-literal */
+
+        // If the directive is annotated with an injection array, we'll add the injection
+        // array's values to the list first.
+        if (Directive["$inject"]) {
+            params = params.concat(Directive["$inject"]);
+        }
 
         // Here we set the options for the Angular directive descriptor object.
         // We get these values from the static fields on the class reference.
@@ -219,15 +232,40 @@ module JustinCredible.SampleApp.Application {
         // directive to the element.
         descriptor.link = (scope: ng.IScope, instanceElement: ng.IAugmentedJQuery, instanceAttributes: ng.IAttributes, controller: any, transclude: ng.ITranscludeFunction): void => {
 
-            // New up the instance of our directive class.
-            var instance = <Directives.IElementDirective>new Directive(scope, instanceElement, instanceAttributes, controller, transclude);
+            // New up an instance of the directive for to link to this element.
+            // Pass along the arguments that were injected so the instance can receive them.
+            var instance = <Directives.BaseElementDirective<any>>construct(Directive, injectedArguments);
 
-            // Delegate to the render method.
+            /* tslint:disable:no-string-literal */
+
+            // Set the protected properties.
+            instance["scope"] = scope;
+            instance["element"] = instanceElement;
+            instance["attributes"] = instanceAttributes;
+            instance["controller"] = controller;
+            instance["transclude"] = transclude;
+
+            /* tslint:enable:no-string-literal */
+
+            // Delegate to the initialize and render methods.
+            instance.initialize();
             instance.render();
         };
 
-        // Finally, return a function that returns this Angular directive descriptor object.
-        return function () { return descriptor; };
+        // The last parameter in the array is the function that will be executed by Angular
+        // when the directive is being used.
+        params.push(function () {
+
+            // Save off a reference to the array of injected objects so we can use them when
+            // constructing an instance of the directive (see above). These arguments are the
+            // objects that were injected via the $inject property.
+            injectedArguments = arguments;
+
+            // Return the descriptor object which describes the directive to Angular.
+            return descriptor;
+        });
+
+        return params;
     }
 
     /**
@@ -278,50 +316,86 @@ module JustinCredible.SampleApp.Application {
 
     /**
      * The main initialize/run function for Angular; fired once the AngularJs framework is done loading.
+     * 
+     * The parameters to this method are automatically determined by Angular's dependency injection based
+     * on the name of each parameter.
      */
-    function angular_initialize($rootScope: ng.IScope, $location: ng.ILocationService, $ionicHistory: any, $ionicPlatform: Ionic.IPlatform, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences, MockHttpApis: Services.MockHttpApis): void {
+    function angular_initialize(
+        $rootScope: ng.IScope,
+        $location: ng.ILocationService,
+        $ionicHistory: any,
+        $ionicPlatform: Ionic.IPlatform,
+        Utilities: Services.Utilities,
+        UiHelper: Services.UiHelper,
+        Preferences: Services.Preferences,
+        Configuration: Services.Configuration,
+        MockHttpApis: Services.MockHttpApis,
+        Logger: Services.Logger
+        ): void {
+
+        // Save off references to the modules for use within this application module.
+        services = {
+            $rootScope: $rootScope,
+            $location: $location,
+            $ionicHistory: $ionicHistory,
+            Utilities: Utilities,
+            UiHelper: UiHelper,
+            Preferences: Preferences,
+            Configuration: Configuration,
+            MockHttpApis: MockHttpApis,
+            Logger: Logger
+        };
 
         // Once AngularJs has loaded we'll wait for the Ionic platform's ready event.
         // This event will be fired once the device ready event fires via Cordova.
         $ionicPlatform.ready(function () {
-            ionicPlatform_ready($rootScope, $location, $ionicHistory, $ionicPlatform, UiHelper, Utilities, Preferences);
+            ionicPlatform_ready();
         });
 
         // Mock up or allow HTTP responses.
-        MockHttpApis.mockHttpCalls(Preferences.enableMockHttpCalls);
+        MockHttpApis.mockHttpCalls(Configuration.enableMockHttpCalls);
     };
 
     /**
      * Fired once the Ionic framework determines that the device is ready.
      */
-    function ionicPlatform_ready($rootScope: ng.IScope, $location: ng.ILocationService, $ionicHistory: any, $ionicPlatform: Ionic.IPlatform, UiHelper: Services.UiHelper, Utilities: Services.Utilities, Preferences: Services.Preferences): void {
+    function ionicPlatform_ready(): void {
 
         // Subscribe to device events.
-        document.addEventListener("pause", _.bind(device_pause, null, Preferences));
-        document.addEventListener("resume", _.bind(device_resume, null, $location, $ionicHistory, Utilities, UiHelper, Preferences));
-        document.addEventListener("menubutton", _.bind(device_menuButton, null, $rootScope));
+        document.addEventListener("pause", device_pause);
+        document.addEventListener("resume", device_resume);
+        document.addEventListener("menubutton", device_menuButton);
 
         // Subscribe to Angular events.
-        $rootScope.$on("$locationChangeStart", angular_locationChangeStart);
+        services.$rootScope.$on("$locationChangeStart", angular_locationChangeStart);
 
         // Register all of the dialogs with the UiHelper.
-        registerDialogs(Utilities, UiHelper);
+        registerDialogs();
 
         // We use this combination of settings so prevent the visual jank that
         // would otherwise occur when tapping an input that shows the keyboard.
-        UiHelper.keyboard.disableScroll(true);
-        UiHelper.keyboard.hideKeyboardAccessoryBar(true);
+        services.UiHelper.keyboard.disableScroll(true);
+        services.UiHelper.keyboard.hideKeyboardAccessoryBar(false);
 
         // Now that the platform is ready, we'll delegate to the resume event.
         // We do this so the same code that fires on resume also fires when the
         // application is started for the first time.
-        device_resume($location, $ionicHistory, Utilities, UiHelper, Preferences);
+        device_resume();
     }
 
     /**
      * Function that is used to configure AngularJs.
+     * 
+     * The parameters to this method are automatically determined by Angular's
+     * dependency injection based on the name of each parameter.
      */
-    function angular_configure($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider, $provide: ng.auto.IProvideService, $httpProvider: ng.IHttpProvider, $compileProvider: ng.ICompileProvider): void {
+    function angular_configure(
+        $stateProvider: ng.ui.IStateProvider,
+        $urlRouterProvider: ng.ui.IUrlRouterProvider,
+        $provide: ng.auto.IProvideService,
+        $httpProvider: ng.IHttpProvider,
+        $compileProvider: ng.ICompileProvider
+        ): void {
 
         // Intercept the default Angular exception handler.
         $provide.decorator("$exceptionHandler", function ($delegate: ng.IExceptionHandlerService) {
@@ -360,12 +434,12 @@ module JustinCredible.SampleApp.Application {
      * Fired when the OS decides to minimize or pause the application. This usually
      * occurs when the user presses the device's home button or switches applications.
      */
-    function device_pause(Preferences: Services.Preferences): void {
+    function device_pause(): void {
 
         if (!isShowingPinPrompt) {
             // Store the current date/time. This will be used to determine if we need to
             // show the PIN lock screen the next time the application is resumed.
-            Preferences.lastPausedAt = moment();
+            services.Configuration.lastPausedAt = moment();
         }
     }
 
@@ -374,12 +448,12 @@ module JustinCredible.SampleApp.Application {
      * when the user launches an app that is already open or uses the OS task manager
      * to switch back to the application.
      */
-    function device_resume($location: ng.ILocationService, $ionicHistory: any, Utilities: Services.Utilities, UiHelper: Services.UiHelper, Preferences: Services.Preferences): void {
+    function device_resume(): void {
 
         isShowingPinPrompt = true;
 
         // Potentially display the PIN screen.
-        UiHelper.showPinEntryAfterResume().then(() => {
+        services.UiHelper.showPinEntryAfterResume().then(() => {
             isShowingPinPrompt = false;
 
             // If the user hasn't completed onboarding (eg new, first-time use of the app)
@@ -387,35 +461,35 @@ module JustinCredible.SampleApp.Application {
             // purposefully after the PIN screen for the case where the user may be upgrading
             // from a version of the application that doesn't have onboarding (we wouldn't
             // want them to be able to bypass the PIN entry in that case).
-            if (!Preferences.hasCompletedOnboarding) {
+            if (!services.Configuration.hasCompletedOnboarding) {
 
                 // Tell Ionic to not animate and clear the history (hide the back button)
                 // for the next view that we'll be navigating to below.
-                $ionicHistory.nextViewOptions({
+                services.$ionicHistory.nextViewOptions({
                     disableAnimate: true,
                     disableBack: true
                 });
 
                 // Navigate the user to the onboarding splash view.
-                $location.path("/app/onboarding/splash");
-                $location.replace();
+                services.$location.path("/app/onboarding/splash");
+                services.$location.replace();
 
                 return;
             }
 
             // If the user is still at the blank sreen, then push them to their default view.
-            if ($location.url() === "/app/blank") {
+            if (services.$location.url() === "/app/blank") {
 
                 // Tell Ionic to not animate and clear the history (hide the back button)
                 // for the next view that we'll be navigating to below.
-                $ionicHistory.nextViewOptions({
+                services.$ionicHistory.nextViewOptions({
                     disableAnimate: true,
                     disableBack: true
                 });
 
                 // Navigate the user to their default view.
-                $location.path(Utilities.defaultCategory.href.substring(1));
-                $location.replace();
+                services.$location.path(services.Utilities.defaultCategory.href.substring(1));
+                services.$location.replace();
             }
         });
     }
@@ -424,10 +498,10 @@ module JustinCredible.SampleApp.Application {
      * Fired when the menu hard (or soft) key is pressed on the device (eg Android menu key).
      * This isn't used for iOS devices because they do not have a menu button key.
      */
-    function device_menuButton($rootScope: ng.IScope): void {
+    function device_menuButton(): void {
         // Broadcast this event to all child scopes. This allows controllers for individual
         // views to handle this event and show a contextual menu etc.
-        $rootScope.$broadcast(Constants.Events.APP_MENU_BUTTON);
+        services.$rootScope.$broadcast(Constants.Events.APP_MENU_BUTTON);
     }
 
     /**
@@ -442,15 +516,15 @@ module JustinCredible.SampleApp.Application {
      * Fired when an unhandled JavaScript exception occurs outside of Angular.
      */
     function window_onerror(message: any, uri: string, lineNumber: number, columnNumber?: number): void {
-        var Logger: Services.Logger,
-            UiHelper: Services.UiHelper;
 
         console.error("Unhandled JS Exception", message, uri, lineNumber, columnNumber);
 
         try {
-            UiHelper = angular.element(document.body).injector().get(Services.UiHelper.ID);
-            UiHelper.toast.showLongBottom("An error has occurred; please try again.");
-            UiHelper.progressIndicator.hide();
+            // Show a generic message to the user.
+            services.UiHelper.toast.showLongBottom("An error has occurred; please try again.");
+
+            // If this exception occurred in the HttpInterceptor, there may still be a progress indicator on the scrren.
+            services.UiHelper.progressIndicator.hide();
         }
         catch (ex) {
             console.warn("There was a problem alerting the user to an Angular error; falling back to a standard alert().", ex);
@@ -458,8 +532,7 @@ module JustinCredible.SampleApp.Application {
         }
 
         try {
-            Logger = angular.element(document.body).injector().get(Services.Logger.ID);
-            Logger.logWindowError(message, uri, lineNumber, columnNumber);
+            services.Logger.logWindowError(message, uri, lineNumber, columnNumber);
         }
         catch (ex) {
             console.error("An error occurred while attempting to log an exception.", ex);
@@ -472,9 +545,7 @@ module JustinCredible.SampleApp.Application {
      * This includes uncaught exceptions in ng-click methods for example.
      */
     function angular_exceptionHandler(exception: Error, cause: string): void {
-        var message = exception.message,
-            Logger: Services.Logger,
-            UiHelper: Services.UiHelper;
+        var message = exception.message;
 
         if (!cause) {
             cause = "[Unknown]";
@@ -483,9 +554,11 @@ module JustinCredible.SampleApp.Application {
         console.error("AngularJS Exception", exception, cause);
 
         try {
-            UiHelper = angular.element(document.body).injector().get(Services.UiHelper.ID);
-            UiHelper.toast.showLongBottom("An error has occurred; please try again.");
-            UiHelper.progressIndicator.hide();
+            // Show a generic message to the user.
+            services.UiHelper.toast.showLongBottom("An error has occurred; please try again.");
+
+            // If this exception occurred in the HttpInterceptor, there may still be a progress indicator on the scrren.
+            services.UiHelper.progressIndicator.hide();
         }
         catch (ex) {
             console.warn("There was a problem alerting the user to an Angular error; falling back to a standard alert().", ex);
@@ -493,8 +566,7 @@ module JustinCredible.SampleApp.Application {
         }
 
         try {
-            Logger = angular.element(document.body).injector().get(Services.Logger.ID);
-            Logger.logError("Angular exception caused by " + cause, exception);
+            services.Logger.logError("Angular exception caused by " + cause, exception);
         }
         catch (ex) {
             console.error("An error occurred while attempting to log an Angular exception.", ex);

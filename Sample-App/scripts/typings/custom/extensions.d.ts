@@ -44,29 +44,51 @@ interface Window {
     /**
      * Variables emitted at build time which contain useful application information.
      */
-    buildVars: {
-        /**
-         * True if the application was build in debug configuration, false if it was
-         * build a release or distribution configuration.
-         */
-        debug: boolean;
+    buildVars: BuildVars
 
-        /**
-         * The time at which the application was built.
-         */
-        buildTimestamp: string;
+    /**
+     * Prints a stack trace at the given location.
+     * 
+     * Uses the stacktrace.js library:
+     * https://github.com/stacktracejs/stacktrace.js
+     */
+    printStackTrace(): string[];
 
-        majorVersion: number;
-        minorVersion: number;
-        buildVersion: number;
-
-        /**
-         * The URL to the APIs to use
-         */
-        apiUrl: string;
-    };
+    /**
+     * Prints a stack trace for the given error object.
+     * 
+     * Uses the stacktrace.js library:
+     * https://github.com/stacktracejs/stacktrace.js
+     * 
+     * @param data An object containing the error on a property named "e".
+     */
+    printStackTrace(data: { e: Error }): string[];
 }
 
+/**
+ * Variables emitted at build time which contain useful application information.
+ */
+interface BuildVars {
+    /**
+     * True if the application was build in debug configuration, false if it was
+     * build a release or distribution configuration.
+     */
+    debug: boolean;
+
+    /**
+     * The time at which the application was built.
+     */
+    buildTimestamp: string;
+
+    majorVersion: number;
+    minorVersion: number;
+    buildVersion: number;
+
+    /**
+     * The URL to the APIs to use
+     */
+    apiUrl: string;
+}
 
 /**
  * These are the Cordova plug-ins that are available via the global Cordova.plugins object.

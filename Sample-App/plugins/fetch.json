@@ -1,63 +1,83 @@
 {
-    "org.apache.cordova.console": {
+    "cordova-plugin-console": {
         "source": {
             "type": "registry",
-            "id": "org.apache.cordova.console@0.2.13"
-        }
+            "id": "cordova-plugin-console"
+        },
+        "is_top_level": true,
+        "variables": {}
     },
-    "org.apache.cordova.device": {
+    "cordova-plugin-device": {
         "source": {
             "type": "registry",
-            "id": "org.apache.cordova.device@0.3.0"
-        }
+            "id": "cordova-plugin-device"
+        },
+        "is_top_level": true,
+        "variables": {}
     },
-    "org.apache.cordova.file": {
+    "cordova-plugin-inappbrowser": {
         "source": {
             "type": "registry",
-            "id": "org.apache.cordova.file@1.3.3"
-        }
+            "id": "cordova-plugin-inappbrowser"
+        },
+        "is_top_level": true,
+        "variables": {}
     },
-    "nl.x-services.plugins.toast": {
+    "cordova-plugin-dialogs": {
         "source": {
-            "type": "git",
-            "url": "https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin",
-            "subdir": "."
-        }
+            "type": "registry",
+            "id": "cordova-plugin-dialogs"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-splashscreen": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-splashscreen"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-statusbar": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-statusbar"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-whitelist": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-whitelist@1"
+        },
+        "is_top_level": true,
+        "variables": {}
     },
     "com.verso.cordova.clipboard": {
         "source": {
             "type": "git",
-            "url": "https://github.com/VersoSolutions/CordovaClipboard",
+            "url": "https://github.com/VersoSolutions/CordovaClipboard.git",
             "subdir": "."
-        }
+        },
+        "is_top_level": true,
+        "variables": {}
     },
-    "org.apache.cordova.dialogs": {
-        "source": {
-            "type": "registry",
-            "id": "org.apache.cordova.dialogs"
-        }
-    },
-    "cordova-plugin-inappbrowser": {
+    "nl.x-services.plugins.toast": {
         "source": {
             "type": "git",
-            "url": "https://github.com/apache/cordova-plugin-inappbrowser",
+            "url": "https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git",
             "subdir": "."
         },
         "is_top_level": true,
         "variables": {}
     },
-    "org.apache.cordova.statusbar": {
+    "net.justin-credible.cordova-progress-indicator": {
         "source": {
-            "type": "registry",
-            "id": "org.apache.cordova.statusbar@0.1.10"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "com.ionic.keyboard": {
-        "source": {
-            "type": "registry",
-            "id": "com.ionic.keyboard@1.0.4"
+            "type": "git",
+            "url": "https://github.com/Justin-Credible/cordova-progressIndicator.git",
+            "subdir": "."
         },
         "is_top_level": true,
         "variables": {}

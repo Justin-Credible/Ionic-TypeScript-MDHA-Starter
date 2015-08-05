@@ -25,7 +25,7 @@
         //#endregion
 
         public static get $inject(): string[] {
-            return ["$rootScope", "$q", "$http", "$ionicModal", MockPlatformApis.ID, Utilities.ID, Preferences.ID];
+            return ["$rootScope", "$q", "$http", "$ionicModal", MockPlatformApis.ID, Utilities.ID, Preferences.ID, Configuration.ID];
         }
 
         private $rootScope: ng.IRootScopeService;
@@ -35,10 +35,11 @@
         private MockPlatformApis: Services.MockPlatformApis;
         private Utilities: Services.Utilities;
         private Preferences: Services.Preferences;
+        private Configuration: Services.Configuration;
 
         private isPinEntryOpen = false;
 
-        constructor($rootScope: ng.IRootScopeService, $q: ng.IQService, $http: ng.IHttpService, $ionicModal: any, MockPlatformApis: Services.MockPlatformApis, Utilities: Services.Utilities, Preferences: Services.Preferences) {
+        constructor($rootScope: ng.IRootScopeService, $q: ng.IQService, $http: ng.IHttpService, $ionicModal: any, MockPlatformApis: Services.MockPlatformApis, Utilities: Services.Utilities, Preferences: Services.Preferences, Configuration: Services.Configuration) {
             this.$rootScope = $rootScope;
             this.$q = $q;
             this.$http = $http;
@@ -46,6 +47,7 @@
             this.MockPlatformApis = MockPlatformApis;
             this.Utilities = Utilities;
             this.Preferences = Preferences;
+            this.Configuration = Configuration;
         }
 
         //#region Plug-in Accessors
@@ -54,7 +56,7 @@
          * Exposes an API for showing toast messages.
          */
         get toast(): ICordovaToastPlugin {
-            if (window.plugins && window.plugins.toast) {
+            if (!this.Utilities.isRipple && window.plugins && window.plugins.toast) {
                 return window.plugins.toast;
             }
             else {
@@ -66,7 +68,7 @@
          * Exposes an API for working with progress indicators.
          */
         get progressIndicator(): ICordovaProgressIndicator {
-            if (window.ProgressIndicator && !this.Utilities.isAndroid) {
+            if (!this.Utilities.isRipple && window.ProgressIndicator && !this.Utilities.isAndroid) {
                 return window.ProgressIndicator;
             }
             else {
@@ -78,7 +80,7 @@
          * Exposes an API for working with the operating system's clipboard.
          */
         get clipboard(): ICordovaClipboardPlugin {
-            if (typeof(cordova) !== "undefined" && cordova.plugins && cordova.plugins.clipboard) {
+            if (!this.Utilities.isRipple && typeof(cordova) !== "undefined" && cordova.plugins && cordova.plugins.clipboard) {
                 return cordova.plugins.clipboard;
             }
             else if (this.Utilities.isChromeExtension) {
@@ -93,7 +95,7 @@
          * Exposes an API for manipulating the device's native status bar.
          */
         get statusBar(): StatusBar {
-            if (window.StatusBar) {
+            if (!this.Utilities.isRipple && window.StatusBar) {
                 return window.StatusBar;
             }
             else {
@@ -105,7 +107,7 @@
          * Exposes an API for adjusting keyboard behavior.
          */
         get keyboard(): Ionic.Keyboard {
-            if (typeof (cordova) !== "undefined" && cordova.plugins && cordova.plugins.Keyboard) {
+            if (!this.Utilities.isRipple && typeof (cordova) !== "undefined" && cordova.plugins && cordova.plugins.Keyboard) {
                 return cordova.plugins.Keyboard;
             }
             else {
@@ -117,7 +119,7 @@
          * Exposes an API for logging exception information to the Crashlytics backend service.
          */
         get crashlytics(): ICordovaCrashlyticsPlugin {
-            if (typeof (navigator) !== "undefined" && navigator.crashlytics) {
+            if (!this.Utilities.isRipple && typeof (navigator) !== "undefined" && navigator.crashlytics) {
                 return navigator.crashlytics;
             }
             else {
@@ -185,7 +187,7 @@
             };
 
             // Obtain the notification plugin implementation.
-            if (navigator.notification) {
+            if (!this.Utilities.isRipple && navigator.notification) {
                 notificationPlugin = navigator.notification;
             }
             else {
@@ -260,7 +262,7 @@
             };
 
             // Obtain the notification plugin implementation.
-            if (navigator.notification) {
+            if (!this.Utilities.isRipple && navigator.notification) {
                 notificationPlugin = navigator.notification;
             }
             else {
@@ -354,7 +356,7 @@
             };
 
             // Obtain the notification plugin implementation.
-            if (navigator.notification) {
+            if (!this.Utilities.isRipple && navigator.notification) {
                 notificationPlugin = navigator.notification;
             }
             else {
@@ -543,13 +545,13 @@
 
             // If there is a PIN set and a last paused time then we need to determine if we
             // need to show the lock screen.
-            if (this.Preferences.pin && this.Preferences.lastPausedAt != null && this.Preferences.lastPausedAt.isValid()) {
+            if (this.Preferences.pin && this.Configuration.lastPausedAt != null && this.Configuration.lastPausedAt.isValid()) {
                 // Get the current time.
                 resumedAt = moment();
 
                 // If the time elapsed since the last pause event is greater than the threshold,
                 // then we need to show the lock screen.
-                if (resumedAt.diff(this.Preferences.lastPausedAt, "minutes") > this.Preferences.requirePinThreshold) {
+                if (resumedAt.diff(this.Configuration.lastPausedAt, "minutes") > this.Configuration.requirePinThreshold) {
 
                     model = new Models.PinEntryDialogModel("PIN Required", this.Preferences.pin, false);
                     options = new Models.DialogOptions(model);

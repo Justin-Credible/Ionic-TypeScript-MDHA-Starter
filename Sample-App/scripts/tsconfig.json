@@ -1,9 +1,10 @@
 {
-    "compilerOptions": {
-        "target": "es5",
-        "out": "www/scripts/appBundle.js",
+    "compilerOptions": { 
+        "noImplicitAny": false,
+        "noEmitOnError": true,
+        "removeComments": false,
         "sourceMap": true,
-        "removeComments": true,
-        "sourceRoot": "/"
+        "out": "www/scripts/appBundle.js",
+        "target": "es5"
     }
 }

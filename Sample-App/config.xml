@@ -1,16 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<widget xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:vs="http://schemas.microsoft.com/appx/2014/htmlapps" id="JustinCredible.SampleApp" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" defaultlocale="en-US">
+<widget xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:vs="http://schemas.microsoft.com/appx/2014/htmlapps" id="net.justincredible.sampleapp" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" defaultlocale="en-US">
   <name>SampleApp</name>
-  <description>This is an example application I use to bootstrap when building mobile applications. It utilizes the Ionic UI framework (which in turn utilizes AngularJS), is written in TypeScript and runs in Cordova. It builds upon the Visual Studio Tools for Apache Cordova project template.</description>
-  <author href="http://cordova.io" email="dev@cordova.apache.org">Justin Unterreiner</author>
+  <description>A blank project that uses Apache Cordova to help you build an app that targets multiple mobile platforms: Android, iOS, Windows, and Windows Phone.</description>
+  <author href="http://cordova.io" email="dev@cordova.apache.org">Apache Cordova Team</author>
   <content src="index.html" />
   <access origin="*" />
   <vs:features />
   <preference name="SplashScreen" value="screen" />
   <preference name="windows-target-version" value="8.1" />
-  <preference name="windows-phone-target-version" value="8.1" />
-  <preference name="ApiUrl" value="https://services.yoursite.com/api"/>
-  <preference name="ApiUrlDebug" value="https://services.devel.yoursite.com/api"/>
+  <preference name="ApiUrl" value="http://sample-app.justin-credible.net/api" />
+  <preference name="ApiUrlDebug" value="http://devel.sample-app.justin-credible.net/api" />
+  <!-- Support for Cordova 5.0.0 plugin system -->
+  <plugin name="cordova-plugin-whitelist" version="1" />
+  <allow-intent href="http://*/*" />
+  <allow-intent href="https://*/*" />
+  <allow-intent href="tel:*" />
+  <allow-intent href="sms:*" />
+  <allow-intent href="mailto:*" />
+  <allow-intent href="geo:*" />
+  <platform name="android">
+    <allow-intent href="market:*" />
+  </platform>
+  <platform name="ios">
+    <allow-intent href="itms:*" />
+    <allow-intent href="itms-apps:*" />
+  </platform>
   <platform name="android">
     <icon src="res/icons/android/icon-36-ldpi.png" density="ldpi" />
     <icon src="res/icons/android/icon-48-mdpi.png" density="mdpi" />
@@ -49,7 +63,7 @@
     <icon src="res/icons/windows/Square150x150Logo.scale-100.png" width="150" height="150" />
     <icon src="res/icons/windows/Square150x150Logo.scale-240.png" width="360" height="360" />
     <icon src="res/icons/windows/Square30x30Logo.scale-100.png" width="30" height="30" />
-    <icon src="res/icons/windows/Square310x310Logo.scale-100.png" width="" height="" />
+    <icon src="res/icons/windows/Square310x310Logo.scale-100.png" width="310" height="310" />
     <icon src="res/icons/windows/Square44x44Logo.scale-240.png" width="106" height="106" />
     <icon src="res/icons/windows/Square70x70Logo.scale-100.png" width="70" height="70" />
     <icon src="res/icons/windows/Square71x71Logo.scale-240.png" width="170" height="170" />
@@ -92,18 +106,14 @@
   <platform name="wp8">
     <splash src="res/screens/wp8/SplashScreenImage.jpg" width="480" height="800" />
   </platform>
-  <vs:plugin name="org.apache.cordova.console" version="0.2.13" />
-  <vs:plugin name="org.apache.cordova.device" version="0.3.0" />
-  <vs:plugin name="org.apache.cordova.file" version="1.3.3" />
-  <vs:plugin name="org.apache.cordova.statusbar" version="0.1.10" />
-  <vs:plugin name="org.apache.cordova.dialogs" version="0.3.0" />
-  <vs:plugin name="com.ionic.keyboard" version="1.0.4" />
-  <vs:plugin name="cordova-plugin-inappbrowser" version="1.0.1-dev" />
-  <vs:plugin name="nl.x-services.plugins.toast" version="2.0.5" />
-  <vs:plugin name="com.verso.cordova.clipboard" version="0.1.0" />
-  <vs:plugin name="org.pbernasconi.progressindicator" version="1.1.0" />
-  <preference name="KeepRunning" value="False" />
-  <preference name="ShowTitle" value="True" />
-  <preference name="InAppBrowserStorageEnabled" value="False" />
-  <preference name="SuppressesIncrementalRendering" value="True" />
+  <vs:plugin name="cordova-plugin-console" version="1.0.1" />
+  <vs:plugin name="cordova-plugin-device" version="1.0.1" />
+  <vs:plugin name="cordova-plugin-inappbrowser" version="1.0.1" />
+  <vs:plugin name="cordova-plugin-dialogs" version="1.1.1" />
+  <vs:plugin name="cordova-plugin-splashscreen" version="2.1.0" />
+  <vs:plugin name="cordova-plugin-statusbar" version="1.0.1" />
+  <vs:plugin name="cordova-plugin-whitelist" version="1.0.0" />
+  <vs:plugin name="com.verso.cordova.clipboard" version="0.1.0" src="https://github.com/VersoSolutions/CordovaClipboard.git" />
+  <vs:plugin name="nl.x-services.plugins.toast" version="2.1.1" src="https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git" />
+  <vs:plugin name="net.justin-credible.cordova-progress-indicator" version="1.1.0" src="https://github.com/Justin-Credible/cordova-progressIndicator.git" />
 </widget>
