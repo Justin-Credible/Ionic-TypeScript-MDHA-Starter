@@ -1,4 +1,4 @@
-﻿module JustinCredible.SampleApp.Services {
+module JustinCredible.SampleApp.Services {
 
     /**
      * Provides a way to easily get/set application configuration.
@@ -13,13 +13,13 @@
         public static ID = "Configuration";
 
         public static get $inject(): string[] {
-            return ["buildVars"];
+            return [
+                "buildVars"
+            ];
         }
 
-        private _buildVars: BuildVars;
-
-        constructor(buildVars: BuildVars) {
-            this._buildVars = buildVars;
+        constructor(
+            private buildVars: BuildVars) {
         }
 
         //#endregion
@@ -56,7 +56,7 @@
                 return this._apiUrl;
             }
             else {
-                return this._buildVars.apiUrl;
+                return this.buildVars.apiUrl;
             }
         }
 

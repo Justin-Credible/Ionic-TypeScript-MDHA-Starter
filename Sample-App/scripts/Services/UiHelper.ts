@@ -5,50 +5,54 @@
      */
     export class UiHelper {
 
+        //#region Injection
+
         public static ID = "UiHelper";
+
+        public static get $inject(): string[] {
+            return [
+                "$rootScope",
+                "$q",
+                "$http",
+                "$ionicModal",
+                MockPlatformApis.ID,
+                Utilities.ID,
+                Preferences.ID,
+                Configuration.ID
+            ];
+        }
+
+        constructor(
+            private $rootScope: ng.IRootScopeService,
+            private $q: ng.IQService,
+            private $http: ng.IHttpService,
+            private $ionicModal: any,
+            private MockPlatformApis: MockPlatformApis,
+            private Utilities: Utilities,
+            private Preferences: Preferences,
+            private Configuration: Services.Configuration) {
+        }
+
+        //#endregion
 
         //#region Dialog Stuff
 
         /**
          * Keeps track of the currently open dialogs. Used by the showDialog helper method.
          */
-        private static openDialogIds: string[];
+        private static _openDialogIds: string[];
 
         /**
          * A map of dialog IDs to the templates that they use. Used by the showDialog helper method.
          * Entries are added to this map via the registerDialog method.
-         *
+         * 
          * The template's root element should have a controller that extends BaseDialogController.
          */
          private static dialogTemplateMap: { [dialogId: string]: string } = {};
 
         //#endregion
 
-        public static get $inject(): string[] {
-            return ["$rootScope", "$q", "$http", "$ionicModal", MockPlatformApis.ID, Utilities.ID, Preferences.ID, Configuration.ID];
-        }
-
-        private $rootScope: ng.IRootScopeService;
-        private $q: ng.IQService;
-        private $http: ng.IHttpService;
-        private $ionicModal: any;
-        private MockPlatformApis: Services.MockPlatformApis;
-        private Utilities: Services.Utilities;
-        private Preferences: Services.Preferences;
-        private Configuration: Services.Configuration;
-
         private isPinEntryOpen = false;
-
-        constructor($rootScope: ng.IRootScopeService, $q: ng.IQService, $http: ng.IHttpService, $ionicModal: any, MockPlatformApis: Services.MockPlatformApis, Utilities: Services.Utilities, Preferences: Services.Preferences, Configuration: Services.Configuration) {
-            this.$rootScope = $rootScope;
-            this.$q = $q;
-            this.$http = $http;
-            this.$ionicModal = $ionicModal;
-            this.MockPlatformApis = MockPlatformApis;
-            this.Utilities = Utilities;
-            this.Preferences = Preferences;
-            this.Configuration = Configuration;
-        }
 
         //#region Plug-in Accessors
 
@@ -155,7 +159,7 @@
          * 
          * @param message The message text to display.
          * @param title The title of the dialog, defaults to "Alert".
-         * @param buttonName The label for the button, defaults to "OK".
+         * @param buttonName The label for the button, defaults to Buttons.OK.
          * 
          * @returns A promise of void which will be resolved when the alert is closed.
          */
@@ -166,7 +170,7 @@
          * 
          * @param message The message text to display.
          * @param title The title of the dialog, defaults to "Alert".
-         * @param buttonName The label for the button, defaults to "OK".
+         * @param buttonName The label for the button, defaults to Buttons.OK.
          * 
          * @returns A promise of void which will be resolved when the alert is closed.
          */
@@ -179,7 +183,7 @@
             title = title || "Alert";
 
             // Default the button name.
-            buttonName = buttonName || "OK";
+            buttonName = buttonName || Constants.Buttons.OK;
 
             // Define the callback that is executed when the dialog is closed.
             callback = (): void => {
@@ -411,7 +415,7 @@
          * Used to open the modal dialog with the given dialog ID.
          * 
          * If a dialog with the given ID is already open, another will not be opened
-         * and the promise will be rejected with UiHelper.DIALOG_ALREADY_OPEN.
+         * and the promise will be rejected with Constants.DIALOG_ALREADY_OPEN.
          * 
          * @param dialogId The ID of the dialog to show/open.
          * @param options The options to use when opening the dialog.
@@ -423,7 +427,7 @@
          * Used to open the modal dialog with the given dialog ID.
          * 
          * If a dialog with the given ID is already open, another will not be opened
-         * and the promise will be rejected with UiHelper.DIALOG_ALREADY_OPEN.
+         * and the promise will be rejected with Constants.DIALOG_ALREADY_OPEN.
          * 
          * @param dialogId The ID of the dialog to show/open.
          * @param options The options to use when opening the dialog.
@@ -441,14 +445,14 @@
             }
 
             // Ensure the array is initialized.
-            if (UiHelper.openDialogIds == null) {
-                UiHelper.openDialogIds = [];
+            if (UiHelper._openDialogIds == null) {
+                UiHelper._openDialogIds = [];
             }
 
             // If a dialog with this ID is already open, we can reject immediately.
             // This ensures that only a single dialog with a given ID can be open
             // at one time.
-            if (_.contains(UiHelper.openDialogIds, dialogId)) {
+            if (_.contains(UiHelper._openDialogIds, dialogId)) {
                 this.$q.reject(Constants.DIALOG_ALREADY_OPEN);
                 return q.promise;
             }
@@ -465,7 +469,7 @@
             }
 
             // Add the ID of this dialog to the list of dialogs that are open.
-            UiHelper.openDialogIds.push(dialogId);
+            UiHelper._openDialogIds.push(dialogId);
 
             // Define the arguments that will be used to create the modal instance.
             creationArgs = {
@@ -515,7 +519,7 @@
                     }
 
                     // Remove this dialog's ID from the list of ones that are open.
-                    UiHelper.openDialogIds = _.without(UiHelper.openDialogIds, dialogId);
+                    UiHelper._openDialogIds = _.without(UiHelper._openDialogIds, dialogId);
 
                     // Once the dialog is closed, resolve the original promise
                     // using the result data object from the dialog (if any).
