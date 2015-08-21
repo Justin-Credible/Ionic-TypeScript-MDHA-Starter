@@ -47,8 +47,6 @@
         //#region Private Helper Methods
 
         private getLogEntry_success(logEntry: Models.LogEntry): void {
-            var formattedDate: string;
-
             // First, save off the entire log entry so it is available if the user attempts
             // to use the copy or email functionality.
             this._fullLogEntry = logEntry;
@@ -71,13 +69,13 @@
             // format the stack trace into something that is more readable by removing long
             // file paths etc.
             if (logEntry.error) {
-                var stackTrace = window.printStackTrace({ e: logEntry.error });
+                let stackTrace = window.printStackTrace({ e: logEntry.error });
                 this.viewModel.formattedStackTrace = this.Utilities.formatStackTrace(stackTrace);
             }
 
             // Format the date and time for display.
             this.viewModel.time = moment(logEntry.timestamp).format("h:mm:ss a");
-            this.viewModel.date = formattedDate = moment(logEntry.timestamp).format("l");
+            this.viewModel.date = moment(logEntry.timestamp).format("l");
 
             if (logEntry.error == null) {
                 // If an error object isn't present, then this is likely one of the
@@ -108,7 +106,7 @@
 
         protected email_click(): void {
             this.Logger.getLog(this.$stateParams.id).then((logEntry: Models.LogEntry) => {
-                var uri = this.Utilities.format("mailto:{0}?subject={1} Error Log&body={2}", this.versionInfo.email, this.versionInfo.applicationName, JSON.stringify(logEntry));
+                let uri = this.Utilities.format("mailto:{0}?subject={1} Error Log&body={2}", this.versionInfo.email, this.versionInfo.applicationName, JSON.stringify(logEntry));
                 uri = encodeURI(uri);
                 window.open(uri, "_system");
             });

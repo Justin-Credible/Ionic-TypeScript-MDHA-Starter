@@ -33,7 +33,7 @@ module JustinCredible.SampleApp.Directives {
             // Parse the value of the on-load property; this will be a function
             // that the user has set on the element for example: <img on-load="load()"/>
             /* tslint:disable:no-string-literal */
-            var fn = this.$parse(attributes["onLoad"]);
+            let fn = this.$parse(attributes["onLoad"]);
             /* tslint:enable:no-string-literal */
 
             // Subscribe to the load event of the image element.

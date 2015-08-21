@@ -29,8 +29,7 @@
         private _logs: Models.LogEntry[] = [];
 
         private addLogEntry(logEntry: Models.LogEntry): ng.IPromise<void> {
-            var q = this.$q.defer<void>(),
-                errorCallback;
+            let q = this.$q.defer<void>();
 
             // Lets handle the simple case first. If we are not logging
             // to disk, then all we need to do is add to the in-memory array.
@@ -44,7 +43,7 @@
 
             // Define our common error callback; if something goes wrong then we can just
             // use the in-memory array and fall back to in-memory logging.
-            errorCallback = (error: any) => {
+            let errorCallback = (error: any) => {
                 this._logToLocalStorage = false;
                 console.warn("Reverting to in-memory logging because an error occurred during file I/O in addLogEntry().", error);
                 this._logs.push(logEntry);
@@ -53,7 +52,7 @@
 
             // First, we need to ensure the log directory is available.
             this.FileUtilities.createDirectory("/logs").then(() => {
-                var logFileName: string,
+                let logFileName: string,
                     json: string;
 
                 logFileName = this.Utilities.format("/logs/{0}.log", moment(logEntry.timestamp).format("YYYY-MM-DD_hh-mm-ss-SSS-a"));
@@ -78,13 +77,11 @@
         }
 
         public getLog(id: string): ng.IPromise<Models.LogEntry> {
-            var q = this.$q.defer<Models.LogEntry>(),
-                logEntry: Models.LogEntry,
-                errorCallback;
+            let q = this.$q.defer<Models.LogEntry>();
 
             // Lets handle the simple case first. If the log entry is already
             // available in-memory, then we can just return it.
-            logEntry = _.find(this._logs, (logEntry: Models.LogEntry) => {
+            let logEntry = _.find(this._logs, (logEntry: Models.LogEntry) => {
                 return logEntry.id === id;
             });
 
@@ -105,7 +102,7 @@
 
             // Define our common error callback; if something goes wrong then we can just
             // use the in-memory array and fall back to in-memory logging.
-            errorCallback = (error: any) => {
+            let errorCallback = (error: any) => {
                 this._logToLocalStorage = false;
                 console.warn("Reverting to in-memory logging because an error occurred during file I/O in getLog().", error);
                 q.resolve(null);
@@ -126,9 +123,8 @@
         }
 
         public getLogs(): ng.IPromise<Models.LogEntry[]> {
-            var q = this.$q.defer<Models.LogEntry[]>(),
-                promises: ng.IPromise<string>[] = [],
-                errorCallback;
+            let q = this.$q.defer<Models.LogEntry[]>(),
+                promises: ng.IPromise<string>[] = [];
 
             // Lets handle the simple case first. If we are not logging
             // to disk, then all we need to do is return the in-memory array.
@@ -141,7 +137,7 @@
 
             // Define our common error callback; if something goes wrong then we can just
             // use the in-memory array and fall back to in-memory logging.
-            errorCallback = (error: any) => {
+            let errorCallback = (error: any) => {
                 this._logToLocalStorage = false;
                 console.warn("Reverting to in-memory logging because an error occurred during file I/O in getLogs().", error);
                 q.resolve(this._logs);
@@ -162,15 +158,12 @@
 
                     // Read in the contents of each file (which will be JSON).
                     entries.forEach((entry: Entry) => {
-                        var promise: ng.IPromise<string>;
 
                         // Read in the file and deserialize its JSON contents back to
                         // a log model object.
-                        promise = this.FileUtilities.readTextFile(entry.fullPath);
+                        let promise: ng.IPromise<string> = this.FileUtilities.readTextFile(entry.fullPath);
                         promise.then((text: string) => {
-                            var logEntry: Models.LogEntry;
-
-                            logEntry = <Models.LogEntry>JSON.parse(text);
+                            let logEntry: Models.LogEntry = <Models.LogEntry>JSON.parse(text);
 
                             this._logs.push(logEntry);
 
@@ -198,8 +191,7 @@
         }
 
         public clearLogs(): ng.IPromise<void> {
-            var q = this.$q.defer<void>(),
-                errorCallback;
+            let q = this.$q.defer<void>();
 
             // Lets handle the simple case first. If we are not logging
             // to disk, then all we need to do is clear the in-memory array.
@@ -213,7 +205,7 @@
 
             // Define our common error callback; if something goes wrong then we can just
             // clear the in-memory array and fall back to in-memory logging.
-            errorCallback = (error: any) => {
+            let errorCallback = (error: any) => {
                 this._logToLocalStorage = false;
                 console.warn("Reverting to in-memory logging because an error occurred during file I/O in clearLogs().", error);
                 this._logs = [];
@@ -238,9 +230,7 @@
         }
 
         public logWindowError(message: string, uri: string, lineNumber: number, colNumber: number): void {
-            var logEntry: Models.LogEntry;
-
-            logEntry = new Models.LogEntry();
+            let logEntry = new Models.LogEntry();
             logEntry.id = this.Utilities.generateGuid();
             logEntry.timestamp = new Date();
             logEntry.message = "Unhandled JS Exception: " + message;
@@ -252,9 +242,7 @@
         }
 
         public logError(message: string, error: Error): void {
-            var logEntry: Models.LogEntry;
-
-            logEntry = new Models.LogEntry();
+            let logEntry = new Models.LogEntry();
             logEntry.id = this.Utilities.generateGuid();
             logEntry.timestamp = new Date();
             logEntry.message = message;
@@ -268,9 +256,7 @@
         }
 
         public logHttpRequestConfig(config: Interfaces.RequestConfig): void {
-            var logEntry: Models.LogEntry;
-
-            logEntry = new Models.LogEntry();
+            let logEntry = new Models.LogEntry();
             logEntry.id = this.Utilities.generateGuid();
             logEntry.timestamp = new Date();
             logEntry.uri = window.location.href;
@@ -285,9 +271,7 @@
         }
 
         public logHttpResponse(httpResponse: ng.IHttpPromiseCallbackArg<any>): void {
-            var logEntry: Models.LogEntry;
-
-            logEntry = new Models.LogEntry();
+            let logEntry = new Models.LogEntry();
             logEntry.id = this.Utilities.generateGuid();
             logEntry.timestamp = new Date();
             logEntry.uri = window.location.href;

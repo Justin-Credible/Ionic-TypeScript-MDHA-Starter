@@ -182,11 +182,8 @@
          * @param ... args The values to inject into the format string.
          */
         public format(formatString: string, ...args: any[]): string {
-            var i, reg;
-            i = 0;
-
-            for (i = 0; i < arguments.length - 1; i += 1) {
-                reg = new RegExp("\\{" + i + "\\}", "gm");
+            for (let i = 0; i < arguments.length - 1; i += 1) {
+                let reg = new RegExp("\\{" + i + "\\}", "gm");
                 formatString = formatString.replace(reg, arguments[i + 1]);
             }
 
@@ -205,9 +202,6 @@
          * @returns The value specified by the property string from the given object.
          */
         public getValue(object: any, propertyString: string): any {
-            var properties: string[],
-                property: string,
-                i: number;
 
             if (!object) {
                 return null;
@@ -224,12 +218,12 @@
             }
 
             // Break the property string down into individual properties.
-            properties = propertyString.split(".");
+            let properties: string[] = propertyString.split(".");
 
             // Dig down into the object hierarchy using the properties.
-            for (i = 0; i < properties.length; i += 1) {
+            for (let i = 0; i < properties.length; i += 1) {
                 // Grab the property for this index.
-                property = properties[i];
+                let property = properties[i];
 
                 // Grab the object with this property name.
                 object = object[property];
@@ -273,9 +267,6 @@
          * @param instantiateObjects True to create objects in the hierarchy that do not yet exist; defaults to true.
          */
         public setValue(object: any, propertyString: string, value: any, instantiateObjects?: boolean): void {
-            var properties: string[],
-                property: string,
-                i: number;
 
             if (!object) {
                 return;
@@ -291,12 +282,12 @@
             }
 
             // Break the property string down into individual properties.
-            properties = propertyString.split(".");
+            let properties = propertyString.split(".");
 
             // Dig down into the object hierarchy using the properties.
-            for (i = 0; i < properties.length; i += 1) {
+            for (let i = 0; i < properties.length; i += 1) {
                 // Grab the property for this index.
-                property = properties[i];
+                let property = properties[i];
 
                 if (properties.length - 1 === i) {
                     // If this is the last property, then set the value.
@@ -339,11 +330,11 @@
             }
 
             // This will hold all of the prototypes for the object hiearchy.
-            var prototypes = [];
+            let prototypes = [];
 
             // Initialize the current class we will be examining in the loop below.
             // We'll start out with the TargetClass.
-            var CurrentClass = TargetClass;
+            let CurrentClass = TargetClass;
 
             // Save off the prototype of the target class.
             prototypes.push(TargetClass.prototype);
@@ -373,7 +364,7 @@
             // Now that we've finished walking up the class hierarchy, we need to see if
             // any of the prototypes match the prototype of the Base class in question.
 
-            var foundMatch = false;
+            let foundMatch = false;
 
             prototypes.forEach((prototype: any) => {
                 if (prototype === BaseClass.prototype) {
@@ -439,16 +430,13 @@
          * @param inferContext Indicates that we should attempt determine the context in which the function should be called.
          */
         public getFunction(scopeOrPropertyString?: any, propertyString?: string, inferContext?: boolean): () => any {
-            var scope: any,
-                fn: () => any,
-                contextPropertyString: string,
-                context: any;
 
             // Default the inferContext variable to true.
             if (inferContext == null) {
                 inferContext = true;
             }
 
+            let scope: any;
             if (typeof (scopeOrPropertyString) === "string") {
                 // If the first parameter was a string, then we know they used the string only overload.
                 // In that case default the scope to be the window object.
@@ -461,12 +449,13 @@
             }
 
             // Delegate to the getValue() function to do the work.
-            fn = this.getValue(scope, propertyString);
+            let fn: () => any = this.getValue(scope, propertyString);
 
             if (!fn) {
                 return null;
             }
 
+            let context: any;
             if (inferContext) {
                 // Now that we've obtained a function reference, lets see if we can find the context to use
                 // to invoke the function in.
@@ -474,7 +463,7 @@
                     // Use the property string all the way up to the last segment.
                     // For example, if property string was: something.else.theFunction
                     // then the context string would be: something.else
-                    contextPropertyString = propertyString.substr(0, propertyString.lastIndexOf("."));
+                    let contextPropertyString: string = propertyString.substr(0, propertyString.lastIndexOf("."));
 
                     // Now delegate to the getValue() function to do the work.
                     context = this.getValue(scope, contextPropertyString);
@@ -513,21 +502,12 @@
          * @returns A GUID in string format.
          */
         public generateGuid() {
-            var
-                // Will hold the GUID string as we build it.
-                guid: string,
 
-                // Used to hold the generated hex digit as they are generated.
-                hexDigit: string,
-
-                // Used to keep track of our location in the generated string.
-                j: number;
-
-            // Start out with an empty string.
-            guid = "";
+            // Will hold the GUID string as we build it. (Start out with an empty string.)
+            let guid: string = "";
 
             // Now loop 35 times to generate 35 characters.
-            for (j = 0; j < 32; j++) {
+            for (let j = 0; j < 32; j++) {
 
                 // Characters at these indexes are always hyphens.
                 if (j === 8 || j === 12 || j === 16 || j === 20) {
@@ -535,7 +515,7 @@
                 }
 
                 // Get a random number between 0 and 16 and convert it to its hexadecimal value.
-                hexDigit = Math.floor(Math.random() * 16).toString(16).toUpperCase();
+                let hexDigit: string = Math.floor(Math.random() * 16).toString(16).toUpperCase();
 
                 // Add the digit onto the string.
                 guid = guid + hexDigit;
@@ -560,9 +540,9 @@
 
                 // First, split the entry on the at symbol; each entry is the name of
                 // the function followed by the file name and line info.
-                var parts = traceEntry.split("@");
-                var functionName: string;
-                var fileAndLineInfo: string;
+                let parts = traceEntry.split("@"),
+                    functionName: string,
+                    fileAndLineInfo: string;
 
                 if (parts.length === 1) {
                     // If there was only one part, then a function name was not specified
@@ -594,7 +574,7 @@
         public get categories(): ViewModels.CategoryItemViewModel[] {
 
             // Define the default set of categories.
-            var categories = [
+            let categories = [
                 new ViewModels.CategoryItemViewModel("Category 1", "#/app/category/1", "ios-pricetags-outline", 0),
                 new ViewModels.CategoryItemViewModel("Category 2", "#/app/category/2", "ios-pricetags-outline", 1),
                 new ViewModels.CategoryItemViewModel("Category 3", "#/app/category/3", "ios-pricetags-outline", 2),
@@ -604,7 +584,7 @@
             // If the user has ordering preferences, then apply their custom ordering.
             if (this.Preferences.categoryOrder) {
                 this.Preferences.categoryOrder.forEach((categoryName: string, index: number) => {
-                    var categoryItem = _.where(categories, { name: categoryName })[0];
+                    let categoryItem = _.where(categories, { name: categoryName })[0];
 
                     if (categoryItem) {
                         categoryItem.order = index;

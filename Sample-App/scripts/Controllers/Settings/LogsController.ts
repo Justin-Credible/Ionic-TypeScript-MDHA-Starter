@@ -51,8 +51,7 @@
 
             // Now use the actual log entry to create the view model.
             logEntries.forEach((logEntry: Models.LogEntry) => {
-                var formattedDate: string,
-                    viewModel: ViewModels.LogEntryViewModel;
+                let viewModel: ViewModels.LogEntryViewModel;
 
                 viewModel = new ViewModels.LogEntryViewModel();
                 viewModel.id = logEntry.id;
@@ -63,6 +62,7 @@
                 viewModel.error = logEntry.error;
 
                 // Format the date and time for display.
+                let formattedDate: string;
                 viewModel.time = moment(logEntry.timestamp).format("h:mm:ss a");
                 formattedDate = moment(logEntry.timestamp).format("l");
                 viewModel.date = formattedDate;

@@ -6,13 +6,13 @@ module JustinCredible.SampleApp.Application {
     /**
      * The root Angular application module.
      */
-    var ngModule: ng.IModule;
+    let ngModule: ng.IModule;
 
     /**
      * Used to hold references to several of the Angular-injected services for use within
      * this local scope. These references are populated in angular_initialize().
      */
-    var services: {
+    let services: {
         $rootScope: ng.IRootScopeService,
         $location: ng.ILocationService,
         $ionicHistory: any,
@@ -30,7 +30,7 @@ module JustinCredible.SampleApp.Application {
      * update the timestamp if the dialog is open because it will allow the user to pause
      * and then kill the app and bypass the PIN entry screen on next resume).
      */
-    var isShowingPinPrompt: boolean;
+    let isShowingPinPrompt: boolean;
 
     //#endregion
 
@@ -41,7 +41,7 @@ module JustinCredible.SampleApp.Application {
      * It is invoked via the Main.js script included from the index.html page.
      */
     export function main(): void {
-        var versionInfo: Interfaces.VersionInfo;
+        let versionInfo: Interfaces.VersionInfo;
 
         // Set the default error handler for all uncaught exceptions.
         window.onerror = window_onerror;
@@ -202,7 +202,7 @@ module JustinCredible.SampleApp.Application {
      * @returns A factory function that can be used by Angular to create an instance of the element directive.
      */
     function getElementDirectiveFactoryFunction(Directive: Directives.IElementDirectiveClass): any[] {
-        var params = [],
+        let params = [],
             injectedArguments: IArguments = null,
             descriptor: ng.IDirective = {};
 
@@ -234,7 +234,7 @@ module JustinCredible.SampleApp.Application {
 
             // New up an instance of the directive for to link to this element.
             // Pass along the arguments that were injected so the instance can receive them.
-            var instance = <Directives.BaseElementDirective<any>>construct(Directive, injectedArguments);
+            let instance = <Directives.BaseElementDirective<any>>construct(Directive, injectedArguments);
 
             /* tslint:disable:no-string-literal */
 
@@ -277,7 +277,7 @@ module JustinCredible.SampleApp.Application {
      */
     function getDirectiveFactoryParameters(Directive: ng.IDirective): any[] {
 
-        var params = [];
+        let params = [];
 
         /* tslint:disable:no-string-literal */
 
@@ -545,8 +545,6 @@ module JustinCredible.SampleApp.Application {
      * This includes uncaught exceptions in ng-click methods for example.
      */
     function angular_exceptionHandler(exception: Error, cause: string): void {
-        var message = exception.message;
-
         if (!cause) {
             cause = "[Unknown]";
         }

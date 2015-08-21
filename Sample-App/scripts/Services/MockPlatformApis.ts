@@ -148,12 +148,9 @@
         //#region Toast
 
         private toast(message: string) {
-            var div: HTMLDivElement,
-                existingToasts: number;
+            let existingToasts: number = document.querySelectorAll(".mockToast").length;
 
-            existingToasts = document.querySelectorAll(".mockToast").length;
-
-            div = document.createElement("div");
+            let div: HTMLDivElement = document.createElement("div");
             div.className = "mockToast";
             div.style.position = "absolute";
             div.style.bottom = (existingToasts === 0 ? 0 : (35 * existingToasts)) + "px";
@@ -206,7 +203,7 @@
         //#region Clipboard
 
         private clipboard_copy(text: string, onSuccess: () => void, onFail: (err: Error) => void): void {
-            var confirmed = confirm("The following text was requested for copy to the clipboard:\n\n" +  text);
+            let confirmed = confirm("The following text was requested for copy to the clipboard:\n\n" +  text);
 
             // Simulate the asynchronous operation with defer.
             if (confirmed) {
@@ -261,7 +258,7 @@
         }
 
         private clipboard_paste(onSuccess: (result: string) => void, onFail: (err: Error) => void): void {
-            var result = prompt("A paste from clipboard was requested; enter text for the paste operation:");
+            const result = prompt("A paste from clipboard was requested; enter text for the paste operation:");
 
             // Simulate the asynchronous operation with defer.
             if (result === null) {
@@ -291,7 +288,6 @@
         //#region Notifications
 
         private notification_alert(message: string, alertCallback: () => void, title?: string, buttonName?: string): void {
-            var buttons = [];
 
             // Default the title.
             title = title || "Alert";
@@ -300,6 +296,7 @@
             buttonName = buttonName || Constants.Buttons.OK;
 
             // Build each of the buttons.
+            let buttons = [];
             buttons.push({ text: buttonName });
 
             // The Ionic pop-up uses HTML to display content, so for line breaks (\n) to render
@@ -315,7 +312,6 @@
         }
 
         private notification_confirm(message: string, confirmCallback: (choice: number) => void, title?: string, buttonLabels?: string[]): void {
-            var buttons = [];
 
             // Default the title.
             title = title || "Confirm";
@@ -324,6 +320,7 @@
             buttonLabels = buttonLabels || [Constants.Buttons.Yes, Constants.Buttons.No];
 
             // Build each of the buttons.
+            let buttons = [];
             buttonLabels.forEach((value: string, index: number) => {
                 buttons.push({
                     text: value,
@@ -347,15 +344,13 @@
         }
 
         private notification_prompt(message: string, promptCallback: (result: NotificationPromptResult) => void, title?: string, buttonLabels?: string[], defaultText?: string): void {
-            var buttons = [],
-                template: string;
 
             // The Ionic pop-up uses HTML to display content, so for line breaks (\n) to render
             // we need to replace them with actual line break takes.
             message = message.replace(/\n/g, "<br/>");
 
             // Here we manually build the HTML template for the prompt dialog.
-            template = this.Utilities.format("<p>{0}</p><input type='text' id='notification_prompt_input' style='border: solid 1px #3e3e3e;'/>", message);
+            let template:string = this.Utilities.format("<p>{0}</p><input type='text' id='notification_prompt_input' style='border: solid 1px #3e3e3e;'/>", message);
 
             // Default the title.
             title = title || "Prompt";
@@ -364,16 +359,14 @@
             buttonLabels = buttonLabels || [Constants.Buttons.OK, Constants.Buttons.Cancel];
 
             // Build each of the buttons.
+            let buttons = [];
             buttonLabels.forEach((value: string, index: number) => {
                 buttons.push({
                     text: value,
                     onTap: function (e: MouseEvent) {
-                        var result: NotificationPromptResult,
-                            input: HTMLInputElement;
+                        let input = <HTMLInputElement>document.getElementById("notification_prompt_input");
 
-                        input = <HTMLInputElement>document.getElementById("notification_prompt_input");
-
-                        result = {
+                        let result: NotificationPromptResult = {
                             // The native confirm API uses a 1 based button index (not zero based!).
                             buttonIndex: index + 1,
                             input1: input.value
@@ -387,9 +380,7 @@
             // Handle defaulting the value.
             if (defaultText) {
                 _.defer(function () {
-                    var input: HTMLInputElement;
-
-                    input = <HTMLInputElement>document.getElementById("notification_prompt_input");
+                    let input = <HTMLInputElement>document.getElementById("notification_prompt_input");
 
                     input.value = defaultText;
                 });
@@ -435,14 +426,15 @@
         }
 
         private progressIndicator_show(dimBackground: boolean, labelOrTimeout: any, labelOrPosition: string) {
-            var label: string,
-                timeout: number;
 
             if (this._isProgressIndicatorShown) {
                 return;
             }
 
             this._isProgressIndicatorShown = true;
+
+            let label: string,
+                timeout: number;
 
             if (typeof (labelOrTimeout) === "string") {
                 label = labelOrTimeout;
