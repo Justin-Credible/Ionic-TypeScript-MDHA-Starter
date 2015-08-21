@@ -113,7 +113,7 @@
          * @returns A promise of type string which will be the contents of the text file.
          */
         public readTextFile(path: string, rootPath?: string): ng.IPromise<string> {
-            var q = this.$q.defer<string>();
+            let q = this.$q.defer<string>();
 
             if (!rootPath) {
                 rootPath = this.getDefaultRootPath();
@@ -128,7 +128,7 @@
 
             window.resolveLocalFileSystemURL(rootPath, function (rootEntry: DirectoryEntry) {
 
-                var flags: Flags = {
+                const flags: Flags = {
                     create: false,
                     exclusive: false
                 };
@@ -137,7 +137,7 @@
 
                     fileEntry.file(function (file: File) {
 
-                        var reader = new FileReader();
+                        let reader = new FileReader();
 
                         reader.onload = function (evt: any) {
                             q.resolve(reader.result);
@@ -200,7 +200,7 @@
          * @returns A promise of type string which will be the contents of the text file.
          */
         public writeTextFile(path: string, text: string, append?: boolean, rootPath?: string) {
-            var q = this.$q.defer<void>();
+            let q = this.$q.defer<void>();
 
             if (!rootPath) {
                 rootPath = this.getDefaultRootPath();
@@ -220,7 +220,7 @@
 
             window.resolveLocalFileSystemURL(rootPath, function (rootEntry: DirectoryEntry) {
 
-                var flags: Flags = {
+                const flags: Flags = {
                     create: true,
                     exclusive: false
                 };
@@ -229,8 +229,6 @@
 
                     fileEntry.createWriter(function (writer: FileWriter) {
 
-                        var blobOptions: BlobPropertyBag;
-
                         if (append) {
                             writer.seek(writer.length);
                         }
@@ -238,7 +236,7 @@
                             writer.truncate(0);
                         }
 
-                        blobOptions = {
+                        let blobOptions: BlobPropertyBag = {
                             type: "text/plain"
                         };
 
@@ -286,7 +284,7 @@
          * @returns A promise of type DirectoryEntry[] which will be a list of directories.
          */
         public getDirectories(path: string, rootPath?: string): ng.IPromise<DirectoryEntry[]> {
-            var q = this.$q.defer<DirectoryEntry[]>();
+            let q = this.$q.defer<DirectoryEntry[]>();
 
             path = this.preparePath(path);
 
@@ -297,20 +295,18 @@
 
             window.resolveLocalFileSystemURL(rootPath, function (rootEntry: DirectoryEntry) {
 
-                var flags: Flags = {
+                const flags: Flags = {
                     create: false,
                     exclusive: false
                 };
 
                 rootEntry.getDirectory(path, flags, function (directoryEntry: DirectoryEntry) {
 
-                    var reader: DirectoryReader;
-
-                    reader = directoryEntry.createReader();
+                    let reader: DirectoryReader = directoryEntry.createReader();
 
                     reader.readEntries(function (entries: Entry[]) {
 
-                        var directories: DirectoryEntry[] = [];
+                        let directories: DirectoryEntry[] = [];
 
                         entries.forEach(function (entry: Entry) {
                             if (entry.isDirectory) {
@@ -336,15 +332,13 @@
          * @returns A promise of type DirectoryEntry[] which will be a list of directories.
          */
         public getDirectoriesUsingEntry(directory: DirectoryEntry): ng.IPromise<DirectoryEntry[]> {
-            var q = this.$q.defer<DirectoryEntry[]>();
+            let q = this.$q.defer<DirectoryEntry[]>();
 
-            var reader: DirectoryReader;
-
-            reader = directory.createReader();
+            let reader: DirectoryReader = directory.createReader();
 
             reader.readEntries(function (entries: Entry[]) {
 
-                var directories: DirectoryEntry[] = [];
+                let directories: DirectoryEntry[] = [];
 
                 entries.forEach(function (entry: Entry) {
                     if (entry.isDirectory) {
@@ -386,7 +380,7 @@
          * @returns A promise of type string[] which will be a list of directory names.
          */
         public getDirectoryNames(path: string, rootPath?: string): ng.IPromise<string[]> {
-            var q = this.$q.defer<string[]>();
+            let q = this.$q.defer<string[]>();
 
             if (!rootPath) {
                 rootPath = this.getDefaultRootPath();
@@ -401,20 +395,18 @@
 
             window.resolveLocalFileSystemURL(rootPath, function (rootEntry: DirectoryEntry) {
 
-                var flags: Flags = {
+                const flags: Flags = {
                     create: false,
                     exclusive: false
                 };
 
                 rootEntry.getDirectory(path, flags, function (directoryEntry: DirectoryEntry) {
 
-                    var reader: DirectoryReader;
-
-                    reader = directoryEntry.createReader();
+                    let reader: DirectoryReader = directoryEntry.createReader();
 
                     reader.readEntries(function (entries: Entry[]) {
 
-                        var directoryNames: string[] = [];
+                        let directoryNames: string[] = [];
 
                         entries.forEach(function (entry: Entry) {
                             if (entry.isDirectory) {
@@ -460,7 +452,7 @@
          * @returns A promise of type string[] which will be a list of full directory paths.
          */
         public getDirectoryPaths(path: string, rootPath?: string): ng.IPromise<string[]> {
-            var q = this.$q.defer<string[]>();
+            let q = this.$q.defer<string[]>();
 
             if (!rootPath) {
                 rootPath = this.getDefaultRootPath();
@@ -475,20 +467,18 @@
 
             window.resolveLocalFileSystemURL(rootPath, function (rootEntry: DirectoryEntry) {
 
-                var flags: Flags = {
+                const flags: Flags = {
                     create: false,
                     exclusive: false
                 };
 
                 rootEntry.getDirectory(path, flags, function (directoryEntry: DirectoryEntry) {
 
-                    var reader: DirectoryReader;
-
-                    reader = directoryEntry.createReader();
+                    let reader: DirectoryReader = directoryEntry.createReader();
 
                     reader.readEntries(function (entries: Entry[]) {
 
-                        var directoryPaths: string[] = [];
+                        let directoryPaths: string[] = [];
 
                         entries.forEach(function (entry: Entry) {
                             if (entry.isDirectory) {
@@ -534,7 +524,7 @@
          * @returns A promise of type FileEntry[] which will be a list of files.
          */
         public getFiles(path: string, rootPath?: string): ng.IPromise<FileEntry[]> {
-            var q = this.$q.defer<Entry[]>();
+            let q = this.$q.defer<Entry[]>();
 
             if (!rootPath) {
                 rootPath = this.getDefaultRootPath();
@@ -549,20 +539,18 @@
 
             window.resolveLocalFileSystemURL(rootPath, function (rootEntry: DirectoryEntry) {
 
-                var flags: Flags = {
+                const flags: Flags = {
                     create: false,
                     exclusive: false
                 };
 
                 rootEntry.getDirectory(path, flags, function (directoryEntry: DirectoryEntry) {
 
-                    var reader: DirectoryReader;
-
-                    reader = directoryEntry.createReader();
+                    let reader: DirectoryReader = directoryEntry.createReader();
 
                     reader.readEntries(function (entries: Entry[]) {
 
-                        var files: FileEntry[] = [];
+                        let files: FileEntry[] = [];
 
                         entries.forEach(function (entry: Entry) {
                             if (entry.isFile) {
@@ -588,15 +576,13 @@
          * @returns A promise of type FileEntry[] which will be a list of files.
          */
         public getFilesUsingEntry(directory: DirectoryEntry): ng.IPromise<FileEntry[]> {
-            var q = this.$q.defer<FileEntry[]>();
+            let q = this.$q.defer<FileEntry[]>();
 
-            var reader: DirectoryReader;
-
-            reader = directory.createReader();
+            let reader: DirectoryReader = directory.createReader();
 
             reader.readEntries(function (entries: Entry[]) {
 
-                var files: FileEntry[] = [];
+                let files: FileEntry[] = [];
 
                 entries.forEach(function (entry: Entry) {
                     if (entry.isFile) {
@@ -638,7 +624,7 @@
          * @returns A promise of type string[] which will be a list of file names.
          */
         public getFileNames(path: string, rootPath?: string): ng.IPromise<string[]> {
-            var q = this.$q.defer<string[]>();
+            let q = this.$q.defer<string[]>();
 
             if (!rootPath) {
                 rootPath = this.getDefaultRootPath();
@@ -653,20 +639,18 @@
 
             window.resolveLocalFileSystemURL(rootPath, function (rootEntry: DirectoryEntry) {
 
-                var flags: Flags = {
+                const flags: Flags = {
                     create: false,
                     exclusive: false
                 };
 
                 rootEntry.getDirectory(path, flags, function (directoryEntry: DirectoryEntry) {
 
-                    var reader: DirectoryReader;
-
-                    reader = directoryEntry.createReader();
+                    let reader: DirectoryReader = directoryEntry.createReader();
 
                     reader.readEntries(function (entries: Entry[]) {
 
-                        var fileNames: string[] = [];
+                        let fileNames: string[] = [];
 
                         entries.forEach(function (entry: Entry) {
                             if (entry.isFile) {
@@ -710,7 +694,7 @@
          * @returns A promise of type string[] which will be a list of file names.
          */
         public getFilePaths(path: string, rootPath?: string): ng.IPromise<string[]> {
-            var q = this.$q.defer<string[]>();
+            let q = this.$q.defer<string[]>();
 
             if (!rootPath) {
                 rootPath = this.getDefaultRootPath();
@@ -725,20 +709,18 @@
 
             window.resolveLocalFileSystemURL(rootPath, function (rootEntry: DirectoryEntry) {
 
-                var flags: Flags = {
+                const flags: Flags = {
                     create: false,
                     exclusive: false
                 };
 
                 rootEntry.getDirectory(path, flags, function (directoryEntry: DirectoryEntry) {
 
-                    var reader: DirectoryReader;
-
-                    reader = directoryEntry.createReader();
+                    let reader: DirectoryReader = directoryEntry.createReader();
 
                     reader.readEntries(function (entries: Entry[]) {
 
-                        var filePaths: string[] = [];
+                        let filePaths: string[] = [];
 
                         entries.forEach(function (entry: Entry) {
                             if (entry.isFile) {
@@ -785,7 +767,7 @@
          * @returns A promise of type FileEntry[] which will be a list of files.
          */
         public getAllFiles(path: string, rootPath?: string): ng.IPromise<FileEntry[]> {
-            var q = this.$q.defer<FileEntry[]>(),
+            let q = this.$q.defer<FileEntry[]>(),
                 allFiles: FileEntry[] = [],
                 promises: ng.IPromise<FileEntry[]>[] = [];
 
@@ -805,7 +787,7 @@
 
                 // Get all of the child subdirectories.
                 this.getAllDirectories(path, rootPath).then((directories: DirectoryEntry[]) => {
-                    var promise: ng.IPromise<FileEntry[]>;
+                    let promise: ng.IPromise<FileEntry[]>;
 
                     // Now we are going loop over each of the directories...
                     directories.forEach((directory: DirectoryEntry) => {
@@ -870,7 +852,7 @@
          * @returns A promise of type DirectoryEntry[] which will be a list of directories.
          */
         public getAllDirectories(path: string, rootPath?: string): ng.IPromise<DirectoryEntry[]> {
-            var q = this.$q.defer<DirectoryEntry[]>(),
+            let q = this.$q.defer<DirectoryEntry[]>(),
                 allDirectories: DirectoryEntry[] = [];
 
             if (!rootPath) {
@@ -904,11 +886,11 @@
         }
 
         private getAllDirectories_recursive(dirsToCheck: DirectoryEntry[], allDirs: DirectoryEntry[], q: ng.IDeferred<DirectoryEntry[]>) {
-            var newDirs: DirectoryEntry[] = [],
+            let newDirs: DirectoryEntry[] = [],
                 promises: ng.IPromise<DirectoryEntry[]>[] = [];
 
             dirsToCheck.forEach((directoryToCheck: DirectoryEntry) => {
-                var promise: ng.IPromise<DirectoryEntry[]>;
+                let promise: ng.IPromise<DirectoryEntry[]>;
 
                 // Get the child directories for the passed in directories.
                 promise = this.getDirectoriesUsingEntry(directoryToCheck);
@@ -990,7 +972,7 @@
          * @returns A promise of type void.
          */
         public createDirectory(path: string, createParents?: boolean, rootPath?: string): ng.IPromise<void> {
-            var q = this.$q.defer<void>();
+            let q = this.$q.defer<void>();
 
             if (!rootPath) {
                 rootPath = this.getDefaultRootPath();
@@ -1014,9 +996,8 @@
             }
 
             window.resolveLocalFileSystemURL(rootPath, function (rootEntry: DirectoryEntry) {
-                var flags: Flags;
 
-                flags = {
+                const flags: Flags = {
                     create: true, // Specify true here to create the directory.
                     exclusive: false
                 };
@@ -1063,7 +1044,7 @@
          * @returns A promise of type void.
          */
         public emptyDirectory(path: string, rootPath?: string): ng.IPromise<void> {
-            var q = this.$q.defer<void>();
+            let q = this.$q.defer<void>();
 
             if (!rootPath) {
                 rootPath = this.getDefaultRootPath();
@@ -1157,7 +1138,7 @@
          * @returns A promise of type void.
          */
         public deleteDirectory(path: string, recursive?: boolean, rootPath?: string): ng.IPromise<void> {
-            var q = this.$q.defer<void>();
+            let q = this.$q.defer<void>();
 
             if (!rootPath) {
                 rootPath = this.getDefaultRootPath();
@@ -1185,7 +1166,7 @@
 
                 window.resolveLocalFileSystemURL(rootPath, function (rootEntry: DirectoryEntry) {
 
-                    var flags: Flags = {
+                    const flags: Flags = {
                         create: false,
                         exclusive: false
                     };
@@ -1215,7 +1196,7 @@
          * @returns A promise of type void.
          */
         public deleteDirectoryUsingEntry(directory: DirectoryEntry): ng.IPromise<void> {
-            var q = this.$q.defer<void>();
+            let q = this.$q.defer<void>();
 
             directory.remove(q.resolve, q.reject);
 
@@ -1229,14 +1210,12 @@
          * @returns A promise of type void.
          */
         public deleteDirectoriesUsingEntries(directories: DirectoryEntry[]): ng.IPromise<void> {
-            var q = this.$q.defer<void>(),
+            let q = this.$q.defer<void>(),
                 promises: ng.IPromise<void>[] = [];
 
             // Kick off a delete of each of the directories.
             directories.forEach((directory: DirectoryEntry) => {
-                var promise: ng.IPromise<void>;
-
-                promise = this.deleteDirectoryUsingEntry(directory);
+                let promise: ng.IPromise<void> = this.deleteDirectoryUsingEntry(directory);
 
                 // Save off the promise, so we know when to complete.
                 promises.push(promise);
@@ -1281,7 +1260,7 @@
          * @returns A promise of type void.
          */
         public deleteFile(path: string, rootPath?: string): ng.IPromise<void> {
-            var q = this.$q.defer<void>();
+            let q = this.$q.defer<void>();
 
             if (!rootPath) {
                 rootPath = this.getDefaultRootPath();
@@ -1304,7 +1283,7 @@
 
                 window.resolveLocalFileSystemURL(rootPath, function (rootEntry: DirectoryEntry) {
 
-                    var flags: Flags = {
+                    const flags: Flags = {
                         create: false,
                         exclusive: false
                     };
@@ -1329,7 +1308,7 @@
          * @returns A promise of type void.
          */
         public deleteFileUsingEntry(file: FileEntry): ng.IPromise<void> {
-            var q = this.$q.defer<void>();
+            let q = this.$q.defer<void>();
 
             file.remove(q.resolve, q.reject);
 
@@ -1343,10 +1322,9 @@
          * @returns A promise of type void.
          */
         public deleteFilesUsingEntries(files: FileEntry[]): ng.IPromise<void> {
-            var q = this.$q.defer<void>(),
-                promises: ng.IPromise<void>[] = [];
-
-            var promise: ng.IPromise<void>;
+            let q = this.$q.defer<void>(),
+                promises: ng.IPromise<void>[] = [],
+                promise: ng.IPromise<void>;
 
             // Kick off a delete of each of the files.
             files.forEach((file: FileEntry) => {
@@ -1390,7 +1368,7 @@
          * @returns A promise of type boolean; true if the file exists, false otherwise.
          */
         public fileExists(path: string, rootPath?: string): ng.IPromise<boolean> {
-            var q = this.$q.defer<boolean>();
+            let q = this.$q.defer<boolean>();
 
             if (!rootPath) {
                 rootPath = this.getDefaultRootPath();
@@ -1404,9 +1382,8 @@
             }
 
             window.resolveLocalFileSystemURL(rootPath, function (rootEntry: DirectoryEntry) {
-                var flags: Flags;
 
-                flags = {
+                const flags: Flags = {
                     create: false,
                     exclusive: false
                 };
@@ -1451,7 +1428,7 @@
          * @returns A promise of type boolean; true if the directory exists, false otherwise.
          */
         public directoryExists(path: string, rootPath?: string): ng.IPromise<boolean> {
-            var q = this.$q.defer<boolean>();
+            let q = this.$q.defer<boolean>();
 
             if (!rootPath) {
                 rootPath = this.getDefaultRootPath();
@@ -1465,9 +1442,8 @@
             }
 
             window.resolveLocalFileSystemURL(rootPath, function (rootEntry: DirectoryEntry) {
-                var flags: Flags;
 
-                flags = {
+                const flags: Flags = {
                     create: false,
                     exclusive: false
                 };

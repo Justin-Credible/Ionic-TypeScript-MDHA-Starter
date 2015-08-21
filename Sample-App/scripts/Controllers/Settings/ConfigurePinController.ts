@@ -36,11 +36,8 @@
         //#region Controller Methods
 
         protected setPin_click() {
-            var options: Models.DialogOptions,
-                model: Models.PinEntryDialogModel;
-
-            model = new Models.PinEntryDialogModel("Enter a value for your new PIN", null, true);
-            options = new Models.DialogOptions(model);
+            let model = new Models.PinEntryDialogModel("Enter a value for your new PIN", null, true);
+            let options = new Models.DialogOptions(model);
 
             // Show the PIN entry dialog.
             this.UiHelper.showDialog(PinEntryController.ID, options).then((result1: Models.PinEntryDialogResultModel) => {
@@ -70,11 +67,9 @@
         }
 
         protected changePin_click() {
-            var options: Models.DialogOptions,
-                model: Models.PinEntryDialogModel;
 
-            model = new Models.PinEntryDialogModel("Enter your current PIN", this.Preferences.pin, true);
-            options = new Models.DialogOptions(model);
+            let model = new Models.PinEntryDialogModel("Enter your current PIN", this.Preferences.pin, true),
+                options = new Models.DialogOptions(model);
 
             // Show the PIN entry dialog; pass the existing PIN which they need to match.
             this.UiHelper.showDialog(PinEntryController.ID, options).then((result1: Models.PinEntryDialogResultModel) => {

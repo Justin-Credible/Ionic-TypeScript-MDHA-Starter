@@ -32,15 +32,15 @@ module JustinCredible.SampleApp.Services {
          * @param $provide The provider service which will be used to obtain and decorate the httpBackend service.
          */
         public static setupMockHttpDelay($provide: ng.auto.IProvideService) {
-            var maxDelay = 3000,
+            let maxDelay = 3000,
                 minDelay = 1000;
 
             // Example taken from the following blog post:
             // http://endlessindirection.wordpress.com/2013/05/18/angularjs-delay-response-from-httpbackend/
             $provide.decorator("$httpBackend", function ($delegate) {
-                var proxy = function (method, url, data, callback, headers) {
-                    var interceptor = function () {
-                        var _this = this,
+                let proxy = function (method, url, data, callback, headers) {
+                    let interceptor = function () {
+                        let _this = this,
                             _arguments = arguments,
                             delay: number;
 
@@ -61,7 +61,7 @@ module JustinCredible.SampleApp.Services {
                 };
 
                 /* tslint:disable:forin */
-                for (var key in $delegate) {
+                for (let key in $delegate) {
                     proxy[key] = $delegate[key];
                 }
                 /* tslint:enable:forin */

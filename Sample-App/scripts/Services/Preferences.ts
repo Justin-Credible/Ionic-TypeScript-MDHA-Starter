@@ -69,7 +69,7 @@
         }
 
         get categoryOrder(): string[] {
-            var categoryOrder = localStorage.getItem(Preferences.CATEGORY_ORDER);
+            let categoryOrder = localStorage.getItem(Preferences.CATEGORY_ORDER);
 
             if (categoryOrder == null) {
                 return null;

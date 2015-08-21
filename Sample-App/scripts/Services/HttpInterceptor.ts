@@ -52,14 +52,13 @@
          * @returns A factory that can be used like this: ngModule.factory(HttpInterceptor.getFactory());
          */
         public static getFactory(): Function {
-            var factory: Function;
 
             // Angular expects the factory function to return the object that is used
             // for the factory when it is injected into other objects.
-            factory = function ($rootScope: ng.IRootScopeService, $injector: ng.auto.IInjectorService, $q: ng.IQService, apiVersion: string) {
+            let factory: Function = function ($rootScope: ng.IRootScopeService, $injector: ng.auto.IInjectorService, $q: ng.IQService, apiVersion: string) {
 
                 // Create an instance our strongly-typed service.
-                var instance = new HttpInterceptor($rootScope, $injector, $q, apiVersion);
+                let instance = new HttpInterceptor($rootScope, $injector, $q, apiVersion);
 
                 // Return an object that exposes the functions that we want to be exposed.
                 // We use bind here so that the correct context is used (Angular normally
@@ -97,7 +96,6 @@
          * out.
          */
         public request(config: Interfaces.RequestConfig): Interfaces.RequestConfig {
-            var baseUrl: string;
 
             // Do nothing for Angular's template requests.
             if (this.Utilities.endsWith(config.url, ".html")) {
@@ -137,7 +135,7 @@
                 if (this.Configuration.apiUrl && this.Configuration.apiUrl) {
 
                     // Grab the base data source URL.
-                    baseUrl = this.Configuration.apiUrl;
+                    let baseUrl: string = this.Configuration.apiUrl;
 
                     // Remove the leading tilde character.
                     config.url = config.url.substring(1);
@@ -171,10 +169,9 @@
          * Fired when an HTTP request completes with a status code in the 200 range.
          */
         public response(httpResponse: ng.IHttpPromiseCallbackArg<any>): ng.IHttpPromiseCallbackArg<any> {
-            var config: Interfaces.RequestConfig;
 
             // Cast to our custom type which includes some extra flags.
-            config = <Interfaces.RequestConfig>httpResponse.config;
+            let config = <Interfaces.RequestConfig>httpResponse.config;
 
             // Do nothing for Angular's template requests.
             if (this.Utilities.endsWith(config.url, ".html")) {
@@ -199,15 +196,12 @@
          * OR when there are problems with the request going out.
          */
         public requestError(rejection: ng.IHttpPromiseCallbackArg<any>) {
-            var httpResponse: ng.IHttpPromiseCallbackArg<any>,
-                exception: Error,
-                config: Interfaces.RequestConfig;
 
             console.error("HttpInterceptor.requestError", [rejection]);
 
             if (rejection instanceof Error) {
                 // Occurs for any uncaught exceptions that occur in other interceptors.
-                exception = <Error>rejection;
+                let exception = <Error>rejection;
                 this.Logger.logError("An request exception was encountered in the HttpInterceptor.requestError().", exception);
                 this.handleFatalError();
             }
@@ -215,10 +209,10 @@
                 // Occurs if any other interceptors reject the request.
                 this.Logger.logError("An request rejection was encountered in the HttpInterceptor.requestError().", null);
 
-                httpResponse = <ng.IHttpPromiseCallbackArg<any>>rejection;
+                let httpResponse = <ng.IHttpPromiseCallbackArg<any>>rejection;
 
                 // Cast to our custom type which includes some extra flags.
-                config = <Interfaces.RequestConfig>httpResponse.config;
+                let config = <Interfaces.RequestConfig>httpResponse.config;
 
                 // Keep track of how many requests are still in progress and hide spinners etc.
                 if (config) {
@@ -236,22 +230,19 @@
          * in the HttpInterceptor response method.
          */
         public responseError(responseOrError: any) {
-            var httpResponse: ng.IHttpPromiseCallbackArg<any>,
-                exception: Error,
-                config: Interfaces.RequestConfig;
 
             console.log("HttpInterceptor.responseError", [responseOrError]);
 
             if (responseOrError instanceof Error) {
-                exception = <Error>responseOrError;
+                let exception = <Error>responseOrError;
                 this.Logger.logError("An response error was encountered in the HttpInterceptor.responseError().", exception);
                 this.handleFatalError();
             }
             else {
-                httpResponse = <ng.IHttpPromiseCallbackArg<any>>responseOrError;
+                let httpResponse = <ng.IHttpPromiseCallbackArg<any>>responseOrError;
 
                 // Cast to our custom type which includes some extra flags.
-                config = <Interfaces.RequestConfig>httpResponse.config;
+                let config = <Interfaces.RequestConfig>httpResponse.config;
 
                 // Do nothing for Angular's template requests.
                 if (this.Utilities.endsWith(config.url, ".html")) {
@@ -403,10 +394,9 @@
          * @returns A value to use for the HTTP Authorization header.
          */
         private getAuthorizationHeader(userName: string, password: string): string {
-            var headerValue: string;
 
             // Concatenate the user name and password with a colon.
-            headerValue = this.Utilities.format("{0}:{1}", userName, password);
+            let headerValue: string = this.Utilities.format("{0}:{1}", userName, password);
 
             // Base64 encode the user name and password and prepend "Basic".
             return "Basic " + btoa(headerValue);

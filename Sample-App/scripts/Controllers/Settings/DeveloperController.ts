@@ -86,7 +86,7 @@
 
             this.Configuration.enableMockHttpCalls = this.viewModel.mockApiRequests;
 
-            var message = "The application needs to be reloaded for changes to take effect.\n\nReload now?";
+            const message = "The application needs to be reloaded for changes to take effect.\n\nReload now?";
 
             this.UiHelper.confirm(message, "Confirm Reload").then((result: string) => {
                 if (result === Constants.Buttons.Yes) {
@@ -104,7 +104,7 @@
         }
 
         protected apiUrl_click(): void {
-            var message = "Here you can edit the API URL for this session.";
+            const message = "Here you can edit the API URL for this session.";
 
             this.UiHelper.prompt(message, "API URL", null, this.Configuration.apiUrl).then((result: Models.KeyValuePair<string, string>) => {
 
@@ -153,7 +153,7 @@
 
         protected setRequirePinThreshold_click(): void {
 
-            var message = this.Utilities.format("Enter the value (in minutes) for PIN prompt threshold? Current setting is {0} minutes.", this.Configuration.requirePinThreshold);
+            const message = this.Utilities.format("Enter the value (in minutes) for PIN prompt threshold? Current setting is {0} minutes.", this.Configuration.requirePinThreshold);
 
             this.UiHelper.prompt(message, "Require PIN Threshold", null, this.Configuration.requirePinThreshold.toString()).then((result: Models.KeyValuePair<string, string>) => {
 
@@ -176,7 +176,7 @@
 
             this.Configuration.lastPausedAt = moment("01-01-2000", "MM-DD-yyyy");
 
-            var message = "The PIN timeout has been set to more than 10 minutes ago. To see the PIN screen, terminate the application via the OS task manager (don't just background it), and then re-launch.";
+            const message = "The PIN timeout has been set to more than 10 minutes ago. To see the PIN screen, terminate the application via the OS task manager (don't just background it), and then re-launch.";
 
             this.UiHelper.alert(message, "Reset PIN Timeout");
         }
@@ -200,7 +200,7 @@
             // Cause an exception by referencing an undefined variable.
             // We use defer so we can execute outside of the context of Angular.
             _.defer(function () {
-                var x = window["____asdf"].blah();
+                let x = window["____asdf"].blah();
             });
 
             /* tslint:enable:no-string-literal */
@@ -210,7 +210,7 @@
             /* tslint:disable:no-string-literal */
 
             // Cause an exception by referencing an undefined variable.
-            var x = window["____asdf"].blah();
+            let x = window["____asdf"].blah();
 
             /* tslint:enable:no-string-literal */
         }
@@ -285,7 +285,7 @@
         }
 
         protected writeFile_click(): void {
-            var path: string,
+            let path: string,
                 contents: string;
 
             this.UiHelper.prompt("Enter file name to write to", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
@@ -312,7 +312,7 @@
         }
 
         protected appendFile_click(): void {
-            var path: string,
+            let path: string,
                 contents: string;
 
             this.UiHelper.prompt("Enter file name to write to", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
@@ -337,7 +337,7 @@
         }
 
         protected createDir_click(): void {
-            var path: string;
+            let path: string;
 
             this.UiHelper.prompt("Enter dir name to create", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
 
@@ -363,7 +363,7 @@
         }
 
         protected listFiles_click(): void {
-            var path: string,
+            let path: string,
                 list = "";
 
             this.UiHelper.prompt("Enter path to list files", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
@@ -392,7 +392,7 @@
         }
 
         protected listDirs_click(): void {
-            var path: string,
+            let path: string,
                 list = "";
 
             this.UiHelper.prompt("Enter path to list dirs", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
@@ -421,7 +421,7 @@
         }
 
         protected deleteFile_click(): void {
-            var path: string;
+            let path: string;
 
             this.UiHelper.prompt("Enter path to delete file", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
 
@@ -438,7 +438,7 @@
         }
 
         protected deleteDir_click(): void {
-            var path: string;
+            let path: string;
 
             this.UiHelper.prompt("Enter path to delete dir", "File I/O Test", null, "/").then((result: Models.KeyValuePair<string, string>) => {
 

@@ -175,9 +175,7 @@
          * @returns A promise of void which will be resolved when the alert is closed.
          */
         public alert(message: string, title?: string, buttonName?: string): ng.IPromise<void> {
-            var q = this.$q.defer<void>(),
-                callback: () => void,
-                notificationPlugin: Notification;
+            let q = this.$q.defer<void>();
 
             // Default the title.
             title = title || "Alert";
@@ -186,11 +184,12 @@
             buttonName = buttonName || Constants.Buttons.OK;
 
             // Define the callback that is executed when the dialog is closed.
-            callback = (): void => {
+            let callback = (): void => {
                 q.resolve();
             };
 
             // Obtain the notification plugin implementation.
+            let notificationPlugin: Notification;
             if (!this.Utilities.isRipple && navigator.notification) {
                 notificationPlugin = navigator.notification;
             }
@@ -244,9 +243,7 @@
          * @returns A promise of type string which will be resolved when the confirm is closed with the button that was clicked.
          */
         public confirm(message: string, title?: string, buttonLabels?: string[]): ng.IPromise<string> {
-            var q = this.$q.defer<string>(),
-                callback: (choice: number) => void,
-                notificationPlugin: Notification;
+            let q = this.$q.defer<string>();
 
             // Default the title.
             title = title || "Confirm";
@@ -255,17 +252,17 @@
             buttonLabels = buttonLabels || [Constants.Buttons.Yes, Constants.Buttons.No];
 
             // Define the callback that is executed when the dialog is closed.
-            callback = (choice: number): void => {
-                var buttonText: string;
+            let callback = (choice: number): void => {
 
                 // Get the button text for the button that was clicked; the callback
                 // gives us a button index that is 1 based (not zero based!).
-                buttonText = buttonLabels[choice - 1];
+                let buttonText: string = buttonLabels[choice - 1];
 
                 q.resolve(buttonText);
             };
 
             // Obtain the notification plugin implementation.
+            let notificationPlugin: Notification;
             if (!this.Utilities.isRipple && navigator.notification) {
                 notificationPlugin = navigator.notification;
             }
@@ -332,9 +329,7 @@
          * @returns A promise of key/value pair of strings; the key is the button that was clicked and the value is the value of the text box.
          */
         public prompt(message: string, title?: string, buttonLabels?: string[], defaultText?: string): ng.IPromise<Models.KeyValuePair<string, string>> {
-            var q = this.$q.defer<Models.KeyValuePair<string, string>>(),
-                callback: (result: NotificationPromptResult) => void,
-                notificationPlugin: Notification;
+            let q = this.$q.defer<Models.KeyValuePair<string, string>>();
 
             // Default the title
             title = title || "Prompt";
@@ -343,23 +338,22 @@
             buttonLabels = buttonLabels || [Constants.Buttons.OK, Constants.Buttons.Cancel];
 
             // Define the callback that is executed when the dialog is closed.
-            callback = (promptResult: NotificationPromptResult): void => {
-                var promiseResult: Models.KeyValuePair<string, string>,
-                    buttonText: string;
+            let callback = (promptResult: NotificationPromptResult): void => {
 
                 // Get the button text for the button that was clicked; the callback
                 // gives us a button index that is 1 based (not zero based!).
-                buttonText = buttonLabels[promptResult.buttonIndex - 1];
+                let buttonText = buttonLabels[promptResult.buttonIndex - 1];
 
                 // Define the result object that we'll use the resolve the promise.
                 // This contains the button that was selected as well as the contents
                 // of the text box.
-                promiseResult = new Models.KeyValuePair<string, string>(buttonText, promptResult.input1);
+                let promiseResult = new Models.KeyValuePair<string, string>(buttonText, promptResult.input1);
 
                 q.resolve(promiseResult);
             };
 
             // Obtain the notification plugin implementation.
+            let notificationPlugin: Notification;
             if (!this.Utilities.isRipple && navigator.notification) {
                 notificationPlugin = navigator.notification;
             }
@@ -434,10 +428,7 @@
          * @returns A promise that will be resolved when the dialog is closed with the dialog's return type.
          */
         public showDialog(dialogId: string, options?: Models.DialogOptions): ng.IPromise<any> {
-            var q = this.$q.defer<any>(),
-                template: string,
-                creationArgs: any,
-                creationPromise: ng.IPromise<any>;
+            let q = this.$q.defer<any>();
 
             // Ensure the options object is present.
             if (!options) {
@@ -458,7 +449,7 @@
             }
 
             // Lookup the template to use for this dialog based on the dialog ID.
-            template = UiHelper.dialogTemplateMap[dialogId];
+            let template = UiHelper.dialogTemplateMap[dialogId];
 
             // If we were unable to find a dialog ID in the template map then we
             // can bail out here as there is nothing to do.
@@ -472,7 +463,7 @@
             UiHelper._openDialogIds.push(dialogId);
 
             // Define the arguments that will be used to create the modal instance.
-            creationArgs = {
+            let creationArgs = {
                 // Include the dialog ID so we can identify the dialog later on.
                 dialogId: dialogId,
 
@@ -486,11 +477,11 @@
             };
 
             // Schedule the modal instance to be created.
-            creationPromise = this.$ionicModal.fromTemplateUrl(template, creationArgs);
+            let creationPromise = this.$ionicModal.fromTemplateUrl(template, creationArgs);
 
             // Once the modal instance has been created...
             creationPromise.then((modal: any) => {
-                var backdrop: HTMLDivElement;
+                let backdrop: HTMLDivElement;
 
                 // Show it.
                 modal.show();
@@ -536,10 +527,7 @@
         //#region Helpers for the device_resume event
 
         public showPinEntryAfterResume(): ng.IPromise<void> {
-            var q = this.$q.defer<void>(),
-                resumedAt: moment.Moment,
-                options: Models.DialogOptions,
-                model: Models.PinEntryDialogModel;
+            let q = this.$q.defer<void>();
 
             // If the PIN entry dialog then there is nothing to do.
             if (this.isPinEntryOpen) {
@@ -551,14 +539,14 @@
             // need to show the lock screen.
             if (this.Preferences.pin && this.Configuration.lastPausedAt != null && this.Configuration.lastPausedAt.isValid()) {
                 // Get the current time.
-                resumedAt = moment();
+                let resumedAt: moment.Moment = moment();
 
                 // If the time elapsed since the last pause event is greater than the threshold,
                 // then we need to show the lock screen.
                 if (resumedAt.diff(this.Configuration.lastPausedAt, "minutes") > this.Configuration.requirePinThreshold) {
 
-                    model = new Models.PinEntryDialogModel("PIN Required", this.Preferences.pin, false);
-                    options = new Models.DialogOptions(model);
+                    let model = new Models.PinEntryDialogModel("PIN Required", this.Preferences.pin, false);
+                    let options = new Models.DialogOptions(model);
                     options.backdropClickToClose = false;
                     options.hardwareBackButtonClose = false;
                     options.showBackground = false;

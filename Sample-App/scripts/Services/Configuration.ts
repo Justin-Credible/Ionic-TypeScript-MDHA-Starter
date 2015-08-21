@@ -111,7 +111,7 @@ module JustinCredible.SampleApp.Services {
         }
 
         get requirePinThreshold(): number {
-            var value = localStorage.getItem(Configuration.REQUIRE_PIN_THRESHOLD);
+            let value = localStorage.getItem(Configuration.REQUIRE_PIN_THRESHOLD);
             return value == null ? Configuration.REQUIRE_PIN_THRESHOLD_DEFAULT : parseInt(value, 10);
         }
 
@@ -134,9 +134,7 @@ module JustinCredible.SampleApp.Services {
         }
 
         get lastPausedAt(): moment.Moment {
-            var lastPausedAt: string;
-
-            lastPausedAt = localStorage.getItem(Configuration.LAST_PAUSED_AT);
+            let lastPausedAt: string = localStorage.getItem(Configuration.LAST_PAUSED_AT);
 
             return moment(lastPausedAt).isValid() ? moment(lastPausedAt) : null;
         }

@@ -45,7 +45,7 @@
         }
 
         protected done_click() {
-            var categoryOrder: string[] = [];
+            let categoryOrder: string[] = [];
 
             this.viewModel.categories.forEach((categoryItem: ViewModels.CategoryItemViewModel) => {
                 categoryOrder.push(categoryItem.name);
