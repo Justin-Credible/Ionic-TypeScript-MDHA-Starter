@@ -385,7 +385,8 @@
                 // If there are no more spinner requests in progress, then hide the spinner.
                 NProgress.done();
             }
-            else {
+            // If showSpinner is false don't show NProgress bar
+            else if (config.showSpinner) {
                 // If there are still spinner requests in progress, then kick up the progress
                 // bar a little bit to show some of the work has completed.
                 NProgress.inc();
