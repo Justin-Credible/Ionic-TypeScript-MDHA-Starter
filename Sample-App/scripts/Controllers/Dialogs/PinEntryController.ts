@@ -12,7 +12,7 @@
                 "$scope",
                 Services.Utilities.ID,
                 Services.Preferences.ID,
-                Services.UiHelper.ID
+                Services.Plugins.ID
             ];
         }
 
@@ -20,7 +20,7 @@
             $scope: ng.IScope,
             private Utilities: Services.Utilities,
             private Preferences: Services.Preferences,
-            private UiHelper: Services.UiHelper) {
+            private Plugins: Services.Plugins) {
             super($scope, ViewModels.PinEntryViewModel, PinEntryController.ID);
         }
 
@@ -57,7 +57,7 @@
                     // If the PIN values do not match, then clear the fields and remain
                     // open so the user can try again.
                     this.viewModel.pin = "";
-                    this.UiHelper.toast.showShortTop("Invalid pin; please try again.");
+                    this.Plugins.toast.showShortTop("Invalid pin; please try again.");
                     this.scope.$apply();
                 }
             }
