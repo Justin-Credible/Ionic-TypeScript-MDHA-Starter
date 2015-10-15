@@ -461,7 +461,7 @@ module JustinCredible.SampleApp.Application {
             // purposefully after the PIN screen for the case where the user may be upgrading
             // from a version of the application that doesn't have onboarding (we wouldn't
             // want them to be able to bypass the PIN entry in that case).
-            if (!services.Configuration.hasCompletedOnboarding) {
+            if (!services.Configuration.hasCompletedOnboarding && services.$location.path().indexOf("/app/onboarding") === -1) {
 
                 // Tell Ionic to not animate and clear the history (hide the back button)
                 // for the next view that we'll be navigating to below.
