@@ -11,24 +11,20 @@
 
         public static get $inject(): string[] {
             return [
-                "$rootScope",
                 "$q",
-                "$http",
                 "$ionicModal",
-                MockPlatformApis.ID,
-                Utilities.ID,
+                Plugins.ID,
+                Logger.ID,
                 Preferences.ID,
                 Configuration.ID
             ];
         }
 
         constructor(
-            private $rootScope: ng.IRootScopeService,
             private $q: ng.IQService,
-            private $http: ng.IHttpService,
             private $ionicModal: any,
-            private MockPlatformApis: MockPlatformApis,
-            private Utilities: Utilities,
+            private Plugins: Plugins,
+            private Logger: Logger,
             private Preferences: Preferences,
             private Configuration: Services.Configuration) {
         }
@@ -97,8 +93,7 @@
          */
         public alert(message: string, title?: string, buttonName?: string): ng.IPromise<void> {
             var q = this.$q.defer<void>(),
-                callback: () => void,
-                notificationPlugin: Notification;
+                callback: () => void;
 
             // Default the title.
             title = title || "Alert";
@@ -111,16 +106,8 @@
                 q.resolve();
             };
 
-            // Obtain the notification plugin implementation.
-            if (!this.Utilities.isRipple && navigator.notification) {
-                notificationPlugin = navigator.notification;
-            }
-            else {
-                notificationPlugin = this.MockPlatformApis.getNotificationPlugin();
-            }
-
             // Show the alert dialog.
-            notificationPlugin.alert(message, callback, title, buttonName);
+            this.Plugins.notification.alert(message, callback, title, buttonName);
 
             return q.promise;
         }
@@ -166,8 +153,7 @@
          */
         public confirm(message: string, title?: string, buttonLabels?: string[]): ng.IPromise<string> {
             var q = this.$q.defer<string>(),
-                callback: (choice: number) => void,
-                notificationPlugin: Notification;
+                callback: (choice: number) => void;
 
             // Default the title.
             title = title || "Confirm";
@@ -186,16 +172,8 @@
                 q.resolve(buttonText);
             };
 
-            // Obtain the notification plugin implementation.
-            if (!this.Utilities.isRipple && navigator.notification) {
-                notificationPlugin = navigator.notification;
-            }
-            else {
-                notificationPlugin = this.MockPlatformApis.getNotificationPlugin();
-            }
-
             // Show the confirm dialog.
-            notificationPlugin.confirm(message, callback, title, buttonLabels);
+            this.Plugins.notification.confirm(message, callback, title, buttonLabels);
 
             return q.promise;
         }
@@ -280,16 +258,8 @@
                 q.resolve(promiseResult);
             };
 
-            // Obtain the notification plugin implementation.
-            if (!this.Utilities.isRipple && navigator.notification) {
-                notificationPlugin = navigator.notification;
-            }
-            else {
-                notificationPlugin = this.MockPlatformApis.getNotificationPlugin();
-            }
-
             // Show the prompt dialog.
-            notificationPlugin.prompt(message, callback, title, buttonLabels, defaultText);
+            this.Plugins.notification.prompt(message, callback, title, buttonLabels, defaultText);
 
             return q.promise;
         }
@@ -315,7 +285,7 @@
             }
 
             if (UiHelper.dialogTemplateMap[dialogId]) {
-                console.warn(this.Utilities.format("A dialog with ID {0} has already been registered; it will be overwritten.", dialogId));
+                this.Logger.warn(UiHelper.ID, "registerDialog", "A dialog with the same ID has already been registered; it will be overwritten.", dialogId);
             }
 
             UiHelper.dialogTemplateMap[dialogId] = templatePath;
@@ -384,8 +354,8 @@
             // If we were unable to find a dialog ID in the template map then we
             // can bail out here as there is nothing to do.
             if (!template) {
+                this.Logger.warn(UiHelper.ID, "showDialog", "A call was made to openDialog, but a template is not registered with the given ID in the dialogTemplateMap.", dialogId);
                 this.$q.reject(Constants.DIALOG_ID_NOT_REGISTERED);
-                console.warn(this.Utilities.format("A call was made to openDialog with dialogId '{0}', but a template is not registered with that ID in the dialogTemplateMap.", dialogId));
                 return q.promise;
             }
 
