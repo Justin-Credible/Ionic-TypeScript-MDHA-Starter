@@ -41,4 +41,29 @@ declare module JustinCredible.SampleApp.Interfaces {
         githubUrl: string;
         email: string;
     }
+
+    /**
+     * Variables emitted at build time which contain useful application information.
+     */
+    interface BuildVars {
+        /**
+         * True if the application was build in debug configuration, false if it was
+         * build a release or distribution configuration.
+         */
+        debug: boolean;
+
+        /**
+         * The time at which the application was built.
+         */
+        buildTimestamp: string;
+
+        majorVersion: number;
+        minorVersion: number;
+        buildVersion: number;
+
+        /**
+         * The URL to the APIs to use
+         */
+        apiUrl: string;
+    }
 }
