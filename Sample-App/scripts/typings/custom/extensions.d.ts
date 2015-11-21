@@ -11,11 +11,6 @@ declare var chrome: any;
 interface Window {
 
     /**
-     * The ProgressIndicator provides some full screen user blocking spinners etc.
-     */
-    ProgressIndicator: ICordovaProgressIndicator;
-
-    /**
      * Used to obtain a directory entry on the local file system given a URI.
      *
      * Describes the resolveLocalFileSystemURL function that is exposed via the

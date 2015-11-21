@@ -115,5 +115,5 @@
   <vs:plugin name="cordova-plugin-whitelist" version="1.0.0" />
   <vs:plugin name="com.verso.cordova.clipboard" version="0.1.0" src="https://github.com/VersoSolutions/CordovaClipboard.git" />
   <vs:plugin name="nl.x-services.plugins.toast" version="2.1.1" src="https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git" />
-  <vs:plugin name="net.justin-credible.cordova-progress-indicator" version="1.1.0" src="https://github.com/Justin-Credible/cordova-progressIndicator.git" />
+  <vs:plugin name="cordova-plugin-spinner" version="1.0.0" src="https://github.com/Justin-Credible/cordova-plugin-spinner.git" />
 </widget>

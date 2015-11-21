@@ -54,12 +54,12 @@
         /**
          * Exposes an API for working with progress indicators.
          */
-        get progressIndicator(): ICordovaProgressIndicator {
-            if (!this.Utilities.isRipple && !this.Utilities.isWindows && window.ProgressIndicator && !this.Utilities.isAndroid) {
-                return window.ProgressIndicator;
+        get spinner(): SpinnerPlugin.SpinnerPluginStatic {
+            if (this.Utilities.isRipple || typeof (SpinnerPlugin) === "undefined") {
+                return this.MockPlatformApis.getSpinnerPlugin();
             }
             else {
-                return this.MockPlatformApis.getProgressIndicatorPlugin();
+                return SpinnerPlugin;
             }
         }
 
