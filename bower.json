@@ -1,0 +1,30 @@
+{
+  "name": "SampleApp",
+  "private": true,
+  "dependencies": {
+    "ionic": "1.2.1",
+    "lodash": "3.10.1",
+    "moment": "2.10.6",
+    "nprogress": "0.2.0",
+    "uri.js": "1.16.1",
+    "angular-mocks": "1.4.7",
+    "stacktrace": "1.0.0"
+  },
+  "install": {
+    "path": "www/lib",
+    "sources": {
+      "uri.js": "bower_components/uri.js/src/uri.min.js",
+      "ionic": "bower_components/ionic/release/**"
+    },
+    "ignore": [
+      "angular",
+      "angular-animate",
+      "angular-sanitize",
+      "angular-ui-router",
+      "jquery"
+    ]
+  },
+  "resolutions": {
+    "angular": "1.4.3"
+  }
+}

@@ -1,0 +1,14 @@
+
+/* Make the corners of the modal dialogs rounded on tablets. */
+/* Corners don't need to be rounded on phones because the modal dialog fills the entire screen. */
+@media only screen and (min-width: 768px) {
+
+    .modal-wrapper .modal {
+        border-radius: 10px;
+    }
+
+    .modal-wrapper .modal .bar-header {
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+    }
+}

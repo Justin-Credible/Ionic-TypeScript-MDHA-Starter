@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "out": "tests/bundle.tests.js",
+        "sourceMap": true,
+        "removeComments": true,
+        "sourceRoot": "../"
+    }
+}
