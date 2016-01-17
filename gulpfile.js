@@ -51,7 +51,12 @@ var paths = {
  * This is controlled by the debug flag in runtime-config.json.
  */
 function isDebugBuild() {
+
     var runtimeConfigJson = fs.readFileSync("runtime-config.json", "utf8");
+
+    // Remove BOM marker on Windows - http://stackoverflow.com/a/24376813
+    runtimeConfigJson = runtimeConfigJson.toString().replace(/^\uFEFF/, "");
+
     var runtimeConfig = JSON.parse(runtimeConfigJson);
     return !!runtimeConfig.debug;
 }
@@ -107,23 +112,23 @@ gulp.task("lint", function (cb) {
     .pipe(tslint());
 });
 
-///**
-// * Run all of the unit tests once and then exit.
-// * 
-// * A Karma test server instance must be running first (eg karma start).
-// */
-//gulp.task("test", ["ts:tests"], function (done) {
+/**
+ * Run all of the unit tests once and then exit.
+ * 
+ * A Karma test server instance must be running first (eg karma start).
+ */
+gulp.task("test", ["ts:tests"], function (done) {
 
-//    var server = new KarmaServer({
-//        configFile: __dirname + "/karma.conf.js",
-//        singleRun: true
-//    }, function (err, result) {
-//        // When a non-zero code is returned by Karma something went wrong.
-//        done(err === 0 ? null : "There are failing unit tests");
-//    });
+    var server = new KarmaServer({
+        configFile: __dirname + "/karma.conf.js",
+        singleRun: true
+    }, function (err, result) {
+        // When a non-zero code is returned by Karma something went wrong.
+        done(err === 0 ? null : "There are failing unit tests");
+    });
 
-//    server.start();
-//});
+    server.start();
+});
 
 /**
  * Uses the tsd command to restore TypeScript definitions to the typings
@@ -208,9 +213,6 @@ gulp.task("config", function (cb) {
     // Remove the schemes node from the config.xml file.
     var configRaw = fs.readFileSync("config.xml", "utf8");
     var configXmlDoc = new XmlDom().parseFromString(configRaw);
-    configXmlDoc.removeChild(xpath.select1("/*[local-name() = 'widget']/*[local-name() = 'schemes']", configXmlDoc));
-    configRaw = xmlSerializer.serializeToString(configXmlDoc);
-    fs.writeFileSync("config.xml", configRaw, "utf8");
 
     // Grab values out of config.xml used to build www/js/build-vars.js
 
@@ -367,6 +369,32 @@ gulp.task("chrome", ["ts"], function (cb) {
 });
 
 /**
+ * Used to perform compliation of the TypeScript source in the src directory and
+ * output the JavaScript to the out location as specified in tsconfig.json (usually
+ * www/js/bundle.js).
+ * 
+ * It will also delegate to the vars and src tasks to copy in the original source
+ * which can be used for debugging purposes. This will only occur if the build scheme
+ * is not set to release.
+ */
+gulp.task("ts", ["config", "ts:src"], function (cb) {
+    exec("tsc -p src", function (err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+
+        // For debug builds, we are done, but for release builds, minify the bundle.
+        if (isDebugBuild()) {
+            cb(err);
+        }
+        else {
+            runSequence("minify", function () {
+                cb(err);
+            });
+        }
+    });
+});
+
+/**
  * Used to minify the JavaScript bundle.js built from the "ts" TypeScript compilation
  * target. This will use the bundle that is already on disk whose location is determined
  * from the out property of the compiler options in tsconfig.json.
@@ -422,12 +450,12 @@ gulp.task("sass", function (cb) {
 
     var sassConfig = {
         outputStyle: isDebugBuild() ? "nested" : "compressed",
-        errLogToConsole: false
+        errLogToConsole: true
     };
 
     return gulp.src(paths.sassIndex)
         .pipe(sourcemaps.init())
-        .pipe(sass(sassConfig).on("error", sassReporter))
+        .pipe(sass(sassConfig))
         .pipe(rename("bundle.css"))
         .pipe(sourcemaps.write("./"))
         .pipe(gulp.dest("./www/css"));

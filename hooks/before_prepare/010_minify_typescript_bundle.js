@@ -1,2 +1,0 @@
-﻿
-//TODO Execute gulp minify
