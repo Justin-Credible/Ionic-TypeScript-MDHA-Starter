@@ -525,17 +525,6 @@ gulp.task("clean:platforms", function (cb) {
 });
 
 /**
- * Removes the plugins directory.
- */
-gulp.task("clean:plugins", function (cb) {
-    del([
-        "plugins"
-    ]).then(function () {
-        cb();
-    });
-});
-
-/**
  * Removes the www/lib directory.
  */
 gulp.task("clean:libs", function (cb) {

@@ -10,7 +10,6 @@
 /node_modules
 /bower_components
 /platforms
-/plugins
 /typings/*
 !/typings/custom/
 /typings-tests/*
