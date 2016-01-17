@@ -13,6 +13,9 @@
         <!-- This is created by the config gulp task. -->
         <script src="js/build-vars.js"></script>
 
+        <!-- Allows us to perform custom mocking, etc for the Apache Ripple Emulator. -->
+        <script src="js/ripple-mock-api.js"></script>
+
         <!-- *** Ionic Framework (includes AngularJs) **************************************** -->
 
         <script src="lib/ionic/js/ionic.bundle.min.js"></script>
@@ -24,6 +27,9 @@
 
         <!-- This will be a 404 during development; it is copied into package at build time. -->
         <script src="cordova.js"></script>
+
+        <!-- These are the platform overrides provided by the default Visual Studio template. -->
+        <script src="scripts/platformOverrides.js"></script>
 
         <!-- *** Third Party Libraries ******************************************************* -->
 

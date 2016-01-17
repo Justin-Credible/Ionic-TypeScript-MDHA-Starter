@@ -31,7 +31,7 @@ namespace JustinCredible.SampleApp.Services {
          * Exposes an API for showing user notifications (eg dialogs).
          */
         get notification(): any {
-            if (typeof(navigator) !== "undefined" && navigator.notification) {
+            if (!this.Utilities.isRipple && typeof(navigator) !== "undefined" && navigator.notification) {
                 return navigator.notification;
             }
             else {
@@ -43,7 +43,7 @@ namespace JustinCredible.SampleApp.Services {
          * Exposes an API for showing toast messages.
          */
         get toast(): ICordovaToastPlugin {
-            if (!this.Utilities.isWindows && !this.Utilities.isWindows8 && window.plugins && window.plugins.toast) {
+            if (!this.Utilities.isRipple && !this.Utilities.isWindows && !this.Utilities.isWindows8 && window.plugins && window.plugins.toast) {
                 return window.plugins.toast;
             }
             else {
@@ -55,7 +55,7 @@ namespace JustinCredible.SampleApp.Services {
          * Exposes an API for working with progress indicators.
          */
         get spinner(): SpinnerPlugin.SpinnerPluginStatic {
-            if (typeof(SpinnerPlugin) !== "undefined") {
+            if (!this.Utilities.isRipple && typeof(SpinnerPlugin) !== "undefined") {
                 return SpinnerPlugin;
             }
             else {
@@ -70,7 +70,7 @@ namespace JustinCredible.SampleApp.Services {
             if (this.Utilities.isWindows) {
                 return this.MockPlatformApis.getClipboardPluginForWindows();
             }
-            else if (typeof(cordova) !== "undefined" && cordova.plugins && cordova.plugins.clipboard) {
+            else if (!this.Utilities.isRipple && typeof(cordova) !== "undefined" && cordova.plugins && cordova.plugins.clipboard) {
                 return cordova.plugins.clipboard;
             }
             else if (this.Utilities.isChromeExtension) {
@@ -85,7 +85,7 @@ namespace JustinCredible.SampleApp.Services {
          * Exposes an API for manipulating the device's native status bar.
          */
         get statusBar(): StatusBar {
-            if (window.StatusBar) {
+            if (!this.Utilities.isRipple && window.StatusBar) {
                 return window.StatusBar;
             }
             else {
@@ -97,7 +97,7 @@ namespace JustinCredible.SampleApp.Services {
          * Exposes an API for adjusting keyboard behavior.
          */
         get keyboard(): Ionic.Keyboard {
-            if (typeof(cordova) !== "undefined" && cordova.plugins && cordova.plugins.Keyboard) {
+            if (!this.Utilities.isRipple && typeof(cordova) !== "undefined" && cordova.plugins && cordova.plugins.Keyboard) {
                 return cordova.plugins.Keyboard;
             }
             else {
@@ -109,7 +109,7 @@ namespace JustinCredible.SampleApp.Services {
          * Exposes an API for logging exception information to the Crashlytics backend service.
          */
         get crashlytics(): ICordovaCrashlyticsPlugin {
-            if (typeof(navigator) !== "undefined" && navigator.crashlytics) {
+            if (!this.Utilities.isRipple && typeof(navigator) !== "undefined" && navigator.crashlytics) {
                 return navigator.crashlytics;
             }
             else {

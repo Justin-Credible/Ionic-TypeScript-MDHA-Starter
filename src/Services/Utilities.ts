@@ -31,6 +31,18 @@
 
         /**
          * Can be used to determine if this application is being run in the Apache
+         * Ripple Emulator, which runs in a desktop browser, and not Cordova.
+         * 
+         * @returns True if the application is running in the Ripple emulator, false otherwise.
+         */
+        public get isRipple(): boolean {
+            /* tslint:disable:no-string-literal */
+            return !!(window.parent && window.parent["ripple"]);
+            /* tslint:enable:no-string-literal */
+        }
+
+        /**
+         * Can be used to determine if this application is being run in the Apache
          * Cordova runtime.
          * 
          * @returns True if the application is running in the Apache Cordova runtime, false otherwise.
