@@ -17,35 +17,38 @@ Screenshots can be found on the project page [here](http://www.justin-credible.n
 
 *If you are looking for a version of this project that is IDE and platform agnostic, you can check out it's sister project: [Ionic-TypeScript-Starter](https://github.com/Justin-Credible/Ionic-TypeScript-Starter).*
 
-## Libraries Used ##
+## Environment Setup ##
 
-The following is a list of JavaScript libraries that are included.
+The following external prerequisites are required:
 
-* [Ionic](http://ionicframework.com/) (1.0.0)
-* [AngularJS](https://angularjs.org/) (1.3.13 via the Ionic bundle)
-* [lodash](http://lodash.com/) (2.4.1)
-* [Moment.js](http://momentjs.com/) (2.7.0)
-* [NProgress.js](http://ricostacruz.com/nprogress/) (0.1.6)
-* [ngCordova](http://ngcordova.com/) (0.1.2-alpha)
-* [URI.js](http://medialize.github.io/URI.js/) (1.13.2)
+* [Visual Studio 2015 Community](https://www.visualstudio.com/) with Update 1
+* Apache Cordova tools for Visual Studio (included with Visual Studio 2015)
+* [Node.js](https://nodejs.org/dist/v4.2.2/) 4.2.2
 
-The following is a list of Cordova plug-ins that are used:
+*In addition, if you want to run on a emulator or physical device, you'll need your environment setup for iOS or Android development.*
 
-* org.apache.cordova.console (0.2.13)
-* org.apache.cordova.device (0.3.0)
-* org.apache.cordova.file (1.3.3)
-* org.apache.cordova.dialogs (0.3.0)
-* com.verso.cordova.clipboard (0.1.0)
-* nl.x-services.plugins.toast (2.0.5)
-* org.pbernasconi.progressIndicator (1.1.0)
+### Configure Visual Studio ###
+
+This project uses gulp to build TypeScript, SASS, etc. You'll want to make sure the **Task Runner Explorer** window is visible:
+
+* View > Other Windows > Task Runner Explorer
+
+Next, configure Visual Studio to use the same version of Node that is available via your path:
+
+1. Tools > Options
+1. Projects and Solutions
+1. External Web Tools
+2. Add the path to your node installation to the top of the list (eg `C:\Program Files\nodejs`)
+
+This can be verified by executing `node --version` at a command prompt and comparing the version to the `gulp echo-node-version` task when executed from Visual Studio's task runner explorer. More details are available [here](http://ryanhayes.net/synchronize-node-js-install-version-with-visual-studio-2015/).
+
+### Modify your path ###
+
+All other dependencies are installed in the project directory via `npm`. To use them you'll need to add `./node_modules/.bin` to your path. Using the dependencies directly from the project directory reduces dependency hell with globally installed modules and ensures all development is done using the exact same versions of the modules.
 
 ## Getting Started ##
 
-The Visual Studio Tools for Apache Cordova are now included with Visual Studio 2015 RC and can be downloaded [here](https://www.visualstudio.com/en-us/features/cordova-vs.aspx).
-
 In addition to installing Visual Studio, the installer will take care of downloading and setting up all the dependencies you need for developing Cordova applications (Node.js, Apache Ant, Oracle JDK 7, the Android SDK, Google Chrome and more).
-
-Finally, you'll need the 1.5 beta version of TypeScript (VS2015RC currently ships with TypeScript 1.4). The 1.5 beta can be obtained from the [TypeScript Homepage](http://www.typescriptlang.org) or via the direct [download page](https://visualstudiogallery.msdn.microsoft.com/3e5ba71c-abea-4d00-b81b-a62de3ad3d53).
 
 You can clone the repository to your machine using:
 
@@ -53,7 +56,26 @@ You can clone the repository to your machine using:
 
 Once you've installed VS2015, and cloned this repository you should be able to open the solution file:
 
-	JustinCredible.SampleApp.sln
+	Ionic-TypeScript-MDHA-Starter.sln
+ 
+In the solution explorer you'll see a dependencies node with both the node and bower dependencies. If they do not automatically begin restoring, you'll have to right click them manually.
+
+After the dependencies are installed, you can use the various gulp tasks from the Task Runner Explorer or the command line.
+
+## Compilation ##
+
+The following tasks can be used to perform code configuration, library and plugin setup, and TypeScript compilation.
+
+*You can also just run `gulp` without any arguments which will run the below targets.*
+
+    $ gulp config     # Creates www/js/build-vars.js from config.xml and runtime-config.json values
+    $ gulp templates  # Compiles Angluar HTML templates from src/Views/**/*.html to www/js/templates.js
+    $ gulp sass       # Compiles SASS from src/Styles/Index.scss to www/css/bundle.css
+    $ gulp libs       # Install third Party JS libraries to www/lib as defined in bower.json
+    $ gulp tsd        # Install TypeScript definitions as defined in tsd.json
+    $ gulp ts         # Compiles TypeScript code as configured by src/tsconfig.json
+
+After you've run the tasks, you can now use the Visual Studio play button to launch the Ripple emulator.
 
 ## Running ##
 
@@ -61,9 +83,9 @@ The VS Cordova Tools make it easy to build and run your mobile application for m
 
 The project has been written to work well with the Ripple emulator; while in the browser several device only features (toast notifications, clipboard access, dialogs) will be mocked up and replaced with versions that will work on the browser. For example, the Ionic dialogs will be used in the emulator, but the native OS dialogs will be used when running on the device.
 
-This is taken care of via the RippleMockApi.js and MockApis.ts files.
+This is taken care of via the `ripple-mock-api.js` and `MockApis.ts` files.
 
-When you click the play button (or press F5), the build process will kick off. The VS Cordova Tools will perform TypeScript compilation, setup a Cordova project, and then copy in all of the resources.
+When you click the play button (or press F5), the build process will kick off. The VS Cordova Tools will setup a Cordova project and then copy in all of the resources.
 
 If you are using the Ripple emulator a Chrome instance will be started and Visual Studio will attach to it to enable DOM inspection and JavaScript debugging.
 
@@ -73,33 +95,17 @@ While debugging, any changes to files in the `www` directory should cause the Ri
 
 You may notice that if you try to open Chrome's F12 Developer Tools while Visual Studio is attached, the Chrome instance may crash. This has gotten much better in recent versions, so you may not encounter this issue, but if you do you can simply detach VS (Debug > Detach All) before opening the Developer Tools in Chrome.
 
-## Debugging in Chrome ##
-
-*The following information is now out of date, but I'm leaving it here because it is still useful to know how to start an instance of the Ripple Emulator manually.*
-
-Personally, I find the VS attachment to the Chrome process takes too long and I also prefer Chrome's debugging tools over those provided in Visual Studio. If you want a faster debug/refresh cycle, you can install the Ripple emulator manually by using npm:
-
-	$ npm install ripple-emulator
-
-When you are ready to debug, instead of clicking run/play/F5, do a regular build (Build > Build Solution or press F6) and then start the Ripple emulator manually:
-
-	$ cd bld\Ripple\Android\Debug
-	$ ripple emulate
-
-You'll need to replace "Android" and "Debug" with the proper device and configuration.
-
-This will start the Ripple emulator's web server on port 4400 and open your default browser to:
-
-	http://localhost:4400/?enableripple=cordova-3.0.0
-
-At this point you can run/test/debug and when you make a change you can just do a build again via F6 and then refresh your browser. This allows for much quicker development in my opinion.
-
 ## Building as a Chrome Extension ##
 
-I've included a simple batch file `Build-Chrome-Extension.cmd` which will generate an extension that can be loaded in Chrome.
+You can use the `chrome` gulp task to create a Chrome extension.
 
-Once built, the extension can be loaded into Chrome using the `chrome://extensions` URL and enabling development mode. The extension payload will be located at `bin\Chrome`.
+Once built, the extension can be loaded into Chrome using the `chrome://extensions` URL and enabling development mode. The extension payload will be located in a `chrome` directory.
 
+## Testing ##
+
+The `npm test` command can be executed to run the TypeScript linter followed by the unit tests using the Karma test runner.
+
+These operations can be performed independently using the `gulp lint` and `gulp test` tasks.
 
 ## Basic Functionality ##
 

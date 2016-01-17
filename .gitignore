@@ -1,40 +1,33 @@
-
-# Build working directories
-Sample-App/bin
-Sample-App/bld
-Sample-App/platforms
-
-# Generated TypeScript artifacts
-Sample-App/www/scripts/appBundle.*
-Sample-App/jsFileList.json
-
-# Include plugin sub-directories, but not top level files (except for fetch.json)
-Sample-App/plugins/*
-!Sample-App/plugins/*/
-!Sample-App/plugins/fetch.json
-
-# Local nu-get packages
-packages/*/
-
-# Build-time variables
-Sample-App/www/scripts/BuildVars.js
+# Specifies intentionally untracked files to ignore when using Git
+# http://git-scm.com/docs/gitignore
 
 # Visual Studio user preferences etc
 *.docstates
 *.suo
 *.jsproj.user
-.vs/*
-Sample-App/changeList.json
 
-# Windows thumbnail cache
-Thumbs.db
+# Toolchain
+/node_modules
+/bower_components
+/platforms
+/typings/*
+!/typings/custom/
+/typings-tests/*
+!/typings-tests/custom/
 
-# Windows folder config
-Desktop.ini
-
-# Mac OS Stuff
-.DS_Store
-
-# Misc temp files
-*.tmp
-*.bak
+# Development Artifacts
+/bld
+/bin
+/www/lib
+/www/js/bundle.*
+/www/js/build-vars.js
+/www/js/templates.js
+/www/js/src/
+/www/css/bundle.*
+/src/tsd.d.ts
+/tests/tsd.d.ts
+/chrome
+/tests/**/*.js
+/tests/**/*.map
+/docs/*
+/tmp/*

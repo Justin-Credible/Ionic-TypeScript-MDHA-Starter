@@ -1,0 +1,52 @@
+{
+  "name": "SampleApp",
+  "version": "1.0.0",
+  "description": "SampleApp: A starter application using Ionic and TypeScript.",
+  "author": "Justin Unterreiner",
+  "license": "MIT",
+  "homepage": "http://www.justin-credible.net/Projects/Ionic-TypeScript-MDHA-Starter",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Justin-Credible/Ionic-TypeScript-Starter.git"
+  },
+  "dependencies": {
+    "bower": "1.6.3",
+    "bower-installer": "1.2.0",
+    "cordova": "5.4.1",
+    "del": "2.0.2",
+    "gulp": "3.9.0",
+    "gulp-angular-templatecache": "1.8.0",
+    "gulp-rename": "1.2.2",
+    "gulp-sass": "2.0.4",
+    "gulp-sourcemaps": "1.6.0",
+    "gulp-tslint": "3.3.1",
+    "gulp-typescript": "2.9.2",
+    "gulp-uglify": "1.4.2",
+    "gulp-util": "3.0.6",
+    "ionic": "1.7.12",
+    "jasmine-core": "2.3.4",
+    "karma": "0.13.19",
+    "karma-jasmine": "0.3.6",
+    "karma-phantomjs-launcher": "0.2.1",
+    "phantomjs": "1.9.18",
+    "request": "2.65.0",
+    "run-sequence": "1.1.4",
+    "tsd": "0.6.5",
+    "tslint": "2.5.1",
+    "typescript": "1.6.2",
+    "xmldom": "0.1.19",
+    "xpath": "0.0.9"
+  },
+  "scripts": {
+    "pretest": "gulp lint",
+    "test": "gulp test"
+  },
+  "cordovaPlatforms": [
+    "android",
+    "ios"
+  ],
+  "devDependencies": {
+    "gulp-typedoc": "^1.2.1",
+    "typedoc": "^0.3.8"
+  }
+}
