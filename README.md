@@ -77,6 +77,8 @@ The following tasks can be used to perform code configuration, library and plugi
 
 > Note: You can also just run `gulp` without any arguments which will run all of the above targets.
 
+> Note: If you have issues running `gulp init` or any of the gulp tasks above, ensure that you've added `./node_modules/bin` to your path and that it is taking precedence over npm's global location. You can verify this by using the `which gulp` (or `where gulp.cmd` on Windows) from the project directory. The local `node_modules` path should be listed first. Windows users should also check `where tsc.exe` to ensure they are using the TypeScript compiler from the project directory instead of Visual Studio's global version.
+
 After you've run the tasks, you can now use the Visual Studio play button to launch the Ripple emulator.
 
 ## Running ##
