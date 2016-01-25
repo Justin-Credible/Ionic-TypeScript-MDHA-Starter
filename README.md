@@ -15,7 +15,7 @@ Applications created with this starter project can target iOS, Android, Windows,
 
 Screenshots can be found on the project page [here](http://www.justin-credible.net/Projects/Ionic-TypeScript-MDHA-Starter).
 
-*If you are looking for a version of this project that is IDE and platform agnostic, you can check out it's sister project: [Ionic-TypeScript-Starter](https://github.com/Justin-Credible/Ionic-TypeScript-Starter).*
+> Note: If you are looking for a version of this project that is IDE and platform agnostic, you can check out it's sister project: [Ionic-TypeScript-Starter](https://github.com/Justin-Credible/Ionic-TypeScript-Starter).
 
 ## Environment Setup ##
 
@@ -25,7 +25,7 @@ The following external prerequisites are required:
 * Apache Cordova tools for Visual Studio (included with Visual Studio 2015)
 * [Node.js](https://nodejs.org/dist/v4.2.2/) 4.2.2
 
-*In addition, if you want to run on a emulator or physical device, you'll need your environment setup for iOS or Android development.*
+> Note: If you want to run on a emulator or physical device, you'll need your environment setup for iOS or Android development.
 
 ### Configure Visual Studio ###
 
@@ -44,7 +44,9 @@ This can be verified by executing `node --version` at a command prompt and compa
 
 ### Modify your path ###
 
-All other dependencies are installed in the project directory via `npm`. To use them you'll need to add `./node_modules/.bin` to your path. Using the dependencies directly from the project directory reduces dependency hell with globally installed modules and ensures all development is done using the exact same versions of the modules.
+All other dependencies are installed in the project directory via `npm`. To use them **you'll need to add `./node_modules/.bin` to your path**. Using the dependencies directly from the project directory reduces dependency hell with globally installed modules and ensures all development is done using the exact same versions of the modules.
+
+The path should be appended via the System > Environment Variables GUI and Visual Studio should be restarted for the changes to take effect.
 
 ## Getting Started ##
 
@@ -66,14 +68,14 @@ After the dependencies are installed, you can use the various gulp tasks from th
 
 The following tasks can be used to perform code configuration, library and plugin setup, and TypeScript compilation.
 
-*You can also just run `gulp` without any arguments which will run the below targets.*
-
     $ gulp config     # Creates www/js/build-vars.js from config.xml and runtime-config.json values
     $ gulp templates  # Compiles Angluar HTML templates from src/Views/**/*.html to www/js/templates.js
     $ gulp sass       # Compiles SASS from src/Styles/Index.scss to www/css/bundle.css
     $ gulp libs       # Install third Party JS libraries to www/lib as defined in bower.json
     $ gulp tsd        # Install TypeScript definitions as defined in tsd.json
     $ gulp ts         # Compiles TypeScript code as configured by src/tsconfig.json
+
+> Note: You can also just run `gulp` without any arguments which will run all of the above targets.
 
 After you've run the tasks, you can now use the Visual Studio play button to launch the Ripple emulator.
 
@@ -169,13 +171,17 @@ The responses for the HTTP requests are defined in the `mockHttpCalls` method in
 
 ## Project Structure ##
 
-The file layout is mostly self describing via the directory names. All of the application code is located in the `scripts/app` directory, with sub-directories for controllers, directives, view models, services, etc.
+The `index.html` page is the page that is loaded which handles including CSS and JavaScript references. It references `www/js/boot1.js`, which is the first level boot loader. It is responsible for any tasks that need to occur early on before delegating to the second level boot loader.
 
-`Application.ts` is the main file that bootstraps the application. It is responsible for setting up Ionic/Angular and registering the controllers, directives, routes, etc. It also takes care of device level events and handling exceptions.
+The bulk of the application code is located in the `src` directory, with sub-directories for directives, services, views, etc.
 
-Visual Studio will compile the TypeScript and bundle it all into a single file located at `www/scripts/appBundle.js`.
+The second level boot loader is located at `src/Framework/Boot2.ts`. It is responsible for setting up Ionic/Angular and registering the controllers, directives, routes, etc.
 
-Third party JavaScript libraries are stored in `www/lib`. I'm not currently using NuGet for third party libraries because I can't control the location of the scripts. 
+The main application logic is located in `src/Application/Application.ts`. This class takes care of handling device events (eg pause, resume) and other application level tasks. Routes are configured via `src/Application/RouteConfig.ts`.
+
+Visual Studio will compile the TypeScript and bundle it all into a single file located at `www/js/bundle.js`.
+
+Third party JavaScript libraries are stored in `www/lib` and are downloaded via the gulp libs task. 
 
 #### TypeScript ####
 
