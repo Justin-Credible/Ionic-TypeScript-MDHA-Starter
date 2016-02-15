@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<widget xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:vs="http://schemas.microsoft.com/appx/2014/htmlapps" id="net.justincredible.sampleapp" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" defaultlocale="en-US">
+<widget xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:vs="http://schemas.microsoft.com/appx/2014/htmlapps" id="net.justincredible.sampleapp" version="1.1.0" xmlns="http://www.w3.org/ns/widgets" defaultlocale="en-US">
   <name>Ionic-TypeScript-MDHA-Starter</name>
   <description>SampleApp: A starter application using Ionic and TypeScript.</description>
   <author href="http://cordova.io" email="dev@cordova.apache.org">Justin Unterreiner</author>
