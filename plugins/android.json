@@ -55,37 +55,37 @@
     },
     "installed_plugins": {
         "cordova-plugin-console": {
-            "PACKAGE_NAME": "io.cordova.myapp1c45ab"
+            "PACKAGE_NAME": "net.justincredible.sampleapp"
         },
         "cordova-plugin-device": {
-            "PACKAGE_NAME": "io.cordova.myapp1c45ab"
+            "PACKAGE_NAME": "net.justincredible.sampleapp"
         },
         "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "io.cordova.myapp1c45ab"
+            "PACKAGE_NAME": "net.justincredible.sampleapp"
         },
         "cordova-plugin-splashscreen": {
-            "PACKAGE_NAME": "io.cordova.myapp1c45ab"
+            "PACKAGE_NAME": "net.justincredible.sampleapp"
         },
         "cordova-plugin-dialogs": {
-            "PACKAGE_NAME": "io.cordova.myapp1c45ab"
+            "PACKAGE_NAME": "net.justincredible.sampleapp"
         },
         "cordova-plugin-inappbrowser": {
-            "PACKAGE_NAME": "io.cordova.myapp1c45ab"
+            "PACKAGE_NAME": "net.justincredible.sampleapp"
         },
         "cordova-plugin-statusbar": {
-            "PACKAGE_NAME": "io.cordova.myapp1c45ab"
+            "PACKAGE_NAME": "net.justincredible.sampleapp"
         },
         "cordova-plugin-spinner": {
-            "PACKAGE_NAME": "io.cordova.myapp1c45ab"
+            "PACKAGE_NAME": "net.justincredible.sampleapp"
         },
         "ionic-plugin-keyboard": {
-            "PACKAGE_NAME": "io.cordova.myapp1c45ab"
+            "PACKAGE_NAME": "net.justincredible.sampleapp"
         },
         "cordova-plugin-x-toast": {
-            "PACKAGE_NAME": "io.cordova.myapp1c45ab"
+            "PACKAGE_NAME": "net.justincredible.sampleapp"
         },
-        "com.verso.cordova.clipboard": {
-            "PACKAGE_NAME": "io.cordova.myapp1c45ab"
+        "cordova-universal-clipboard": {
+            "PACKAGE_NAME": "net.justincredible.sampleapp"
         }
     },
     "dependent_plugins": {}

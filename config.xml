@@ -114,5 +114,5 @@
   <vs:plugin name="cordova-plugin-spinner" version="1.0.0" src="https://github.com/Justin-Credible/cordova-plugin-spinner.git" />
   <vs:plugin name="ionic-plugin-keyboard" version="1.0.8" src="https://github.com/driftyco/ionic-plugin-keyboard.git" />
   <vs:plugin name="cordova-plugin-x-toast" version="2.3.2" src="https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git" />
-  <vs:plugin name="com.verso.cordova.clipboard" version="0.1.0" src="https://github.com/VersoSolutions/CordovaClipboard.git" />
+  <vs:plugin name="cordova-universal-clipboard" version="0.1.0" src="https://github.com/Visigo/CordovaClipboard" />
 </widget>

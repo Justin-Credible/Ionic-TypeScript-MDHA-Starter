@@ -7,7 +7,7 @@ Clipboard management plugin for Cordova/PhoneGap that supports iOS, Android, and
 
 Install the plugin using the CLI, for instance with PhoneGap:
 
-	phonegap local plugin add https://github.com/VersoSolutions/CordovaClipboard
+	phonegap local plugin add https://github.com/Visigo/CordovaClipboard
 
 The plugin creates the object `cordova.plugins.clipboard` with the methods `copy(text, onSuccess, onError)` and `paste(onSuccess, onError)`.
 
@@ -41,7 +41,7 @@ This plugin was inspired by [ClipboardManagerPlugin](https://github.com/jacob/Cl
 
 The MIT License (MIT)
 
-Copyright (c) 2013 Verso Solutions LLC
+Copyright (c) 2013-2015 Verso Solutions LLC and contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

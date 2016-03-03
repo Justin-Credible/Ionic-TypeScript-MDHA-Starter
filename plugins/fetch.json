@@ -82,10 +82,10 @@
         "is_top_level": true,
         "variables": {}
     },
-    "com.verso.cordova.clipboard": {
+    "cordova-universal-clipboard": {
         "source": {
             "type": "git",
-            "url": "https://github.com/VersoSolutions/CordovaClipboard.git",
+            "url": "https://github.com/Visigo/CordovaClipboard",
             "subdir": "."
         },
         "is_top_level": true,
